@@ -1,0 +1,35 @@
+package jeonseguard.backend.auth.presentation.resolver;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jeonseguard.backend.auth.infrastructure.JwtTokenProvider;
+import lombok.*;
+import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.support.WebDataBinderFactory;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.support.*;
+
+@Component
+@RequiredArgsConstructor
+public class AuthenticatedUserArgumentResolver implements HandlerMethodArgumentResolver {
+    private final JwtTokenProvider tokenProvider;
+
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.getParameterAnnotation(AuthenticatedUser.class) != null && parameter.getParameterType().equals(Long.class);
+    }
+
+    @Override
+    public Object resolveArgument(@NonNull MethodParameter parameter, ModelAndViewContainer mavContainer,
+                                  @NonNull NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+        String token = extractToken(webRequest);
+        tokenProvider.validateToken(token);
+        return tokenProvider.getUserIdFromToken(token);
+    }
+
+    private String extractToken(NativeWebRequest webRequest) {
+        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+        String header = request.getHeader("Authorization");
+        return (header != null && header.startsWith("Bearer ")) ? header.substring(7) : null;
+    }
+}
