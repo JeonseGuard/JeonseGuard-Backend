@@ -9,7 +9,7 @@ public class UserFactory {
                 .kakaoId(response.kakaoId())
                 .nickname(response.getNickname())
                 .profileImage(response.getProfileImage())
-                .email(response.email())
+                .email(response.getEmail())
                 .role(Role.ROLE_USER)
                 .build();
     }

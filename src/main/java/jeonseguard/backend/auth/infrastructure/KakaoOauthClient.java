@@ -1,27 +1,28 @@
 package jeonseguard.backend.auth.infrastructure;
 
-import jeonseguard.backend.auth.presentation.dto.request.KakaoTokenRequest;
 import jeonseguard.backend.auth.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class KakaoOauthClient {
     private final WebClient webClient;
 
-    public KakaoTokenResponse getKakaoTokens(String tokenUri, KakaoTokenRequest request) {
+    public KakaoTokenResponse getKakaoTokens(String tokenUri, BodyInserters.FormInserter<String> formData) {
         return webClient.post()
                 .uri(tokenUri)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .bodyValue(request)
+                .header(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded")
+                .body(formData)
                 .retrieve()
                 .bodyToMono(KakaoTokenResponse.class)
-                .blockOptional()
-                .orElseThrow(() -> new BusinessException(ErrorCode.KAKAO_TOKEN_FETCH_FAILED));
+                .block();
     }
 
     public KakaoUserInfoResponse getKakaoUserInfo(String userInfoUri, String accessToken) {

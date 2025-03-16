@@ -1,12 +1,12 @@
 package jeonseguard.backend.auth.infrastructure;
 
-import jeonseguard.backend.auth.presentation.dto.request.KakaoTokenRequest;
 import jeonseguard.backend.auth.presentation.dto.response.*;
-import jeonseguard.backend.global.exception.BusinessException;
-import jeonseguard.backend.global.exception.ErrorCode;
+import jeonseguard.backend.global.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.*;
+import org.springframework.web.reactive.function.BodyInserters;
 
 @Component
 @RequiredArgsConstructor
@@ -30,13 +30,22 @@ public class KakaoOauthProvider {
 
     public KakaoTokenResponse getKakaoTokens(String code) {
         validateKakaoAuthorizationCode(code);
-        KakaoTokenRequest request = KakaoTokenRequest.of(clientId, clientSecret, redirectUri, code);
-        return kakaoOauthClient.getKakaoTokens(tokenUri, request);
+        return kakaoOauthClient.getKakaoTokens(tokenUri, createFormData(code));
     }
 
     public KakaoUserInfoResponse getKakaoUserInfo(String accessToken) {
         validateKakaoToken(accessToken);
         return kakaoOauthClient.getKakaoUserInfo(userInfoUri, accessToken);
+    }
+
+    private BodyInserters.FormInserter<String> createFormData(String code) {
+        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        formData.add("grant_type", "authorization_code");
+        formData.add("client_id", clientId);
+        formData.add("client_secret", clientSecret);
+        formData.add("redirect_uri", redirectUri);
+        formData.add("code", code);
+        return BodyInserters.fromFormData(formData);
     }
 
     private void validateKakaoAuthorizationCode(String code) {

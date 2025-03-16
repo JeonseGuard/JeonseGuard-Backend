@@ -10,11 +10,7 @@ public record KakaoUserInfoResponse(
 
         @Schema(description = "카카오 계정")
         @JsonProperty("kakao_account")
-        KakaoAccount account,
-
-        @Schema(description = "카카오 이메일")
-        @JsonProperty("email")
-        String email
+        KakaoAccount account
 ) {
     public String getNickname() {
         return account.profile().nickName();
@@ -22,5 +18,9 @@ public record KakaoUserInfoResponse(
 
     public String getProfileImage() {
         return account.profile().profileImage();
+    }
+
+    public String getEmail() {
+        return account.email();
     }
 }
