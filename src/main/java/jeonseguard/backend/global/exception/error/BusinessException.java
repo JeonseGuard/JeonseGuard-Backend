@@ -1,4 +1,4 @@
-package jeonseguard.backend.global.exception;
+package jeonseguard.backend.global.exception.error;
 
 import lombok.Getter;
 

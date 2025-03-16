@@ -1,7 +1,8 @@
 package jeonseguard.backend.auth.infrastructure;
 
 import jeonseguard.backend.auth.presentation.dto.response.*;
-import jeonseguard.backend.global.exception.*;
+import jeonseguard.backend.global.exception.error.BusinessException;
+import jeonseguard.backend.global.exception.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

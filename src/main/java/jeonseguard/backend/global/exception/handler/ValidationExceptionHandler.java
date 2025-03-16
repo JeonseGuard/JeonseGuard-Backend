@@ -1,4 +1,4 @@
-package jeonseguard.backend.global.exception;
+package jeonseguard.backend.global.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;

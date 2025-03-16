@@ -1,7 +1,8 @@
 package jeonseguard.backend.auth.infrastructure;
 
 import jeonseguard.backend.auth.presentation.dto.response.*;
-import jeonseguard.backend.global.exception.*;
+import jeonseguard.backend.global.exception.error.BusinessException;
+import jeonseguard.backend.global.exception.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -22,7 +23,8 @@ public class KakaoOauthClient {
                 .body(formData)
                 .retrieve()
                 .bodyToMono(KakaoTokenResponse.class)
-                .block();
+                .blockOptional()
+                .orElseThrow(() -> new BusinessException(ErrorCode.KAKAO_TOKEN_FETCH_FAILED));
     }
 
     public KakaoUserInfoResponse getKakaoUserInfo(String userInfoUri, String accessToken) {

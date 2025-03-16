@@ -1,7 +1,8 @@
-package jeonseguard.backend.global.exception;
+package jeonseguard.backend.global.exception.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jeonseguard.backend.global.exception.error.ErrorCode;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record ErrorResponse(
