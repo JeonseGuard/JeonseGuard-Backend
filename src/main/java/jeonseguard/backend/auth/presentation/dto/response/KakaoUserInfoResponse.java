@@ -1,11 +1,20 @@
 package jeonseguard.backend.auth.presentation.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public record KakaoUserInfoResponse(
-        @JsonProperty("id") Long kakaoId,
-        @JsonProperty("kakao_account") KakaoAccount account,
-        @JsonProperty("email") String email
+        @Schema(description = "카카오 ID")
+        @JsonProperty("id")
+        Long kakaoId,
+
+        @Schema(description = "카카오 계정")
+        @JsonProperty("kakao_account")
+        KakaoAccount account,
+
+        @Schema(description = "카카오 이메일")
+        @JsonProperty("email")
+        String email
 ) {
     public String getNickname() {
         return account.profile().nickName();
