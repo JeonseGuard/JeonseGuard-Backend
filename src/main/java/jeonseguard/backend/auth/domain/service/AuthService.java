@@ -1,6 +1,7 @@
-package jeonseguard.backend.auth.domain;
+package jeonseguard.backend.auth.domain.service;
 
-import jeonseguard.backend.auth.infrastructure.*;
+import jeonseguard.backend.auth.infrastructure.provider.*;
+import jeonseguard.backend.auth.infrastructure.repository.*;
 import jeonseguard.backend.auth.presentation.dto.request.*;
 import jeonseguard.backend.auth.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.error.*;

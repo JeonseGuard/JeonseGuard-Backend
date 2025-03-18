@@ -1,4 +1,4 @@
-package jeonseguard.backend.auth.infrastructure;
+package jeonseguard.backend.auth.infrastructure.provider;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

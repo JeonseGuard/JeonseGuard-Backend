@@ -1,4 +1,4 @@
-package jeonseguard.backend.auth.infrastructure;
+package jeonseguard.backend.auth.infrastructure.provider.client;
 
 import jeonseguard.backend.auth.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.error.*;

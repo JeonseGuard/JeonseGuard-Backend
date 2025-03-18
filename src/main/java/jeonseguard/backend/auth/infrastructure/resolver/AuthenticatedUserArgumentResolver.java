@@ -1,7 +1,9 @@
-package jeonseguard.backend.auth.presentation.resolver;
+package jeonseguard.backend.auth.infrastructure.resolver;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jeonseguard.backend.auth.infrastructure.*;
+import jeonseguard.backend.auth.domain.annotation.AuthenticatedUser;
+import jeonseguard.backend.auth.infrastructure.provider.JwtTokenProvider;
+import jeonseguard.backend.auth.infrastructure.repository.LogoutTokenRepository;
 import jeonseguard.backend.global.exception.error.*;
 import lombok.*;
 import org.springframework.core.MethodParameter;

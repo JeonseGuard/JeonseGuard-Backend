@@ -1,4 +1,4 @@
-package jeonseguard.backend.auth.infrastructure;
+package jeonseguard.backend.auth.infrastructure.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;

@@ -1,5 +1,6 @@
-package jeonseguard.backend.auth.infrastructure;
+package jeonseguard.backend.auth.infrastructure.provider;
 
+import jeonseguard.backend.auth.infrastructure.provider.client.KakaoOauthClient;
 import jeonseguard.backend.auth.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.error.*;
 import lombok.RequiredArgsConstructor;

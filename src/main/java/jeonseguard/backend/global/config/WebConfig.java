@@ -1,6 +1,6 @@
 package jeonseguard.backend.global.config;
 
-import jeonseguard.backend.auth.presentation.resolver.AuthenticatedUserArgumentResolver;
+import jeonseguard.backend.auth.infrastructure.resolver.AuthenticatedUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
