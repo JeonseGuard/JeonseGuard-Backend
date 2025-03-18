@@ -2,7 +2,6 @@ package jeonseguard.backend.auth.infrastructure;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import jeonseguard.backend.auth.presentation.dto.response.TokenResponse;
 import jeonseguard.backend.global.exception.error.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,6 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
@@ -22,8 +20,12 @@ public class JwtTokenProvider {
     @Value("${security.jwt.refresh-expiration-time}")
     private long refreshExpirationTime;
 
-    public TokenResponse getTokens(Long userId) {
-        return TokenResponse.of(generateAccessToken(userId), generateRefreshToken(userId));
+    public String generateAccessToken(Long userId) {
+        return generateToken(userId, accessExpirationTime);
+    }
+
+    public String generateRefreshToken(Long userId) {
+        return generateToken(userId, refreshExpirationTime);
     }
 
     public Long getUserIdFromToken(String token) {
@@ -36,14 +38,6 @@ public class JwtTokenProvider {
         } catch (JwtException | IllegalArgumentException ex) {
             throw new BusinessException(ErrorCode.INVALID_JWT_TOKEN);
         }
-    }
-
-    private String generateAccessToken(Long userId) {
-        return generateToken(userId, accessExpirationTime);
-    }
-
-    private String generateRefreshToken(Long userId) {
-        return generateToken(userId, refreshExpirationTime);
     }
 
     private String generateToken(Long userId, long expirationTime) {

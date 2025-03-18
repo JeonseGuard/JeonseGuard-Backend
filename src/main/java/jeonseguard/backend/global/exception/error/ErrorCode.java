@@ -11,6 +11,7 @@ public enum ErrorCode {
 
     // 인증 관련 예외
     INVALID_JWT_TOKEN(HttpStatus.UNAUTHORIZED, "잘못된 JWT 토큰입니다."),
+    INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "잘못된 리프레시 토큰입니다."),
     INVALID_KAKAO_TOKEN(HttpStatus.UNAUTHORIZED, "잘못된 카카오 액세스 토큰입니다."),
     INVALID_KAKAO_AUTHORIZATION_CODE(HttpStatus.BAD_REQUEST, "잘못된 카카오 인가 코드입니다."),
     KAKAO_TOKEN_FETCH_FAILED(HttpStatus.UNAUTHORIZED, "카카오 토큰을 가져오는 데 실패했습니다."),
