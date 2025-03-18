@@ -1,7 +1,8 @@
 package jeonseguard.backend.auth.presentation.resolver;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jeonseguard.backend.auth.infrastructure.JwtTokenProvider;
+import jeonseguard.backend.auth.infrastructure.*;
+import jeonseguard.backend.global.exception.error.*;
 import lombok.*;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import org.springframework.web.method.support.*;
 @RequiredArgsConstructor
 public class AuthenticatedUserArgumentResolver implements HandlerMethodArgumentResolver {
     private final JwtTokenProvider tokenProvider;
+    private final LogoutTokenRepository logoutTokenRepository;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -23,7 +25,7 @@ public class AuthenticatedUserArgumentResolver implements HandlerMethodArgumentR
     public Object resolveArgument(@NonNull MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   @NonNull NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         String token = extractToken(webRequest);
-        tokenProvider.validateToken(token);
+        validateBlacklistedToken(token);
         return tokenProvider.getUserIdFromToken(token);
     }
 
@@ -31,5 +33,11 @@ public class AuthenticatedUserArgumentResolver implements HandlerMethodArgumentR
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String header = request.getHeader("Authorization");
         return (header != null && header.startsWith("Bearer ")) ? header.substring(7) : null;
+    }
+
+    private void validateBlacklistedToken(String token) {
+        if (logoutTokenRepository.checkBlacklistedToken(token)) {
+            throw new BusinessException(ErrorCode.TOKEN_IS_BLACKLISTED);
+        }
     }
 }

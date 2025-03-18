@@ -28,4 +28,11 @@ public class AuthController {
     public ResponseEntity<TokenResponse> refresh(@Valid @RequestBody RefreshRequest request) {
         return ResponseEntity.ok(authFacade.refresh(request));
     }
+
+    @Operation(summary = "로그아웃", description = "엑세스 토큰을 이용하여, 엑세스 토큰을 블랙리스트에 추가하고, 저장된 리프레시 토큰을 제거합니다.")
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@Valid @RequestBody LogoutRequest request) {
+        authFacade.logout(request);
+        return ResponseEntity.noContent().build();
+    }
 }

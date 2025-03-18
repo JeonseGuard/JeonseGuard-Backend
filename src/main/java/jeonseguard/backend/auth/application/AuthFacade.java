@@ -23,4 +23,8 @@ public class AuthFacade {
     public TokenResponse refresh(RefreshRequest request) {
         return authService.refreshTokens(request);
     }
+
+    public void logout(LogoutRequest request) {
+        authService.blacklistToken(request);
+    }
 }

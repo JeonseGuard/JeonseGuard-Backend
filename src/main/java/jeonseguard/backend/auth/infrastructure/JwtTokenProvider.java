@@ -29,15 +29,8 @@ public class JwtTokenProvider {
     }
 
     public Long getUserIdFromToken(String token) {
+        validateToken(token);
         return Long.parseLong(decodeToken(token).getSubject());
-    }
-
-    public void validateToken(String token) {
-        try {
-            decodeToken(token);
-        } catch (JwtException | IllegalArgumentException ex) {
-            throw new BusinessException(ErrorCode.INVALID_JWT_TOKEN);
-        }
     }
 
     private String generateToken(Long userId, long expirationTime) {
@@ -59,5 +52,13 @@ public class JwtTokenProvider {
 
     private SecretKey getSecretKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
+
+    private void validateToken(String token) {
+        try {
+            decodeToken(token);
+        } catch (JwtException | IllegalArgumentException ex) {
+            throw new BusinessException(ErrorCode.INVALID_JWT_TOKEN);
+        }
     }
 }

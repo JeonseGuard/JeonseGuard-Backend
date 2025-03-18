@@ -13,6 +13,7 @@ public class AuthService {
     private final KakaoOauthProvider oauthProvider;
     private final JwtTokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final LogoutTokenRepository logoutTokenRepository;
 
     public KakaoUserInfoResponse getKakaoUserInfo(LoginRequest request) {
         KakaoTokenResponse response = oauthProvider.getKakaoTokens(request.code());
@@ -28,18 +29,20 @@ public class AuthService {
 
     public TokenResponse refreshTokens(RefreshRequest request) {
         String refreshToken = request.refreshToken();
-        tokenProvider.validateToken(refreshToken);
         Long userId = tokenProvider.getUserIdFromToken(refreshToken);
         String storedRefreshToken = refreshTokenRepository.getRefreshToken(userId);
         validateRefreshToken(refreshToken, storedRefreshToken);
-        TokenResponse newTokens = getTokens(userId);
-        updateRefreshToken(userId, newTokens.refreshToken());
-        return newTokens;
+        TokenResponse response = getTokens(userId);
+        refreshTokenRepository.removeRefreshToken(userId);
+        refreshTokenRepository.saveRefreshToken(userId, response.refreshToken());
+        return response;
     }
 
-    private void updateRefreshToken(Long userId, String refreshToken) {
+    public void blacklistToken(LogoutRequest request) {
+        String accessToken = request.accessToken();
+        Long userId = tokenProvider.getUserIdFromToken(accessToken);
+        logoutTokenRepository.blacklistToken(accessToken);
         refreshTokenRepository.removeRefreshToken(userId);
-        refreshTokenRepository.saveRefreshToken(userId, refreshToken);
     }
 
     private void validateRefreshToken(String refreshToken, String storedRefreshToken) {

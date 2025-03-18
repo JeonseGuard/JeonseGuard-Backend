@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class RefreshTokenRepository {
     private final RedisTemplate<String, String> redisTemplate;
 
-    private static final long REFRESH_EXPIRATION_TIME = 7 * 24 * 60 * 60; // 7일
+    private static final long REFRESH_EXPIRATION_TIME = 5 * 24 * 60 * 60; // 5일
 
     public void saveRefreshToken(Long userId, String refreshToken) {
         redisTemplate.opsForValue().set("refresh:" + userId, refreshToken, REFRESH_EXPIRATION_TIME, TimeUnit.SECONDS);
