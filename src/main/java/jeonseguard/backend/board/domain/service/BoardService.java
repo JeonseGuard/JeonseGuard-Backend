@@ -33,9 +33,17 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateBoard(UpdateBoardRequest request, Board board, User user) {
+    public void updateBoard(Long boardId, UpdateBoardRequest request, User user) {
+        Board board = getBoardOrThrow(boardId);
         validateAuthor(board, user, ErrorCode.BOARD_UPDATE_FORBIDDEN);
         board.updateBoard(request.newTitle(), request.newContent(), user.getNickname());
+    }
+
+    @Transactional
+    public void deleteBoard(Long boardId, User user) {
+        Board board = getBoardOrThrow(boardId);
+        validateAuthor(board, user, ErrorCode.BOARD_DELETE_FORBIDDEN);
+        boardRepository.delete(board);
     }
 
     private Board getBoardOrThrow(Long boardId) {

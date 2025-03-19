@@ -2,8 +2,7 @@ package jeonseguard.backend.board.application;
 
 import jeonseguard.backend.board.domain.entity.Board;
 import jeonseguard.backend.board.domain.service.BoardService;
-import jeonseguard.backend.board.presentation.dto.request.CreateBoardRequest;
-import jeonseguard.backend.board.presentation.dto.request.UpdateBoardRequest;
+import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.domain.service.UserService;
@@ -34,8 +33,13 @@ public class BoardFacade {
     }
 
     public void updateBoard(Long boardId, Long userId, UpdateBoardRequest request) {
-        Board board = boardService.getBoard(boardId);
         User user = userService.getUserOrThrow(userId);
-        boardService.updateBoard(request, board, user);
+        Board board = boardService.getBoard(boardId);
+        boardService.updateBoard(boardId, request, user);
+    }
+
+    public void deleteBoard(Long boardId, Long userId) {
+        User user = userService.getUserOrThrow(userId);
+        boardService.deleteBoard(boardId, user);
     }
 }
