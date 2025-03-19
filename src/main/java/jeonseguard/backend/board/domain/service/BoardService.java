@@ -3,7 +3,7 @@ package jeonseguard.backend.board.domain.service;
 import jeonseguard.backend.board.domain.entity.Board;
 import jeonseguard.backend.board.domain.factory.BoardFactory;
 import jeonseguard.backend.board.infrastructure.BoardRepository;
-import jeonseguard.backend.board.presentation.dto.request.CreateBoardRequest;
+import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
     private final BoardRepository boardRepository;
 
+    @Transactional(readOnly = true)
     public Page<Board> getBoards(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
     public Board getBoardOrThrow(Long boardId) {
         return boardRepository.findById(boardId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_NOT_FOUND));
@@ -29,5 +31,15 @@ public class BoardService {
     public Board createBoard(CreateBoardRequest request, User user) {
         Board board = BoardFactory.fromRequest(request, user);
         return boardRepository.save(board);
+    }
+
+    @Transactional
+    public void updateBoard(Long boardId, UpdateBoardRequest request, User user) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_NOT_FOUND));
+        if (!board.getUser().getId().equals(user.getId())) {
+            throw new BusinessException(ErrorCode.BOARD_UPDATE_FORBIDDEN);
+        }
+        board.updateBoard(request.newTitle(), request.newContent(), user.getNickname());
     }
 }

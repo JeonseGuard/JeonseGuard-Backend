@@ -28,4 +28,10 @@ public class Board extends CommonBaseEntity {
 
     @Column(nullable = false)
     private String updatedBy;
+
+    public void updateBoard(String title, String content, String updatedBy) {
+        this.title = title;
+        this.content = content;
+        this.updatedBy = updatedBy;
+    }
 }

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jeonseguard.backend.auth.domain.annotation.AuthenticatedUser;
 import jeonseguard.backend.board.application.BoardFacade;
-import jeonseguard.backend.board.presentation.dto.request.CreateBoardRequest;
+import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,13 +27,20 @@ public class BoardController {
 
     @Operation(summary = "게시글 상세 조회", description = "게시글 ID를 이용하여, 특정 게시글을 조회합니다.")
     @GetMapping("/{boardId}")
-    public ResponseEntity<BoardInfoResponse> getBoardInfo(@PathVariable Long boardId) {
-        return ResponseEntity.ok(boardFacade.getBoardInfo(boardId));
+    public ResponseEntity<BoardInfoResponse> getBoard(@PathVariable Long boardId) {
+        return ResponseEntity.ok(boardFacade.getBoard(boardId));
     }
 
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
     @PostMapping
     public ResponseEntity<CreateBoardResponse> createBoard(@AuthenticatedUser Long userId, @Valid @RequestBody CreateBoardRequest request) {
         return ResponseEntity.ok(boardFacade.createBoard(userId, request));
+    }
+
+    @Operation(summary = "게시글 수정", description = "게시글을 수정합니다.")
+    @PutMapping("/{boardId}")
+    public ResponseEntity<Void> updateBoard(@PathVariable Long boardId, @AuthenticatedUser Long userId, @Valid @RequestBody UpdateBoardRequest request) {
+        boardFacade.updateBoard(boardId, userId, request);
+        return ResponseEntity.noContent().build();
     }
 }
