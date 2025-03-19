@@ -34,7 +34,8 @@ public class BoardFacade {
     }
 
     public void updateBoard(Long boardId, Long userId, UpdateBoardRequest request) {
+        Board board = boardService.getBoard(boardId);
         User user = userService.getUserOrThrow(userId);
-        boardService.updateBoard(boardId, request, user);
+        boardService.updateBoard(request, board, user);
     }
 }

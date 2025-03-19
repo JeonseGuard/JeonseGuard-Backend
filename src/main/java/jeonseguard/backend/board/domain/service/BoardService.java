@@ -33,9 +33,8 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateBoard(Long boardId, UpdateBoardRequest request, User user) {
-        Board board = getBoardOrThrow(boardId);
-        validateAuthor(board, user);
+    public void updateBoard(UpdateBoardRequest request, Board board, User user) {
+        validateAuthor(board, user, ErrorCode.BOARD_UPDATE_FORBIDDEN);
         board.updateBoard(request.newTitle(), request.newContent(), user.getNickname());
     }
 
@@ -44,9 +43,9 @@ public class BoardService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_NOT_FOUND));
     }
 
-    private void validateAuthor(Board board, User user) {
+    private void validateAuthor(Board board, User user, ErrorCode errorCode) {
         if (!board.getUser().getId().equals(user.getId())) {
-            throw new BusinessException(ErrorCode.BOARD_UPDATE_FORBIDDEN);
+            throw new BusinessException(errorCode);
         }
     }
 }
