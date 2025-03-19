@@ -22,9 +22,8 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public Board getBoardOrThrow(Long boardId) {
-        return boardRepository.findById(boardId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_NOT_FOUND));
+    public Board getBoard(Long boardId) {
+        return getBoardOrThrow(boardId);
     }
 
     @Transactional
@@ -35,11 +34,19 @@ public class BoardService {
 
     @Transactional
     public void updateBoard(Long boardId, UpdateBoardRequest request, User user) {
-        Board board = boardRepository.findById(boardId)
+        Board board = getBoardOrThrow(boardId);
+        validateAuthor(board, user);
+        board.updateBoard(request.newTitle(), request.newContent(), user.getNickname());
+    }
+
+    private Board getBoardOrThrow(Long boardId) {
+        return boardRepository.findById(boardId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_NOT_FOUND));
+    }
+
+    private void validateAuthor(Board board, User user) {
         if (!board.getUser().getId().equals(user.getId())) {
             throw new BusinessException(ErrorCode.BOARD_UPDATE_FORBIDDEN);
         }
-        board.updateBoard(request.newTitle(), request.newContent(), user.getNickname());
     }
 }

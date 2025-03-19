@@ -23,7 +23,7 @@ public class BoardFacade {
     }
 
     public BoardInfoResponse getBoard(Long boardId) {
-        Board board = boardService.getBoardOrThrow(boardId);
+        Board board = boardService.getBoard(boardId);
         return BoardInfoResponse.fromEntity(board);
     }
 
