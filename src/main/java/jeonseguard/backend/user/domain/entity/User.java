@@ -1,8 +1,11 @@
 package jeonseguard.backend.user.domain.entity;
 
 import jakarta.persistence.*;
+import jeonseguard.backend.board.domain.entity.Board;
 import jeonseguard.backend.global.entity.CommonBaseEntity;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Builder
@@ -24,4 +27,7 @@ public class User extends CommonBaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Board> boards;
 }

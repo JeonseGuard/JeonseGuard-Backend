@@ -32,6 +32,12 @@ spring:
       password: ${REDIS_PASSWORD}
       timeout: ${REDIS_TIMEOUT}
 
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+        one-indexed-parameters: false
+
 security:
   jwt:
     secret-key: ${JWT_SECRET_KEY}
