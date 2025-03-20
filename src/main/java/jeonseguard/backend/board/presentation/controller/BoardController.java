@@ -43,4 +43,11 @@ public class BoardController {
         boardFacade.updateBoard(boardId, userId, request);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity<Void> deleteBoard(@PathVariable Long boardId, @AuthenticatedUser Long userId) {
+        boardFacade.deleteBoard(boardId, userId);
+        return ResponseEntity.noContent().build();
+    }
 }
