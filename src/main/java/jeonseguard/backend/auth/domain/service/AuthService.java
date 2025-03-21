@@ -1,7 +1,7 @@
 package jeonseguard.backend.auth.domain.service;
 
+import jeonseguard.backend.auth.domain.repository.*;
 import jeonseguard.backend.auth.infrastructure.provider.*;
-import jeonseguard.backend.auth.infrastructure.repository.*;
 import jeonseguard.backend.auth.presentation.dto.request.*;
 import jeonseguard.backend.auth.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.error.*;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final KakaoOauthProvider oauthProvider;
     private final JwtTokenProvider tokenProvider;
-    private final RefreshTokenRepository refreshTokenRepository;
-    private final LogoutTokenRepository logoutTokenRepository;
+    private final LogoutTokenStore logoutTokenStore;
+    private final RefreshTokenStore refreshTokenStore;
 
     public KakaoUserInfoResponse getKakaoUserInfo(LoginRequest request) {
         KakaoTokenResponse response = oauthProvider.getKakaoTokens(request.code());
@@ -24,26 +24,29 @@ public class AuthService {
     public TokenResponse getTokens(Long userId) {
         String accessToken = tokenProvider.generateAccessToken(userId);
         String refreshToken = tokenProvider.generateRefreshToken(userId);
-        refreshTokenRepository.saveRefreshToken(userId, refreshToken);
+        long accessTokenExpirationTime = tokenProvider.getAccessTokenExpirationTime();
+        refreshTokenStore.saveRefreshToken(userId, refreshToken, accessTokenExpirationTime);
         return TokenResponse.of(accessToken, refreshToken);
     }
 
     public TokenResponse refreshTokens(RefreshRequest request) {
         String refreshToken = request.refreshToken();
         Long userId = tokenProvider.getUserIdFromToken(refreshToken);
-        String storedRefreshToken = refreshTokenRepository.getRefreshToken(userId);
+        String storedRefreshToken = refreshTokenStore.getRefreshToken(userId);
+        long refreshTokenExpirationTime = tokenProvider.getRefreshTokenExpirationTime();
         validateRefreshToken(refreshToken, storedRefreshToken);
         TokenResponse response = getTokens(userId);
-        refreshTokenRepository.removeRefreshToken(userId);
-        refreshTokenRepository.saveRefreshToken(userId, response.refreshToken());
+        refreshTokenStore.removeRefreshToken(userId);
+        refreshTokenStore.saveRefreshToken(userId, response.refreshToken(), refreshTokenExpirationTime);
         return response;
     }
 
     public void blacklistToken(LogoutRequest request) {
         String accessToken = request.accessToken();
         Long userId = tokenProvider.getUserIdFromToken(accessToken);
-        logoutTokenRepository.blacklistToken(accessToken);
-        refreshTokenRepository.removeRefreshToken(userId);
+        long accessTokenExpirationTime = tokenProvider.getAccessTokenExpirationTime();
+        logoutTokenStore.blacklistToken(accessToken, accessTokenExpirationTime);
+        refreshTokenStore.removeRefreshToken(userId);
     }
 
     private void validateRefreshToken(String refreshToken, String storedRefreshToken) {

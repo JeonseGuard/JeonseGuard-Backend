@@ -2,8 +2,8 @@ package jeonseguard.backend.auth.infrastructure.resolver;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jeonseguard.backend.auth.domain.annotation.AuthenticatedUser;
+import jeonseguard.backend.auth.domain.repository.LogoutTokenStore;
 import jeonseguard.backend.auth.infrastructure.provider.JwtTokenProvider;
-import jeonseguard.backend.auth.infrastructure.repository.LogoutTokenRepository;
 import jeonseguard.backend.global.exception.error.*;
 import lombok.*;
 import org.springframework.core.MethodParameter;
@@ -16,7 +16,7 @@ import org.springframework.web.method.support.*;
 @RequiredArgsConstructor
 public class AuthenticatedUserArgumentResolver implements HandlerMethodArgumentResolver {
     private final JwtTokenProvider tokenProvider;
-    private final LogoutTokenRepository logoutTokenRepository;
+    private final LogoutTokenStore logoutTokenStore;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -38,7 +38,7 @@ public class AuthenticatedUserArgumentResolver implements HandlerMethodArgumentR
     }
 
     private void validateBlacklistedToken(String token) {
-        if (logoutTokenRepository.checkBlacklistedToken(token)) {
+        if (logoutTokenStore.checkBlacklistedToken(token)) {
             throw new BusinessException(ErrorCode.TOKEN_IS_BLACKLISTED);
         }
     }

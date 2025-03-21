@@ -33,6 +33,14 @@ public class JwtTokenProvider {
         return Long.parseLong(decodeToken(token).getSubject());
     }
 
+    public long getAccessTokenExpirationTime() {
+        return accessExpirationTime;
+    }
+
+    public long getRefreshTokenExpirationTime() {
+        return refreshExpirationTime;
+    }
+
     private String generateToken(Long userId, long expirationTime) {
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
