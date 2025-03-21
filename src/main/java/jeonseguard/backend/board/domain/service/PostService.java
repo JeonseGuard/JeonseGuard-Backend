@@ -2,7 +2,7 @@ package jeonseguard.backend.board.domain.service;
 
 import jeonseguard.backend.board.domain.entity.Post;
 import jeonseguard.backend.board.domain.factory.PostFactory;
-import jeonseguard.backend.board.infrastructure.BoardRepository;
+import jeonseguard.backend.board.domain.repository.PostRepository;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
@@ -13,45 +13,39 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class BoardService {
-    private final BoardRepository boardRepository;
+public class PostService {
+    private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public Page<Post> getBoards(Pageable pageable) {
-        return boardRepository.findAll(pageable);
+    public Page<Post> getPosts(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
-    public Post getBoard(Long boardId) {
-        return getBoardOrThrow(boardId);
+    public Post getPost(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
     @Transactional
-    public Post createBoard(CreateBoardRequest request, User user) {
+    public Post createPost(CreatePostRequest request, User user) {
         Post post = PostFactory.fromRequest(request, user);
-        return boardRepository.save(post);
+        return postRepository.save(post);
     }
 
     @Transactional
-    public void updateBoard(Long boardId, UpdateBoardRequest request, User user) {
-        Post post = getBoardOrThrow(boardId);
-        validateAuthor(post, user, ErrorCode.BOARD_UPDATE_FORBIDDEN);
+    public void updatePost(UpdatePostRequest request, User user, Post post) {
+        validateAuthor(user, post, ErrorCode.POST_UPDATE_FORBIDDEN);
         post.updateBoard(request.newTitle(), request.newContent(), user.getNickname());
     }
 
     @Transactional
-    public void deleteBoard(Long boardId, User user) {
-        Post post = getBoardOrThrow(boardId);
-        validateAuthor(post, user, ErrorCode.BOARD_DELETE_FORBIDDEN);
-        boardRepository.delete(post);
+    public void deletePost(User user, Post post) {
+        validateAuthor(user, post, ErrorCode.POST_DELETE_FORBIDDEN);
+        postRepository.delete(post);
     }
 
-    private Post getBoardOrThrow(Long boardId) {
-        return boardRepository.findById(boardId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.BOARD_NOT_FOUND));
-    }
-
-    private void validateAuthor(Post post, User user, ErrorCode errorCode) {
+    private void validateAuthor(User user, Post post, ErrorCode errorCode) {
         if (!post.getUser().getId().equals(user.getId())) {
             throw new BusinessException(errorCode);
         }

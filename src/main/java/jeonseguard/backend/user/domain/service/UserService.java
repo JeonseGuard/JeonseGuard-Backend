@@ -4,7 +4,7 @@ import jeonseguard.backend.auth.presentation.dto.response.KakaoUserInfoResponse;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.domain.factory.UserFactory;
-import jeonseguard.backend.user.infrastructure.UserRepository;
+import jeonseguard.backend.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User getUserOrThrow(Long userId) {
+    public User getUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }

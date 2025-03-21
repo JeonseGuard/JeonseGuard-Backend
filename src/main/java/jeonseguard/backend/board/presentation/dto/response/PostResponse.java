@@ -5,14 +5,14 @@ import jeonseguard.backend.board.domain.entity.Post;
 
 import java.time.LocalDate;
 
-public record BoardResponse(
-        @Schema(description = "게시글 ID") Long boardId,
+public record PostResponse(
+        @Schema(description = "게시글 ID") Long postId,
         @Schema(description = "제목") String title,
         @Schema(description = "생성자") String creator,
         @Schema(description = "생성일") LocalDate createdAt
 ) {
-    public static BoardResponse fromEntity(Post post) {
-        return new BoardResponse(
+    public static PostResponse fromEntity(Post post) {
+        return new PostResponse(
                 post.getId(),
                 post.getTitle(),
                 post.getContent(),

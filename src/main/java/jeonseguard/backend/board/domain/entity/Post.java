@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Board extends CommonBaseEntity {
+public class Post extends CommonBaseEntity {
     @Column(nullable = false, length = 50)
     private String title;
 
