@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Board extends CommonBaseEntity {
+public class Post extends CommonBaseEntity {
     @Column(nullable = false, length = 50)
     private String title;
 
@@ -29,9 +29,21 @@ public class Board extends CommonBaseEntity {
     @Column(nullable = false)
     private String updatedBy;
 
-    public void updateBoard(String title, String content, String updatedBy) {
-        this.title = title;
-        this.content = content;
+    public void updatePost(String title, String content, String updatedBy) {
+        updatePostTitle(title);
+        updatePostContent(content);
         this.updatedBy = updatedBy;
+    }
+
+    private void updatePostTitle(String title) {
+        if (title != null) {
+            this.title = title;
+        }
+    }
+
+    private void updatePostContent(String content) {
+        if (content != null) {
+            this.content = content;
+        }
     }
 }
