@@ -40,13 +40,13 @@ public class Post extends CommonBaseEntity {
     }
 
     private void updatePostTitle(String title) {
-        if (title != null) {
+        if (title != null && !title.isBlank()) {
             this.title = title;
         }
     }
 
     private void updatePostContent(String content) {
-        if (content != null) {
+        if (content != null && !content.isBlank()) {
             this.content = content;
         }
     }

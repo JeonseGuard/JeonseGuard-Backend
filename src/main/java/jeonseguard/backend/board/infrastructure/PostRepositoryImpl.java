@@ -1,7 +1,6 @@
 package jeonseguard.backend.board.infrastructure;
 
-import jeonseguard.backend.board.domain.entity.BoardCategory;
-import jeonseguard.backend.board.domain.entity.Post;
+import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;

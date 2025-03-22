@@ -9,6 +9,7 @@ public record PostInfoResponse(
         @Schema(description = "게시글 ID") Long postId,
         @Schema(description = "제목") String title,
         @Schema(description = "내용") String content,
+        @Schema(description = "카테고리") String category,
         @Schema(description = "생성자") String creator,
         @Schema(description = "생성일") LocalDate createdAt
 ) {
@@ -17,6 +18,7 @@ public record PostInfoResponse(
                 post.getId(),
                 post.getTitle(),
                 post.getContent(),
+                post.getCategory().toString(),
                 post.getCreatedBy(),
                 post.getCreatedAt().toLocalDate()
         );
