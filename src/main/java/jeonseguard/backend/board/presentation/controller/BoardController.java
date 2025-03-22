@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Post", description = "게시판 관련 API")
+@Tag(name = "Board", description = "게시판 관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/board")
