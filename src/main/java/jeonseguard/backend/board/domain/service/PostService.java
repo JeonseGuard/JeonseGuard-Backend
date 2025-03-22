@@ -1,7 +1,6 @@
 package jeonseguard.backend.board.domain.service;
 
-import jeonseguard.backend.board.domain.entity.BoardCategory;
-import jeonseguard.backend.board.domain.entity.Post;
+import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.PostFactory;
 import jeonseguard.backend.board.domain.repository.PostRepository;
 import jeonseguard.backend.board.presentation.dto.request.*;
@@ -18,13 +17,13 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public Page<Post> getPosts(Pageable pageable) {
-        return postRepository.findAll(pageable);
+    public Page<Post> getPosts(String category, Pageable pageable) {
+        return postRepository.findAllByCategory(parseCategory(category), pageable);
     }
 
     @Transactional(readOnly = true)
-    public Post getPost(Long postId) {
-        return postRepository.findById(postId)
+    public Post getPost(String category, Long postId) {
+        return postRepository.findByCategoryAndId(parseCategory(category), postId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
@@ -35,7 +34,7 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(UpdatePostRequest request, User user, Post post) {
+    public void updatePost(User user, Post post, UpdatePostRequest request) {
         validateAuthor(user, post, ErrorCode.POST_UPDATE_FORBIDDEN);
         post.updatePost(request.newTitle(), request.newContent(), user.getNickname());
     }

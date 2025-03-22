@@ -16,13 +16,13 @@ public class BoardFacade {
     private final PostService postService;
     private final UserService userService;
 
-    public PostPageResponse getPosts(Pageable pageable) {
-        Page<Post> boards = postService.getPosts(pageable);
+    public PostPageResponse getPosts(String category, Pageable pageable) {
+        Page<Post> boards = postService.getPosts(category, pageable);
         return PostPageResponse.of(boards);
     }
 
-    public PostInfoResponse getPost(Long postId) {
-        Post post = postService.getPost(postId);
+    public PostInfoResponse getPost(String category, Long postId) {
+        Post post = postService.getPost(category, postId);
         return PostInfoResponse.fromEntity(post);
     }
 
@@ -32,15 +32,15 @@ public class BoardFacade {
         return CreatePostResponse.fromEntity(post);
     }
 
-    public void updatePost(Long userId, Long postId, UpdatePostRequest request) {
+    public void updatePost(String category, Long userId, Long postId, UpdatePostRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.getPost(postId);
-        postService.updatePost(request, user, post);
+        Post post = postService.getPost(category, postId);
+        postService.updatePost(user, post, request);
     }
 
-    public void deletePost(Long userId, Long postId) {
+    public void deletePost(String category, Long userId, Long postId) {
         User user = userService.getUser(userId);
-        Post post = postService.getPost(postId);
+        Post post = postService.getPost(category, postId);
         postService.deletePost(user, post);
     }
 }
