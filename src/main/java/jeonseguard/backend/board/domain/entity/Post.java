@@ -18,6 +18,10 @@ public class Post extends CommonBaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BoardCategory category;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
@@ -36,13 +40,13 @@ public class Post extends CommonBaseEntity {
     }
 
     private void updatePostTitle(String title) {
-        if (title != null) {
+        if (title != null && !title.isBlank()) {
             this.title = title;
         }
     }
 
     private void updatePostContent(String content) {
-        if (content != null) {
+        if (content != null && !content.isBlank()) {
             this.content = content;
         }
     }
