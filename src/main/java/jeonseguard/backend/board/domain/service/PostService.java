@@ -1,5 +1,6 @@
 package jeonseguard.backend.board.domain.service;
 
+import jeonseguard.backend.board.domain.entity.BoardCategory;
 import jeonseguard.backend.board.domain.entity.Post;
 import jeonseguard.backend.board.domain.factory.PostFactory;
 import jeonseguard.backend.board.domain.repository.PostRepository;
@@ -28,8 +29,8 @@ public class PostService {
     }
 
     @Transactional
-    public Post createPost(CreatePostRequest request, User user) {
-        Post post = PostFactory.fromRequest(request, user);
+    public Post createPost(String category, User user, CreatePostRequest request) {
+        Post post = PostFactory.fromRequest(parseCategory(category), user, request);
         return postRepository.save(post);
     }
 
@@ -49,5 +50,9 @@ public class PostService {
         if (!post.getUser().getId().equals(user.getId())) {
             throw new BusinessException(errorCode);
         }
+    }
+
+    private BoardCategory parseCategory(String category) {
+        return BoardCategory.valueOf(category.toUpperCase());
     }
 }

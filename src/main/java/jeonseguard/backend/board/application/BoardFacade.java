@@ -26,9 +26,9 @@ public class BoardFacade {
         return PostInfoResponse.fromEntity(post);
     }
 
-    public CreatePostResponse createPost(Long userId, CreatePostRequest request) {
+    public CreatePostResponse createPost(String category, Long userId, CreatePostRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.createPost(request, user);
+        Post post = postService.createPost(category, user, request);
         return CreatePostResponse.fromEntity(post);
     }
 
