@@ -30,4 +30,11 @@ public class Comment extends CommonBaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
+
+    public void updateComment(String content, String updatedBy) {
+        if (content != null && !content.isEmpty()) {
+            this.content = content;
+        }
+        this.updatedBy = updatedBy;
+    }
 }

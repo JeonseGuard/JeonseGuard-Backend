@@ -1,7 +1,6 @@
 package jeonseguard.backend.board.presentation.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jeonseguard.backend.board.domain.entity.Comment;
 import jeonseguard.backend.board.domain.entity.Post;
 
 import java.time.LocalDate;

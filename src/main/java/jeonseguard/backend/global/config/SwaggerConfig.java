@@ -19,7 +19,7 @@ public class SwaggerConfig {
     private Info apiInfo() {
         return new Info()
                 .title("JeonseGuard API Documentation")
-                .description("전세 사기 예방 서비스 API")
+                .description("전세 사기 예방 AI 서비스 API")
                 .version("1.0.0");
     }
 

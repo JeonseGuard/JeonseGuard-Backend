@@ -51,4 +51,16 @@ public class BoardFacade {
         Comment comment = commentService.createComment(user, post, request);
         return CreateCommentResponse.fromEntity(comment);
     }
+
+    public void updateComment(Long userId, Long commentId, UpdateCommentRequest request) {
+        User user = userService.getUser(userId);
+        Comment comment = commentService.getComment(commentId);
+        commentService.updateComment(user, comment, request);
+    }
+
+    public void deleteComment(Long userId, Long commentId) {
+        User user = userService.getUser(userId);
+        Comment comment = commentService.getComment(commentId);
+        commentService.deleteComment(user, comment);
+    }
 }

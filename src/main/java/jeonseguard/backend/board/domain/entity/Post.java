@@ -39,20 +39,12 @@ public class Post extends CommonBaseEntity {
     private List<Comment> comments;
 
     public void updatePost(String title, String content, String updatedBy) {
-        updatePostTitle(title);
-        updatePostContent(content);
-        this.updatedBy = updatedBy;
-    }
-
-    private void updatePostTitle(String title) {
         if (title != null && !title.isBlank()) {
             this.title = title;
         }
-    }
-
-    private void updatePostContent(String content) {
         if (content != null && !content.isBlank()) {
             this.content = content;
         }
+        this.updatedBy = updatedBy;
     }
 }
