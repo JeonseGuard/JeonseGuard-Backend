@@ -1,7 +1,7 @@
 package jeonseguard.backend.user.domain.entity;
 
 import jakarta.persistence.*;
-import jeonseguard.backend.board.domain.entity.Post;
+import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.global.entity.CommonBaseEntity;
 import lombok.*;
 
@@ -30,4 +30,7 @@ public class User extends CommonBaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Comment> comments;
 }

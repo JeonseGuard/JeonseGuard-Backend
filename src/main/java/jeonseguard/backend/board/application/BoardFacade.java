@@ -1,7 +1,7 @@
 package jeonseguard.backend.board.application;
 
-import jeonseguard.backend.board.domain.entity.Post;
-import jeonseguard.backend.board.domain.service.PostService;
+import jeonseguard.backend.board.domain.entity.*;
+import jeonseguard.backend.board.domain.service.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.user.domain.entity.User;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class BoardFacade {
     private final PostService postService;
     private final UserService userService;
+    private final CommentService commentService;
 
     public PostPageResponse getPosts(String category, Pageable pageable) {
         Page<Post> boards = postService.getPosts(category, pageable);
@@ -42,5 +43,12 @@ public class BoardFacade {
         User user = userService.getUser(userId);
         Post post = postService.getPost(category, postId);
         postService.deletePost(user, post);
+    }
+
+    public CreateCommentResponse createComment(String category, Long userId, Long postId, CreateCommentRequest request) {
+        User user = userService.getUser(userId);
+        Post post = postService.getPost(category, postId);
+        Comment comment = commentService.createComment(user, post, request);
+        return CreateCommentResponse.fromEntity(comment);
     }
 }

@@ -44,8 +44,8 @@ public class BoardController {
     @Operation(summary = "게시글 수정", description = "게시글을 수정합니다.")
     @PatchMapping("/{postId}")
     public ResponseEntity<Void> updatePost(@PathVariable String category,
-                                           @AuthenticatedUser Long userId,
                                            @PathVariable Long postId,
+                                           @AuthenticatedUser Long userId,
                                            @RequestBody UpdatePostRequest request) {
         boardFacade.updatePost(category, userId, postId, request);
         return ResponseEntity.noContent().build();
@@ -54,9 +54,18 @@ public class BoardController {
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable String category,
-                                           @AuthenticatedUser Long userId,
-                                           @PathVariable Long postId) {
+                                           @PathVariable Long postId,
+                                           @AuthenticatedUser Long userId) {
         boardFacade.deletePost(category, userId, postId);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "댓글 생성", description = "댓글을 생성합니다.")
+    @PostMapping("/{postId}/comments")
+    public ResponseEntity<CreateCommentResponse> createComment(@PathVariable String category,
+                                                               @PathVariable Long postId,
+                                                               @AuthenticatedUser Long userId,
+                                                               @Valid @RequestBody CreateCommentRequest request) {
+        return ResponseEntity.ok(boardFacade.createComment(category, userId, postId, request));
     }
 }

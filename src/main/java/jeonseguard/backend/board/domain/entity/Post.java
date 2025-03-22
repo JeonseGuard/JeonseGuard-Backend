@@ -6,6 +6,8 @@ import jeonseguard.backend.global.entity.CommonBaseEntity;
 import jeonseguard.backend.user.domain.entity.User;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Builder
 @Getter
@@ -18,6 +20,12 @@ public class Post extends CommonBaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @Column(nullable = false, updatable = false)
+    private String createdBy;
+
+    @Column(nullable = false)
+    private String updatedBy;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BoardCategory category;
@@ -27,11 +35,8 @@ public class Post extends CommonBaseEntity {
     @JsonBackReference
     private User user;
 
-    @Column(nullable = false, updatable = false)
-    private String createdBy;
-
-    @Column(nullable = false)
-    private String updatedBy;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Comment> comments;
 
     public void updatePost(String title, String content, String updatedBy) {
         updatePostTitle(title);
