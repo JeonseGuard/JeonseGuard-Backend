@@ -36,7 +36,7 @@ public class PostService {
     @Transactional
     public void updatePost(UpdatePostRequest request, User user, Post post) {
         validateAuthor(user, post, ErrorCode.POST_UPDATE_FORBIDDEN);
-        post.updateBoard(request.newTitle(), request.newContent(), user.getNickname());
+        post.updatePost(request.newTitle(), request.newContent(), user.getNickname());
     }
 
     @Transactional
