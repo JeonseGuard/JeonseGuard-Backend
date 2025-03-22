@@ -6,17 +6,12 @@ import jeonseguard.backend.global.entity.CommonBaseEntity;
 import jeonseguard.backend.user.domain.entity.User;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post extends CommonBaseEntity {
-    @Column(nullable = false, length = 50)
-    private String title;
-
+public class Comment extends CommonBaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
@@ -26,23 +21,18 @@ public class Post extends CommonBaseEntity {
     @Column(nullable = false)
     private String updatedBy;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private BoardCategory category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    @JsonBackReference
+    private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Comment> comments;
-
-    public void updatePost(String title, String content, String updatedBy) {
-        if (title != null && !title.isBlank()) {
-            this.title = title;
-        }
-        if (content != null && !content.isBlank()) {
+    public void updateComment(String content, String updatedBy) {
+        if (content != null && !content.isEmpty()) {
             this.content = content;
         }
         this.updatedBy = updatedBy;

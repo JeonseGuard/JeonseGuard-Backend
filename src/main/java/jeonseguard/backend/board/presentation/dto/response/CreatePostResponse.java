@@ -7,8 +7,6 @@ public record CreatePostResponse(
         @Schema(description = "게시글 ID", example = "100") Long postId
 ) {
     public static CreatePostResponse fromEntity(Post post) {
-        return new CreatePostResponse(
-                post.getId()
-        );
+        return new CreatePostResponse(post.getId());
     }
 }

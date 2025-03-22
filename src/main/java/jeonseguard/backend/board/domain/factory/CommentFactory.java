@@ -1,17 +1,16 @@
 package jeonseguard.backend.board.domain.factory;
 
 import jeonseguard.backend.board.domain.entity.*;
-import jeonseguard.backend.board.presentation.dto.request.CreatePostRequest;
+import jeonseguard.backend.board.presentation.dto.request.CreateCommentRequest;
 import jeonseguard.backend.user.domain.entity.User;
 
-public class PostFactory {
-    public static Post fromRequest(BoardCategory category, User user, CreatePostRequest request) {
-        return Post.builder()
-                .title(request.title())
+public class CommentFactory {
+    public static Comment fromRequest(User user, Post post, CreateCommentRequest request) {
+        return Comment.builder()
                 .content(request.content())
                 .createdBy(user.getNickname())
                 .updatedBy(user.getNickname())
-                .category(category)
+                .post(post)
                 .user(user)
                 .build();
     }

@@ -35,17 +35,17 @@ public class PostService {
 
     @Transactional
     public void updatePost(User user, Post post, UpdatePostRequest request) {
-        validateAuthor(user, post, ErrorCode.POST_UPDATE_FORBIDDEN);
+        validatePostAuthor(user, post, ErrorCode.POST_UPDATE_FORBIDDEN);
         post.updatePost(request.newTitle(), request.newContent(), user.getNickname());
     }
 
     @Transactional
     public void deletePost(User user, Post post) {
-        validateAuthor(user, post, ErrorCode.POST_DELETE_FORBIDDEN);
+        validatePostAuthor(user, post, ErrorCode.POST_DELETE_FORBIDDEN);
         postRepository.delete(post);
     }
 
-    private void validateAuthor(User user, Post post, ErrorCode errorCode) {
+    private void validatePostAuthor(User user, Post post, ErrorCode errorCode) {
         if (!post.getUser().getId().equals(user.getId())) {
             throw new BusinessException(errorCode);
         }

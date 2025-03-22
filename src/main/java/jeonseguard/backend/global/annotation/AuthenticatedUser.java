@@ -1,4 +1,4 @@
-package jeonseguard.backend.auth.domain.annotation;
+package jeonseguard.backend.global.annotation;
 
 import java.lang.annotation.*;
 
