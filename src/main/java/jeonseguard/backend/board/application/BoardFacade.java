@@ -10,21 +10,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class BoardFacade {
     private final PostService postService;
-    private final UserService userService;
     private final CommentService commentService;
+    private final HeartService heartService;
+    private final UserService userService;
 
     public PostPageResponse getPosts(String category, Pageable pageable) {
-        Page<Post> boards = postService.getPosts(category, pageable);
-        return PostPageResponse.of(boards);
+        Page<Post> pages = postService.getPosts(category, pageable);
+        List<PostResponse> posts = mapPostsToResponses(pages.getContent());
+        return PostPageResponse.of(posts, pages);
     }
 
-    public PostInfoResponse getPost(String category, Long postId) {
+    public PostInfoResponse getPost(String category, Long postId, Long userId) {
+        User user = userService.getUser(userId);
         Post post = postService.getPost(category, postId);
-        return PostInfoResponse.fromEntity(post);
+        List<CommentResponse> comments = mapCommentsToResponses(commentService.getComments(postId), user);
+        long heartCount = heartService.countHearts(postId, HeartTarget.POST);
+        boolean heartStatus = heartService.checkHeartStatus(postId, HeartTarget.POST, user);
+        return PostInfoResponse.of(post, heartCount, heartStatus, comments);
     }
 
     public CreatePostResponse createPost(String category, Long userId, CreatePostRequest request) {
@@ -62,5 +70,34 @@ public class BoardFacade {
         User user = userService.getUser(userId);
         Comment comment = commentService.getComment(commentId);
         commentService.deleteComment(user, comment);
+    }
+
+//    public void changeHeartStatus(Long userId, Long targetId, String target) {
+//        User user = userService.getUser(userId);
+//        heartService.changeHeartStatus(targetId, target, user);
+//    }
+
+    private List<PostResponse> mapPostsToResponses(List<Post> posts) {
+        return posts.stream()
+                .map(this::toPostResponse)
+                .toList();
+    }
+
+    private List<CommentResponse> mapCommentsToResponses(List<Comment> comments, User user) {
+        return comments.stream()
+                .map(comment -> toCommentResponse(comment, user))
+                .toList();
+    }
+
+    private PostResponse toPostResponse(Post post) {
+        long commentCount = commentService.countComments(post.getId());
+        long heartCount = heartService.countHearts(post.getId(), HeartTarget.POST);
+        return PostResponse.of(post, commentCount, heartCount);
+    }
+
+    private CommentResponse toCommentResponse(Comment comment, User user) {
+        long heartCount = heartService.countHearts(comment.getId(), HeartTarget.COMMENT);
+        boolean heartStatus = heartService.checkHeartStatus(comment.getId(), HeartTarget.COMMENT, user);
+        return CommentResponse.of(comment, heartCount, heartStatus);
     }
 }

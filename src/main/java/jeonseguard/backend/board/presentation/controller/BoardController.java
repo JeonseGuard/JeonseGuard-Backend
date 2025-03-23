@@ -29,8 +29,9 @@ public class BoardController {
     @Operation(summary = "게시글 상세 조회", description = "게시글 ID를 이용하여, 특정 게시글을 조회합니다.")
     @GetMapping("/{category}/{postId}")
     public ResponseEntity<PostInfoResponse> getPost(@PathVariable String category,
-                                                    @PathVariable Long postId) {
-        return ResponseEntity.ok(boardFacade.getPost(category, postId));
+                                                    @PathVariable Long postId,
+                                                    @AuthenticatedUser Long userId) {
+        return ResponseEntity.ok(boardFacade.getPost(category, postId, userId));
     }
 
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")

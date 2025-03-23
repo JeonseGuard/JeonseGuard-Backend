@@ -9,14 +9,18 @@ public record CommentResponse(
         @Schema(description = "댓글 ID") Long commentId,
         @Schema(description = "내용") String content,
         @Schema(description = "생성자") String creator,
-        @Schema(description = "생성일") LocalDate createdAt
+        @Schema(description = "생성일") LocalDate createdAt,
+        @Schema(description = "댓글 좋아요 수") long heartCount,
+        @Schema(description = "댓글 좋아요 상태") boolean heartStatus
 ) {
-    public static CommentResponse fromEntity(Comment comment) {
+    public static CommentResponse of(Comment comment, long heartCount, boolean heartStatus) {
         return new CommentResponse(
                 comment.getId(),
                 comment.getContent(),
                 comment.getCreatedBy(),
-                comment.getCreatedAt().toLocalDate()
+                comment.getCreatedAt().toLocalDate(),
+                heartCount,
+                heartStatus
         );
     }
 }
