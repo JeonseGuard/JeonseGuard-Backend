@@ -17,6 +17,11 @@ public class HeartRepositoryImpl implements HeartRepository {
     }
 
     @Override
+    public long countByTargetIdAndTarget(Long targetId, HeartTarget target) {
+        return jpaRepository.countByTargetIdAndTarget(targetId, target);
+    }
+
+    @Override
     public boolean existsByTargetIdAndTargetAndUser(Long targetId, HeartTarget target, User user) {
         return jpaRepository.existsByTargetIdAndTargetAndUser(targetId, target, user);
     }
@@ -24,10 +29,5 @@ public class HeartRepositoryImpl implements HeartRepository {
     @Override
     public void deleteByTargetIdAndTargetAndUser(Long targetId, HeartTarget target, User user) {
         jpaRepository.deleteByTargetIdAndTargetAndUser(targetId, target, user);
-    }
-
-    @Override
-    public long countByTargetIdAndTarget(Long targetId, HeartTarget target) {
-        return jpaRepository.countByTargetIdAndTarget(targetId, target);
     }
 }

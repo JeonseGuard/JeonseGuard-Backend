@@ -17,7 +17,7 @@ public record PostInfoResponse(
         @Schema(description = "게시글 좋아요 상태") boolean heartStatus,
         @Schema(description = "댓글 목록") List<CommentResponse> comments
 ) {
-    public static PostInfoResponse of(Post post, long heartCount, boolean heartStatus, List<CommentResponse> comments) {
+    public static PostInfoResponse of(Post post, List<CommentResponse> comments, HeartResponse heart) {
         return new PostInfoResponse(
                 post.getId(),
                 post.getTitle(),
@@ -25,8 +25,8 @@ public record PostInfoResponse(
                 post.getCategory().toString(),
                 post.getCreatedBy(),
                 post.getCreatedAt().toLocalDate(),
-                heartCount,
-                heartStatus,
+                heart.count(),
+                heart.status(),
                 comments
         );
     }

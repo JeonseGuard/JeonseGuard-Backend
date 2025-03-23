@@ -2,8 +2,7 @@ package jeonseguard.backend.board.domain.repository;
 
 import jeonseguard.backend.board.domain.entity.Comment;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public interface CommentRepository {
     Optional<Comment> findById(Long id);

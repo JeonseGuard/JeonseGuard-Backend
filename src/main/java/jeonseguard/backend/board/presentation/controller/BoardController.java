@@ -3,8 +3,8 @@ package jeonseguard.backend.board.presentation.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jeonseguard.backend.global.annotation.AuthenticatedUser;
 import jeonseguard.backend.board.application.BoardFacade;
+import jeonseguard.backend.global.annotation.AuthenticatedUser;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import lombok.RequiredArgsConstructor;
@@ -85,5 +85,19 @@ public class BoardController {
                                               @AuthenticatedUser Long userId) {
         boardFacade.deleteComment(userId, commentId);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "게시글 좋아요", description = "게시글에 좋아요를 누르거나 취소합니다.")
+    @PostMapping("/posts/{postId}/hearts")
+    public ResponseEntity<HeartResponse> changePostHeart(@PathVariable Long postId,
+                                                         @AuthenticatedUser Long userId) {
+        return ResponseEntity.ok(boardFacade.changePostHeart(userId, postId));
+    }
+
+    @Operation(summary = "댓글 좋아요", description = "댓글에 좋아요를 누르거나 취소합니다.")
+    @PostMapping("/comments/{commentId}/hearts")
+    public ResponseEntity<HeartResponse> changeCommentHeart(@PathVariable Long commentId,
+                                                            @AuthenticatedUser Long userId) {
+        return ResponseEntity.ok(boardFacade.changeCommentHeart(userId, commentId));
     }
 }

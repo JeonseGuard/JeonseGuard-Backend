@@ -13,14 +13,14 @@ public record CommentResponse(
         @Schema(description = "댓글 좋아요 수") long heartCount,
         @Schema(description = "댓글 좋아요 상태") boolean heartStatus
 ) {
-    public static CommentResponse of(Comment comment, long heartCount, boolean heartStatus) {
+    public static CommentResponse of(Comment comment, HeartResponse heart) {
         return new CommentResponse(
                 comment.getId(),
                 comment.getContent(),
                 comment.getCreatedBy(),
                 comment.getCreatedAt().toLocalDate(),
-                heartCount,
-                heartStatus
+                heart.count(),
+                heart.status()
         );
     }
 }

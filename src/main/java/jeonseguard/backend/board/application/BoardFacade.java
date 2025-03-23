@@ -22,17 +22,16 @@ public class BoardFacade {
 
     public PostPageResponse getPosts(String category, Pageable pageable) {
         Page<Post> pages = postService.getPosts(category, pageable);
-        List<PostResponse> posts = mapPostsToResponses(pages.getContent());
+        List<PostResponse> posts = toPostResponses(pages.getContent());
         return PostPageResponse.of(posts, pages);
     }
 
     public PostInfoResponse getPost(String category, Long postId, Long userId) {
         User user = userService.getUser(userId);
         Post post = postService.getPost(category, postId);
-        List<CommentResponse> comments = mapCommentsToResponses(commentService.getComments(postId), user);
-        long heartCount = heartService.countHearts(postId, HeartTarget.POST);
-        boolean heartStatus = heartService.checkHeartStatus(postId, HeartTarget.POST, user);
-        return PostInfoResponse.of(post, heartCount, heartStatus, comments);
+        List<CommentResponse> comments = toCommentResponses(postId, user);
+        HeartResponse heart = toHeartResponse(postId, HeartTarget.POST, user);
+        return PostInfoResponse.of(post, comments, heart);
     }
 
     public CreatePostResponse createPost(String category, Long userId, CreatePostRequest request) {
@@ -72,19 +71,24 @@ public class BoardFacade {
         commentService.deleteComment(user, comment);
     }
 
-//    public void changeHeartStatus(Long userId, Long targetId, String target) {
-//        User user = userService.getUser(userId);
-//        heartService.changeHeartStatus(targetId, target, user);
-//    }
+    public HeartResponse changePostHeart(Long userId, Long targetId) {
+        User user = userService.getUser(userId);
+        return changeHeart(targetId, HeartTarget.POST, user);
+    }
 
-    private List<PostResponse> mapPostsToResponses(List<Post> posts) {
+    public HeartResponse changeCommentHeart(Long userId, Long targetId) {
+        User user = userService.getUser(userId);
+        return changeHeart(targetId, HeartTarget.COMMENT, user);
+    }
+
+    private List<PostResponse> toPostResponses(List<Post> posts) {
         return posts.stream()
                 .map(this::toPostResponse)
                 .toList();
     }
 
-    private List<CommentResponse> mapCommentsToResponses(List<Comment> comments, User user) {
-        return comments.stream()
+    private List<CommentResponse> toCommentResponses(Long postId, User user) {
+        return commentService.getComments(postId).stream()
                 .map(comment -> toCommentResponse(comment, user))
                 .toList();
     }
@@ -96,8 +100,20 @@ public class BoardFacade {
     }
 
     private CommentResponse toCommentResponse(Comment comment, User user) {
-        long heartCount = heartService.countHearts(comment.getId(), HeartTarget.COMMENT);
-        boolean heartStatus = heartService.checkHeartStatus(comment.getId(), HeartTarget.COMMENT, user);
-        return CommentResponse.of(comment, heartCount, heartStatus);
+        HeartResponse heart = toHeartResponse(comment.getId(), HeartTarget.COMMENT, user);
+        return CommentResponse.of(comment, heart);
+    }
+
+    private HeartResponse toHeartResponse(Long targetId, HeartTarget target, User user) {
+        long heartCount = heartService.countHearts(targetId, target);
+        boolean heartStatus = heartService.checkHeartStatus(targetId, target, user);
+        return HeartResponse.of(heartCount, heartStatus);
+    }
+
+    private HeartResponse changeHeart(Long targetId, HeartTarget target, User user) {
+        boolean heartStatus = heartService.checkHeartStatus(targetId, target, user);
+        heartService.changeHeart(heartStatus, targetId, target, user);
+        long heartCount = heartService.countHearts(targetId, target);
+        return HeartResponse.of(heartCount, !heartStatus);
     }
 }

@@ -6,52 +6,30 @@ import jeonseguard.backend.board.domain.repository.HeartRepository;
 import jeonseguard.backend.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class HeartService {
     private final HeartRepository heartRepository;
 
-    public boolean checkHeartStatus(Long targetId, HeartTarget target, User user) {
-        return heartRepository.existsByTargetIdAndTargetAndUser(targetId, target, user);
-    }
-
+    @Transactional
     public long countHearts(Long targetId, HeartTarget target) {
         return heartRepository.countByTargetIdAndTarget(targetId, target);
     }
 
-    public void changeHeartStatus(Long targetId, String target, User user) {
-        HeartTarget parsedTarget = parseTarget(target);
-        boolean exists = heartRepository.existsByTargetIdAndTargetAndUser(targetId, parsedTarget, user);
-        applyHeartStatus(targetId, parsedTarget, user, exists);
+    @Transactional
+    public boolean checkHeartStatus(Long targetId, HeartTarget target, User user) {
+        return heartRepository.existsByTargetIdAndTargetAndUser(targetId, target, user);
     }
 
-    public boolean checkPostHeartStatus(Long postId, User user) {
-        return heartRepository.existsByTargetIdAndTargetAndUser(postId, HeartTarget.POST, user);
-    }
-
-    public boolean checkCommentHeartStatus(Long commentId, User user) {
-        return heartRepository.existsByTargetIdAndTargetAndUser(commentId, HeartTarget.COMMENT, user);
-    }
-
-    public long countPostHearts(Long targetId) {
-        return heartRepository.countByTargetIdAndTarget(targetId, HeartTarget.POST);
-    }
-
-    public long countCommentHearts(Long targetId) {
-        return heartRepository.countByTargetIdAndTarget(targetId, HeartTarget.COMMENT);
-    }
-
-    private void applyHeartStatus(Long targetId, HeartTarget heartTarget, User user, boolean exists) {
-        if (exists) {
-            heartRepository.deleteByTargetIdAndTargetAndUser(targetId, heartTarget, user);
+    @Transactional
+    public void changeHeart(boolean heartStatus, Long targetId, HeartTarget target, User user) {
+        if (heartStatus) {
+            heartRepository.deleteByTargetIdAndTargetAndUser(targetId, target, user);
         } else {
-            Heart heart = HeartFactory.createHeart(targetId, heartTarget, user);
+            Heart heart = HeartFactory.createHeart(targetId, target, user);
             heartRepository.save(heart);
         }
-    }
-
-    private HeartTarget parseTarget(String target) {
-        return HeartTarget.valueOf(target);
     }
 }
