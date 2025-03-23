@@ -5,7 +5,7 @@ import jeonseguard.backend.board.domain.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,5 +25,15 @@ public class CommentRepositoryImpl implements CommentRepository {
     @Override
     public void delete(Comment comment) {
         jpaRepository.delete(comment);
+    }
+
+    @Override
+    public List<Comment> findAllByPostId(Long postId) {
+        return jpaRepository.findByPostId(postId);
+    }
+
+    @Override
+    public long countByPostId(Long postId) {
+        return jpaRepository.countByPostId(postId);
     }
 }

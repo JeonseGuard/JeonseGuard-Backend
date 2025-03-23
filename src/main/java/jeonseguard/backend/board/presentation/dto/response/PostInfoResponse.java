@@ -13,9 +13,11 @@ public record PostInfoResponse(
         @Schema(description = "카테고리") String category,
         @Schema(description = "생성자") String creator,
         @Schema(description = "생성일") LocalDate createdAt,
+        @Schema(description = "게시글 좋아요 수") long heartCount,
+        @Schema(description = "게시글 좋아요 상태") boolean heartStatus,
         @Schema(description = "댓글 목록") List<CommentResponse> comments
 ) {
-    public static PostInfoResponse fromEntity(Post post) {
+    public static PostInfoResponse of(Post post, List<CommentResponse> comments, HeartResponse heart) {
         return new PostInfoResponse(
                 post.getId(),
                 post.getTitle(),
@@ -23,13 +25,9 @@ public record PostInfoResponse(
                 post.getCategory().toString(),
                 post.getCreatedBy(),
                 post.getCreatedAt().toLocalDate(),
-                toCommentResponses(post)
+                heart.count(),
+                heart.status(),
+                comments
         );
-    }
-
-    private static List<CommentResponse> toCommentResponses(Post post) {
-        return post.getComments().stream()
-                .map(CommentResponse::fromEntity)
-                .toList();
     }
 }

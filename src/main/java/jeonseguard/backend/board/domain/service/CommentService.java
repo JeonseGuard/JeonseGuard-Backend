@@ -10,10 +10,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+
+    @Transactional(readOnly = true)
+    public List<Comment> getComments(Long postId) {
+        return commentRepository.findAllByPostId(postId);
+    }
 
     @Transactional(readOnly = true)
     public Comment getComment(Long commentId) {
@@ -37,6 +44,11 @@ public class CommentService {
     public void deleteComment(User user, Comment comment) {
         validateCommentAuthor(user, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
         commentRepository.delete(comment);
+    }
+
+    @Transactional
+    public long countComments(Long postId) {
+        return commentRepository.countByPostId(postId);
     }
 
     private void validateCommentAuthor(User user, Comment comment, ErrorCode errorCode) {
