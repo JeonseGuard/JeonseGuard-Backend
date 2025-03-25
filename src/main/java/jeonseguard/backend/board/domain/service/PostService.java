@@ -12,8 +12,6 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -27,13 +25,13 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public PostDetailResponse getPostDetail(Long userId, Long postId, String category) {
-        return Optional.ofNullable(postQueryRepository.findDetailById(userId, postId, category))
+        return postQueryRepository.findDetailById(userId, postId, category)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
-    public Post getPost(String category, Long postId) {
-        return postRepository.findByCategoryAndId(parseCategory(category), postId)
+    public Post getPost(Long userId, Long postId, String category) {
+        return postQueryRepository.findByUserIdAndIdAndCategory(userId, postId, parseCategory(category))
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 

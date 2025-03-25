@@ -49,8 +49,8 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     }
 
     @Override
-    public PostDetailResponse findDetailById(Long userId, Long postId, String category) {
-        return queryFactory
+    public Optional<PostDetailResponse> findDetailById(Long userId, Long postId, String category) {
+        return Optional.ofNullable(queryFactory
                 .select(new QPostDetailResponse(
                         post.id,
                         post.title,
@@ -63,7 +63,21 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 ))
                 .from(post)
                 .where(post.id.eq(postId))
-                .fetchOne();
+                .fetchOne()
+        );
+    }
+
+    @Override
+    public Optional<Post> findByUserIdAndIdAndCategory(Long userId, Long postId, BoardCategory category) {
+        return Optional.ofNullable(queryFactory
+                .selectFrom(post)
+                .where(
+                        post.id.eq(postId),
+                        post.user.id.eq(userId),
+                        post.category.eq(category)
+                )
+                .fetchOne()
+        );
     }
 
     private NumberExpression<Long> commentCount() {
@@ -92,7 +106,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 .from(heart)
                 .where(heart.targetId.eq(post.id)
                         .and(heart.target.eq(HeartTarget.POST))
-                        .and(heart.user.id.eq(userId)))
+                        .and(heart.userId.eq(userId)))
                 .exists();
     }
 

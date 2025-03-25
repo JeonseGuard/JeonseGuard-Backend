@@ -89,14 +89,14 @@ public class BoardController {
 
     @Operation(summary = "게시글 좋아요", description = "게시글에 좋아요를 누르거나 취소합니다.")
     @PostMapping("/posts/{postId}/hearts")
-    public ResponseEntity<HeartResponse> changePostHeart(@AuthenticatedUser Long userId,
+    public ResponseEntity<HeartResponse> togglePostHeart(@AuthenticatedUser Long userId,
                                                          @PathVariable Long postId) {
         return ResponseEntity.ok(boardFacade.togglePostHeart(userId, postId));
     }
 
     @Operation(summary = "댓글 좋아요", description = "댓글에 좋아요를 누르거나 취소합니다.")
     @PostMapping("/comments/{commentId}/hearts")
-    public ResponseEntity<HeartResponse> changeCommentHeart(@AuthenticatedUser Long userId,
+    public ResponseEntity<HeartResponse> toggleCommentHeart(@AuthenticatedUser Long userId,
                                                             @PathVariable Long commentId) {
         return ResponseEntity.ok(boardFacade.toggleCommentHeart(userId, commentId));
     }

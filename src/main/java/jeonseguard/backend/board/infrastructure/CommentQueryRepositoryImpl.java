@@ -52,7 +52,7 @@ public class CommentQueryRepositoryImpl implements CommentQueryRepository {
                 .from(heart)
                 .where(heart.targetId.eq(comment.id)
                         .and(heart.target.eq(HeartTarget.POST))
-                        .and(heart.user.id.eq(userId)))
+                        .and(heart.userId.eq(userId)))
                 .exists();
     }
 

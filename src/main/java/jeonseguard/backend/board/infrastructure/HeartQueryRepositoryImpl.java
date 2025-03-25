@@ -20,7 +20,7 @@ public class HeartQueryRepositoryImpl implements HeartQueryRepository {
                 .selectOne()
                 .from(heart)
                 .where(
-                        heart.user.id.eq(userId),
+                        heart.userId.eq(userId),
                         heart.targetId.eq(targetId),
                         heart.target.eq(target)
                 )
@@ -45,7 +45,7 @@ public class HeartQueryRepositoryImpl implements HeartQueryRepository {
                 .select(heart.targetId)
                 .from(heart)
                 .where(
-                        heart.user.id.eq(userId),
+                        heart.userId.eq(userId),
                         heart.targetId.in(targetIds),
                         heart.target.eq(target)
                 )

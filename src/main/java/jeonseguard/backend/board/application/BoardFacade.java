@@ -38,19 +38,19 @@ public class BoardFacade {
 
     public void updatePost(Long userId, Long postId, String category, UpdatePostRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.getPost(category, postId);
+        Post post = postService.getPost(userId, postId, category);
         postService.updatePost(user, post, request);
     }
 
     public void deletePost(Long userId, Long postId, String category) {
         User user = userService.getUser(userId);
-        Post post = postService.getPost(category, postId);
+        Post post = postService.getPost(userId, postId, category);
         postService.deletePost(user, post);
     }
 
     public CreateCommentResponse createComment(Long userId, Long postId, String category, CreateCommentRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.getPost(category, postId);
+        Post post = postService.getPost(userId, postId, category);
         Comment comment = commentService.createComment(user, post, request);
         return CreateCommentResponse.fromEntity(comment);
     }
