@@ -2,8 +2,9 @@ package jeonseguard.backend.board.domain.service;
 
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.CommentFactory;
-import jeonseguard.backend.board.domain.repository.CommentRepository;
+import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
+import jeonseguard.backend.board.presentation.dto.response.CommentResponse;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final CommentQueryRepository commentQueryRepository;
 
     @Transactional(readOnly = true)
-    public List<Comment> getComments(Long postId) {
-        return commentRepository.findAllByPostId(postId);
+    public List<CommentResponse> getComments(Long userId, Long postId) {
+        return commentQueryRepository.findAllByPostIdWithHearts(postId, userId, HeartTarget.COMMENT);
     }
 
     @Transactional(readOnly = true)
@@ -44,11 +46,6 @@ public class CommentService {
     public void deleteComment(User user, Comment comment) {
         validateCommentAuthor(user, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
         commentRepository.delete(comment);
-    }
-
-    @Transactional
-    public long countComments(Long postId) {
-        return commentRepository.countByPostId(postId);
     }
 
     private void validateCommentAuthor(User user, Comment comment, ErrorCode errorCode) {

@@ -2,8 +2,9 @@ package jeonseguard.backend.board.domain.service;
 
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.PostFactory;
-import jeonseguard.backend.board.domain.repository.PostRepository;
+import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
+import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +12,23 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final PostQueryRepository postQueryRepository;
 
     @Transactional(readOnly = true)
-    public Page<Post> getPosts(String category, Pageable pageable) {
-        return postRepository.findAllByCategory(parseCategory(category), pageable);
+    public Page<PostResponse> getPosts(String category, Pageable pageable) {
+        return postQueryRepository.findAllWithCounts(parseCategory(category), pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public PostDetailResponse getPostDetail(Long userId, Long postId, String category) {
+        return Optional.ofNullable(postQueryRepository.findDetailById(userId, postId, category))
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)

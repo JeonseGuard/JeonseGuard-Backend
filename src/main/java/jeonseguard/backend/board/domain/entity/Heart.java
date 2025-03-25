@@ -1,9 +1,7 @@
 package jeonseguard.backend.board.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jeonseguard.backend.global.entity.CommonBaseEntity;
-import jeonseguard.backend.user.domain.entity.User;
 import lombok.*;
 
 @Entity
@@ -19,8 +17,6 @@ public class Heart extends CommonBaseEntity {
     @Column(nullable = false)
     private HeartTarget target;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 }

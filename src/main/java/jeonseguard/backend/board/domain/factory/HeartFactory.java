@@ -1,14 +1,13 @@
 package jeonseguard.backend.board.domain.factory;
 
 import jeonseguard.backend.board.domain.entity.*;
-import jeonseguard.backend.user.domain.entity.User;
 
 public class HeartFactory {
-    public static Heart createHeart(Long targetId, HeartTarget target, User user) {
+    public static Heart createHeart(Long userId, Long targetId, HeartTarget target) {
         return Heart.builder()
                 .targetId(targetId)
                 .target(target)
-                .user(user)
+                .userId(userId)
                 .build();
     }
 }

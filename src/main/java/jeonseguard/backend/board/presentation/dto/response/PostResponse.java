@@ -1,7 +1,7 @@
 package jeonseguard.backend.board.presentation.dto.response;
 
+import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jeonseguard.backend.board.domain.entity.Post;
 
 import java.time.LocalDate;
 
@@ -13,14 +13,6 @@ public record PostResponse(
         @Schema(description = "댓글 수") long commentCount,
         @Schema(description = "좋아요 수") long heartCount
 ) {
-    public static PostResponse of(Post post, long commentCount, long heartCount) {
-        return new PostResponse(
-                post.getId(),
-                post.getTitle(),
-                post.getCreatedBy(),
-                post.getCreatedAt().toLocalDate(),
-                commentCount,
-                heartCount
-        );
-    }
+    @QueryProjection // Q 클래스로 직접 조회 가능 → 성능 개선 + 클린 코드
+    public PostResponse {}
 }
