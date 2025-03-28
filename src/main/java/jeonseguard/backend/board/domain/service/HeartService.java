@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
-
 @Service
 @RequiredArgsConstructor
 public class HeartService {
@@ -24,11 +22,6 @@ public class HeartService {
     public long countHeart(Long targetId, HeartTarget target) {
         return heartQueryRepository.countByTarget(targetId, target);
     }
-
-//    @Transactional(readOnly = true)
-//    public Set<Long> findAllHeartedTargetIds(Long userId, List<Long> targetIds, HeartTarget target) {
-//        return heartQueryRepository.findHeartedTargetIds(userId, targetIds, target);
-//    }
 
     @Transactional
     public void toggleHeart(Long userId, Long targetId, HeartTarget target) {

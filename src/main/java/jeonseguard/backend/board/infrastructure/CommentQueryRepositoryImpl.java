@@ -9,7 +9,6 @@ import jeonseguard.backend.board.presentation.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -20,7 +19,7 @@ public class CommentQueryRepositoryImpl implements CommentQueryRepository {
     private final QHeart heart = QHeart.heart;
 
     @Override
-    public List<CommentResponse> findAllByPostIdWithHearts(Long userId, Long postId, HeartTarget target) {
+    public List<CommentResponse> findAllByIdAndPostIdAndTarget(Long userId, Long postId, HeartTarget target) {
         return queryFactory
                 .select(new QCommentResponse(
                         comment.id,

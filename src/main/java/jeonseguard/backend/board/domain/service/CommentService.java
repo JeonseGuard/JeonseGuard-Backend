@@ -21,7 +21,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentResponse> getComments(Long userId, Long postId) {
-        return commentQueryRepository.findAllByPostIdWithHearts(postId, userId, HeartTarget.COMMENT);
+        return commentQueryRepository.findAllByIdAndPostIdAndTarget(userId, postId, HeartTarget.COMMENT);
     }
 
     @Transactional(readOnly = true)

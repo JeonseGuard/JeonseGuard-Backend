@@ -38,18 +38,4 @@ public class HeartQueryRepositoryImpl implements HeartQueryRepository {
                 )
                 .fetchOne()).orElse(0L);
     }
-
-    @Override
-    public Set<Long> findHeartedTargetIds(Long userId, List<Long> targetIds, HeartTarget target) {
-        return new HashSet<>(queryFactory
-                .select(heart.targetId)
-                .from(heart)
-                .where(
-                        heart.userId.eq(userId),
-                        heart.targetId.in(targetIds),
-                        heart.target.eq(target)
-                )
-                .fetch()
-        );
-    }
 }
