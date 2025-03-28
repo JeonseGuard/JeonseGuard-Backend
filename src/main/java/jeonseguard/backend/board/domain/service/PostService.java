@@ -25,7 +25,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public PostDetailResponse getPostDetail(Long userId, Long postId, String category) {
-        return postQueryRepository.findDetailById(userId, postId, category)
+        return postQueryRepository.findDetailByUserIdAndIdAndCategory(userId, postId, category)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 

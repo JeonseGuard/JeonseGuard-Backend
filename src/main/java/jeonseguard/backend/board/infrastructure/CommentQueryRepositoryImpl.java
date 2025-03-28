@@ -26,7 +26,7 @@ public class CommentQueryRepositoryImpl implements CommentQueryRepository {
                         comment.id,
                         comment.content,
                         comment.createdBy,
-                        createdDate(),
+                        comment.createdAt,
                         heartCount(),
                         heartStatus(userId)
                 ))
@@ -54,13 +54,5 @@ public class CommentQueryRepositoryImpl implements CommentQueryRepository {
                         .and(heart.target.eq(HeartTarget.COMMENT))
                         .and(heart.userId.eq(userId)))
                 .exists();
-    }
-
-    private DateExpression<LocalDate> createdDate() {
-        return Expressions.dateTemplate(
-                LocalDate.class,
-                "function('date', {0})",
-                comment.createdAt
-        );
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Repository
@@ -28,7 +29,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         post.id,
                         post.title,
                         post.createdBy,
-                        createdDate(),
+                        post.createdAt,
                         commentCount(),
                         heartCount()
                 ))
@@ -49,7 +50,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     }
 
     @Override
-    public Optional<PostDetailResponse> findDetailById(Long userId, Long postId, String category) {
+    public Optional<PostDetailResponse> findDetailByUserIdAndIdAndCategory(Long userId, Long postId, String category) {
         return Optional.ofNullable(queryFactory
                 .select(new QPostDetailResponse(
                         post.id,
@@ -57,7 +58,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         post.content,
                         Expressions.constant(category),
                         post.createdBy,
-                        createdDate(),
+                        post.createdAt,
                         heartCount(),
                         heartStatus(userId)
                 ))
@@ -84,7 +85,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         return Expressions.numberTemplate(
                 Long.class,
                 "({0})",
-                JPAExpressions.select(comment.count())
+                JPAExpressions.select(comment.count().longValue())
                         .from(comment)
                         .where(comment.postId.eq(post.id))
         );
@@ -94,7 +95,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         return Expressions.numberTemplate(
                 Long.class,
                 "({0})",
-                JPAExpressions.select(heart.count())
+                JPAExpressions.select(heart.count().longValue())
                         .from(heart)
                         .where(heart.targetId.eq(post.id)
                                 .and(heart.target.eq(HeartTarget.POST)))
@@ -108,13 +109,5 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(heart.target.eq(HeartTarget.POST))
                         .and(heart.userId.eq(userId)))
                 .exists();
-    }
-
-    private DateExpression<LocalDate> createdDate() {
-        return Expressions.dateTemplate(
-                LocalDate.class,
-                "function('date', {0})",
-                post.createdAt
-        );
     }
 }

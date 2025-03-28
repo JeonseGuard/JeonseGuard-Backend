@@ -26,7 +26,7 @@ public class BoardFacade {
 
     public PostInfoResponse getPost(Long userId, Long postId, String category) {
         PostDetailResponse post = postService.getPostDetail(userId, postId, category);
-        List<CommentResponse> comments = commentService.getComments(postId, userId);
+        List<CommentResponse> comments = commentService.getComments(userId, postId);
         return PostInfoResponse.of(post, comments);
     }
 
