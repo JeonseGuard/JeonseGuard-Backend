@@ -5,7 +5,7 @@ import jeonseguard.backend.board.presentation.dto.request.CreatePostRequest;
 import jeonseguard.backend.user.domain.entity.User;
 
 public class PostFactory {
-    public static Post fromRequest(BoardCategory category, User user, CreatePostRequest request) {
+    public static Post fromRequest(User user, BoardCategory category, CreatePostRequest request) {
         return Post.builder()
                 .title(request.title())
                 .content(request.content())

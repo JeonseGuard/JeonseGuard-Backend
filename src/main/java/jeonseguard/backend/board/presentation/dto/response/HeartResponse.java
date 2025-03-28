@@ -3,10 +3,10 @@ package jeonseguard.backend.board.presentation.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record HeartResponse(
-        @Schema(description = "좋아요 수") long count,
-        @Schema(description = "좋아요 상태") boolean status
+        @Schema(description = "좋아요 수") long heartCount,
+        @Schema(description = "좋아요 상태") boolean heartStatus
 ) {
-    public static HeartResponse of(long count, boolean status) {
-        return new HeartResponse(count, status);
+    public static HeartResponse of(long heartCount, boolean heartStatus) {
+        return new HeartResponse(heartCount, heartStatus);
     }
 }

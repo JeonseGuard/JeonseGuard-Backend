@@ -26,14 +26,4 @@ public class CommentRepositoryImpl implements CommentRepository {
     public void delete(Comment comment) {
         jpaRepository.delete(comment);
     }
-
-    @Override
-    public List<Comment> findAllByPostId(Long postId) {
-        return jpaRepository.findByPostId(postId);
-    }
-
-    @Override
-    public long countByPostId(Long postId) {
-        return jpaRepository.countByPostId(postId);
-    }
 }

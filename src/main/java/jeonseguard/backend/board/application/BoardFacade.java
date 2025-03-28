@@ -20,100 +20,62 @@ public class BoardFacade {
     private final HeartService heartService;
     private final UserService userService;
 
-    public PostPageResponse getPosts(String category, Pageable pageable) {
-        Page<Post> pages = postService.getPosts(category, pageable);
-        List<PostResponse> posts = toPostResponses(pages.getContent());
-        return PostPageResponse.of(posts, pages);
+    public Page<PostResponse> getPosts(String category, Pageable pageable) {
+        return postService.getPosts(category, pageable);
     }
 
-    public PostInfoResponse getPost(String category, Long postId, Long userId) {
-        User user = userService.getUser(userId);
-        Post post = postService.getPost(category, postId);
-        List<CommentResponse> comments = toCommentResponses(postId, user);
-        HeartResponse heart = toHeartResponse(postId, HeartTarget.POST, user);
-        return PostInfoResponse.of(post, comments, heart);
+    public PostInfoResponse getPost(Long userId, Long postId, String category) {
+        PostDetailResponse post = postService.getPostDetail(userId, postId, category);
+        List<CommentResponse> comments = commentService.getComments(userId, postId);
+        return PostInfoResponse.of(post, comments);
     }
 
-    public CreatePostResponse createPost(String category, Long userId, CreatePostRequest request) {
+    public CreatePostResponse createPost(Long userId, String category, CreatePostRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.createPost(category, user, request);
+        Post post = postService.createPost(user, category, request);
         return CreatePostResponse.fromEntity(post);
     }
 
-    public void updatePost(String category, Long userId, Long postId, UpdatePostRequest request) {
+    public void updatePost(Long userId, Long postId, String category, UpdatePostRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.getPost(category, postId);
-        postService.updatePost(user, post, request);
+        Post post = postService.getPost(userId, postId, category);
+        postService.updatePost(userId, user, post, request);
     }
 
-    public void deletePost(String category, Long userId, Long postId) {
-        User user = userService.getUser(userId);
-        Post post = postService.getPost(category, postId);
-        postService.deletePost(user, post);
+    public void deletePost(Long userId, Long postId, String category) {
+        Post post = postService.getPost(userId, postId, category);
+        postService.deletePost(userId, post);
     }
 
-    public CreateCommentResponse createComment(String category, Long userId, Long postId, CreateCommentRequest request) {
+    public CreateCommentResponse createComment(Long userId, Long postId, CreateCommentRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.getPost(category, postId);
-        Comment comment = commentService.createComment(user, post, request);
+        Comment comment = commentService.createComment(postId, user, request);
         return CreateCommentResponse.fromEntity(comment);
     }
 
     public void updateComment(Long userId, Long commentId, UpdateCommentRequest request) {
         User user = userService.getUser(userId);
         Comment comment = commentService.getComment(commentId);
-        commentService.updateComment(user, comment, request);
+        commentService.updateComment(userId, user, comment, request);
     }
 
     public void deleteComment(Long userId, Long commentId) {
-        User user = userService.getUser(userId);
         Comment comment = commentService.getComment(commentId);
-        commentService.deleteComment(user, comment);
+        commentService.deleteComment(userId, comment);
     }
 
-    public HeartResponse changePostHeart(Long userId, Long targetId) {
-        User user = userService.getUser(userId);
-        return changeHeart(targetId, HeartTarget.POST, user);
+    public HeartResponse togglePostHeart(Long userId, Long targetId) {
+        return toggleHeart(userId, targetId, HeartTarget.POST);
     }
 
-    public HeartResponse changeCommentHeart(Long userId, Long targetId) {
-        User user = userService.getUser(userId);
-        return changeHeart(targetId, HeartTarget.COMMENT, user);
+    public HeartResponse toggleCommentHeart(Long userId, Long targetId) {
+        return toggleHeart(userId, targetId, HeartTarget.COMMENT);
     }
 
-    private List<PostResponse> toPostResponses(List<Post> posts) {
-        return posts.stream()
-                .map(this::toPostResponse)
-                .toList();
-    }
-
-    private List<CommentResponse> toCommentResponses(Long postId, User user) {
-        return commentService.getComments(postId).stream()
-                .map(comment -> toCommentResponse(comment, user))
-                .toList();
-    }
-
-    private PostResponse toPostResponse(Post post) {
-        long commentCount = commentService.countComments(post.getId());
-        long heartCount = heartService.countHearts(post.getId(), HeartTarget.POST);
-        return PostResponse.of(post, commentCount, heartCount);
-    }
-
-    private CommentResponse toCommentResponse(Comment comment, User user) {
-        HeartResponse heart = toHeartResponse(comment.getId(), HeartTarget.COMMENT, user);
-        return CommentResponse.of(comment, heart);
-    }
-
-    private HeartResponse toHeartResponse(Long targetId, HeartTarget target, User user) {
-        long heartCount = heartService.countHearts(targetId, target);
-        boolean heartStatus = heartService.checkHeartStatus(targetId, target, user);
+    private HeartResponse toggleHeart(Long userId, Long targetId, HeartTarget target) {
+        heartService.toggleHeart(userId, targetId, target);
+        long heartCount = heartService.countHeart(targetId, target);
+        boolean heartStatus = heartService.hasHeart(userId, targetId, target);
         return HeartResponse.of(heartCount, heartStatus);
-    }
-
-    private HeartResponse changeHeart(Long targetId, HeartTarget target, User user) {
-        boolean heartStatus = heartService.checkHeartStatus(targetId, target, user);
-        heartService.changeHeart(heartStatus, targetId, target, user);
-        long heartCount = heartService.countHearts(targetId, target);
-        return HeartResponse.of(heartCount, !heartStatus);
     }
 }

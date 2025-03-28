@@ -2,8 +2,7 @@ package jeonseguard.backend.board.domain.service;
 
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.HeartFactory;
-import jeonseguard.backend.board.domain.repository.HeartRepository;
-import jeonseguard.backend.user.domain.entity.User;
+import jeonseguard.backend.board.domain.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,23 +11,24 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class HeartService {
     private final HeartRepository heartRepository;
+    private final HeartQueryRepository heartQueryRepository;
 
-    @Transactional
-    public long countHearts(Long targetId, HeartTarget target) {
-        return heartRepository.countByTargetIdAndTarget(targetId, target);
+    @Transactional(readOnly = true)
+    public boolean hasHeart(Long userId, Long targetId, HeartTarget target) {
+        return heartQueryRepository.existsByTarget(userId, targetId, target);
+    }
+
+    @Transactional(readOnly = true)
+    public long countHeart(Long targetId, HeartTarget target) {
+        return heartQueryRepository.countByTarget(targetId, target);
     }
 
     @Transactional
-    public boolean checkHeartStatus(Long targetId, HeartTarget target, User user) {
-        return heartRepository.existsByTargetIdAndTargetAndUser(targetId, target, user);
-    }
-
-    @Transactional
-    public void changeHeart(boolean heartStatus, Long targetId, HeartTarget target, User user) {
-        if (heartStatus) {
-            heartRepository.deleteByTargetIdAndTargetAndUser(targetId, target, user);
+    public void toggleHeart(Long userId, Long targetId, HeartTarget target) {
+        if (heartRepository.existsByUserIdAndTargetIdAndTarget(userId, targetId, target)) {
+            heartRepository.deleteByUserIdAndTargetIdAndTarget(userId, targetId, target);
         } else {
-            Heart heart = HeartFactory.createHeart(targetId, target, user);
+            Heart heart = HeartFactory.createHeart(userId, targetId, target);
             heartRepository.save(heart);
         }
     }
