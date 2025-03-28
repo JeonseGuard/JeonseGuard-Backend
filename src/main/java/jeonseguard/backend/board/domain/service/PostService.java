@@ -36,25 +36,25 @@ public class PostService {
     }
 
     @Transactional
-    public Post createPost(String category, User user, CreatePostRequest request) {
-        Post post = PostFactory.fromRequest(parseCategory(category), user, request);
+    public Post createPost(User user, String category, CreatePostRequest request) {
+        Post post = PostFactory.fromRequest(user, parseCategory(category), request);
         return postRepository.save(post);
     }
 
     @Transactional
-    public void updatePost(User user, Post post, UpdatePostRequest request) {
-        validatePostAuthor(user, post, ErrorCode.POST_UPDATE_FORBIDDEN);
+    public void updatePost(Long userId, User user, Post post, UpdatePostRequest request) {
+        validatePostAuthor(userId, post, ErrorCode.POST_UPDATE_FORBIDDEN);
         post.updatePost(request.newTitle(), request.newContent(), user.getNickname());
     }
 
     @Transactional
-    public void deletePost(User user, Post post) {
-        validatePostAuthor(user, post, ErrorCode.POST_DELETE_FORBIDDEN);
+    public void deletePost(Long userId, Post post) {
+        validatePostAuthor(userId, post, ErrorCode.POST_DELETE_FORBIDDEN);
         postRepository.delete(post);
     }
 
-    private void validatePostAuthor(User user, Post post, ErrorCode errorCode) {
-        if (!post.getUser().getId().equals(user.getId())) {
+    private void validatePostAuthor(Long userId, Post post, ErrorCode errorCode) {
+        if (!post.getUser().getId().equals(userId)) {
             throw new BusinessException(errorCode);
         }
     }

@@ -32,39 +32,36 @@ public class BoardFacade {
 
     public CreatePostResponse createPost(Long userId, String category, CreatePostRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.createPost(category, user, request);
+        Post post = postService.createPost(user, category, request);
         return CreatePostResponse.fromEntity(post);
     }
 
     public void updatePost(Long userId, Long postId, String category, UpdatePostRequest request) {
         User user = userService.getUser(userId);
         Post post = postService.getPost(userId, postId, category);
-        postService.updatePost(user, post, request);
+        postService.updatePost(userId, user, post, request);
     }
 
     public void deletePost(Long userId, Long postId, String category) {
-        User user = userService.getUser(userId);
         Post post = postService.getPost(userId, postId, category);
-        postService.deletePost(user, post);
+        postService.deletePost(userId, post);
     }
 
-    public CreateCommentResponse createComment(Long userId, Long postId, String category, CreateCommentRequest request) {
+    public CreateCommentResponse createComment(Long userId, Long postId, CreateCommentRequest request) {
         User user = userService.getUser(userId);
-        Post post = postService.getPost(userId, postId, category);
-        Comment comment = commentService.createComment(user, post, request);
+        Comment comment = commentService.createComment(postId, user, request);
         return CreateCommentResponse.fromEntity(comment);
     }
 
     public void updateComment(Long userId, Long commentId, UpdateCommentRequest request) {
         User user = userService.getUser(userId);
         Comment comment = commentService.getComment(commentId);
-        commentService.updateComment(user, comment, request);
+        commentService.updateComment(userId, user, comment, request);
     }
 
     public void deleteComment(Long userId, Long commentId) {
-        User user = userService.getUser(userId);
         Comment comment = commentService.getComment(commentId);
-        commentService.deleteComment(user, comment);
+        commentService.deleteComment(userId, comment);
     }
 
     public HeartResponse togglePostHeart(Long userId, Long targetId) {

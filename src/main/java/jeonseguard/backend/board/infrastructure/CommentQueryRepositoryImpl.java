@@ -31,7 +31,7 @@ public class CommentQueryRepositoryImpl implements CommentQueryRepository {
                         heartStatus(userId)
                 ))
                 .from(comment)
-                .where(comment.post.id.eq(postId))
+                .where(comment.postId.eq(postId))
                 .orderBy(comment.createdAt.asc())
                 .fetch();
     }
@@ -43,7 +43,7 @@ public class CommentQueryRepositoryImpl implements CommentQueryRepository {
                 JPAExpressions.select(heart.count())
                         .from(heart)
                         .where(heart.targetId.eq(comment.id)
-                                .and(heart.target.eq(HeartTarget.POST)))
+                                .and(heart.target.eq(HeartTarget.COMMENT)))
         );
     }
 
@@ -51,7 +51,7 @@ public class CommentQueryRepositoryImpl implements CommentQueryRepository {
         return JPAExpressions.selectOne()
                 .from(heart)
                 .where(heart.targetId.eq(comment.id)
-                        .and(heart.target.eq(HeartTarget.POST))
+                        .and(heart.target.eq(HeartTarget.COMMENT))
                         .and(heart.userId.eq(userId)))
                 .exists();
     }

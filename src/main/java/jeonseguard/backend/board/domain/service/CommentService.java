@@ -31,25 +31,25 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment createComment(User user, Post post, CreateCommentRequest request) {
-        Comment comment = CommentFactory.fromRequest(user, post, request);
+    public Comment createComment(Long postId, User user, CreateCommentRequest request) {
+        Comment comment = CommentFactory.fromRequest(postId, user, request);
         return commentRepository.save(comment);
     }
 
     @Transactional
-    public void updateComment(User user, Comment comment, UpdateCommentRequest request) {
-        validateCommentAuthor(user, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
+    public void updateComment(Long userId, User user, Comment comment, UpdateCommentRequest request) {
+        validateCommentAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
         comment.updateComment(request.newContent(), user.getNickname());
     }
 
     @Transactional
-    public void deleteComment(User user, Comment comment) {
-        validateCommentAuthor(user, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
+    public void deleteComment(Long userId, Comment comment) {
+        validateCommentAuthor(userId, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
         commentRepository.delete(comment);
     }
 
-    private void validateCommentAuthor(User user, Comment comment, ErrorCode errorCode) {
-        if (!comment.getUser().getId().equals(user.getId())) {
+    private void validateCommentAuthor(Long userId, Comment comment, ErrorCode errorCode) {
+        if (!comment.getUser().getId().equals(userId)) {
             throw new BusinessException(errorCode);
         }
     }

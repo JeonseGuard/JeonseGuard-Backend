@@ -17,11 +17,11 @@ public class HeartRepositoryImpl implements HeartRepository {
 
     @Override
     public boolean existsByUserIdAndTargetIdAndTarget(Long userId, Long targetId, HeartTarget target) {
-        return jpaRepository.existsByUserIdAndTargetIdAndTarget(targetId, targetId, target);
+        return jpaRepository.existsByUserIdAndTargetIdAndTarget(userId, targetId, target);
     }
 
     @Override
     public void deleteByUserIdAndTargetIdAndTarget(Long userId, Long targetId, HeartTarget target) {
-        jpaRepository.deleteByUserIdAndTargetIdAndTarget(targetId, targetId, target);
+        jpaRepository.deleteByUserIdAndTargetIdAndTarget(userId, targetId, target);
     }
 }

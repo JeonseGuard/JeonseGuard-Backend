@@ -86,7 +86,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 "({0})",
                 JPAExpressions.select(comment.count())
                         .from(comment)
-                        .where(comment.post.id.eq(post.id))
+                        .where(comment.postId.eq(post.id))
         );
     }
 
