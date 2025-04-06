@@ -1,4 +1,6 @@
-package jeonseguard.backend.region.domain;
+package jeonseguard.backend.region.domain.repository;
+
+import jeonseguard.backend.region.domain.entity.RegionCode;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package jeonseguard.backend.region.domain;
+package jeonseguard.backend.region.domain.entity;
 
 import jakarta.persistence.*;
 import jeonseguard.backend.global.entity.CommonBaseEntity;
@@ -18,9 +18,9 @@ public class RegionCode extends CommonBaseEntity {
     @Column(nullable = false)
     private String sidoName;
 
-    private String sggName;
+    private String sigunguName;
 
-    private String eupMyeonDongName;
+    private String eupmyeondongName;
 
     private String riName;
 
@@ -30,5 +30,5 @@ public class RegionCode extends CommonBaseEntity {
 
     private LocalDate deletedDate;
 
-    private String oldRegionCode;
+    private String pastCode;
 }
