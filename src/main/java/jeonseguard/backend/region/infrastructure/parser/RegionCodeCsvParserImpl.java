@@ -30,7 +30,7 @@ public class RegionCodeCsvParserImpl implements RegionCodeCsvParser {
                 regionCodes.add(RegionCodeFactory.fromRecord(record, orderNo, createdDate, deletedDate));
             }
             return regionCodes;
-        } catch (IOException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             throw new BusinessException(ErrorCode.CSV_PARSE_ERROR);
         }
     }
