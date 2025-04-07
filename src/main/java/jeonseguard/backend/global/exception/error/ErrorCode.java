@@ -33,7 +33,6 @@ public enum ErrorCode {
     // 법정동코드 관련 에러
     CSV_PARSE_ERROR(HttpStatus.BAD_REQUEST, "CSV 파일 파싱 중 오류가 발생했습니다."),
 
-
     // 기타 서버 오류
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),

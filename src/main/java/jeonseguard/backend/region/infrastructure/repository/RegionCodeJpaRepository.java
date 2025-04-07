@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface RegionCodeJpaRepository extends JpaRepository<RegionCode, Long> {
     Optional<RegionCode> findByCode(String code);
+    boolean existsByCode(String code);
 }
