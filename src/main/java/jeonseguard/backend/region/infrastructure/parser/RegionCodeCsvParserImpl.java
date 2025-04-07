@@ -1,6 +1,7 @@
 package jeonseguard.backend.region.infrastructure.parser;
 
 import jeonseguard.backend.global.exception.error.*;
+import jeonseguard.backend.global.util.DateUtil;
 import jeonseguard.backend.region.domain.entity.RegionCode;
 import jeonseguard.backend.region.domain.factory.RegionCodeFactory;
 import jeonseguard.backend.region.domain.parser.RegionCodeCsvParser;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.*;
 
 @Component
@@ -22,12 +24,23 @@ public class RegionCodeCsvParserImpl implements RegionCodeCsvParser {
         ) {
             List<RegionCode> regionCodes = new ArrayList<>();
             for (CSVRecord record : csvParser) {
-                regionCodes.add(RegionCodeFactory.fromRecord(record));
+                Integer orderNo = parseNullableInteger(record.get("순위"));
+                LocalDate createdDate = parseNullableLocalDate(record.get("생성일자"));
+                LocalDate deletedDate = parseNullableLocalDate(record.get("삭제일자"));
+                regionCodes.add(RegionCodeFactory.fromRecord(record, orderNo, createdDate, deletedDate));
             }
             return regionCodes;
         } catch (IOException ex) {
             throw new BusinessException(ErrorCode.CSV_PARSE_ERROR);
         }
+    }
+
+    private Integer parseNullableInteger(String raw) {
+        return raw.isBlank() ? null : Integer.valueOf(raw.trim());
+    }
+
+    private LocalDate parseNullableLocalDate(String raw) {
+        return raw.isBlank() ? null : DateUtil.parseDate(raw.trim());
     }
 
     private CSVFormat createCsvFormat() {
