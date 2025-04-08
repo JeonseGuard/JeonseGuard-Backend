@@ -56,6 +56,10 @@ security:
           token-uri: https://kauth.kakao.com/oauth/token
           user-info-uri: https://kapi.kakao.com/v2/user/me
 
+region-code:
+  init:
+    final-code: ${REGION_FINAL_CODE}
+
 logging:
   level:
     org.hibernate.sql: debug
