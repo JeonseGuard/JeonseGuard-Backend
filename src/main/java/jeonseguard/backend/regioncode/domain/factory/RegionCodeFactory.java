@@ -1,6 +1,6 @@
-package jeonseguard.backend.region.domain.factory;
+package jeonseguard.backend.regioncode.domain.factory;
 
-import jeonseguard.backend.region.domain.entity.RegionCode;
+import jeonseguard.backend.regioncode.domain.entity.RegionCode;
 import org.apache.commons.csv.CSVRecord;
 
 import java.time.LocalDate;

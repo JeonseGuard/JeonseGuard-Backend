@@ -1,10 +1,10 @@
-package jeonseguard.backend.region.infrastructure.parser;
+package jeonseguard.backend.regioncode.infrastructure.parser;
 
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.global.util.DateUtil;
-import jeonseguard.backend.region.domain.entity.RegionCode;
-import jeonseguard.backend.region.domain.factory.RegionCodeFactory;
-import jeonseguard.backend.region.domain.parser.RegionCodeCsvParser;
+import jeonseguard.backend.regioncode.domain.entity.RegionCode;
+import jeonseguard.backend.regioncode.domain.factory.RegionCodeFactory;
+import jeonseguard.backend.regioncode.domain.parser.RegionCodeCsvParser;
 import org.apache.commons.csv.*;
 import org.springframework.stereotype.Component;
 
