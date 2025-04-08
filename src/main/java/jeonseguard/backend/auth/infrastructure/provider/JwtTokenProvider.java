@@ -2,30 +2,25 @@ package jeonseguard.backend.auth.infrastructure.provider;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jeonseguard.backend.global.config.properties.JwtTokenProperties;
 import jeonseguard.backend.global.exception.error.*;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
-    @Value("${security.jwt.secret-key}")
-    private String secretKey;
-
-    @Value("${security.jwt.access-expiration-time}")
-    private long accessExpirationTime;
-
-    @Value("${security.jwt.refresh-expiration-time}")
-    private long refreshExpirationTime;
+    private final JwtTokenProperties jwtTokenProperties;
 
     public String generateAccessToken(Long userId) {
-        return generateToken(userId, accessExpirationTime);
+        return generateToken(userId, jwtTokenProperties.accessExpirationTime());
     }
 
     public String generateRefreshToken(Long userId) {
-        return generateToken(userId, refreshExpirationTime);
+        return generateToken(userId, jwtTokenProperties.refreshExpirationTime());
     }
 
     public Long getUserIdFromToken(String token) {
@@ -34,11 +29,11 @@ public class JwtTokenProvider {
     }
 
     public long getAccessTokenExpirationTime() {
-        return accessExpirationTime;
+        return jwtTokenProperties.accessExpirationTime();
     }
 
     public long getRefreshTokenExpirationTime() {
-        return refreshExpirationTime;
+        return jwtTokenProperties.refreshExpirationTime();
     }
 
     private String generateToken(Long userId, long expirationTime) {
@@ -59,7 +54,7 @@ public class JwtTokenProvider {
     }
 
     private SecretKey getSecretKey() {
-        return Keys.hmacShaKeyFor(secretKey.getBytes());
+        return Keys.hmacShaKeyFor(jwtTokenProperties.secretKey().getBytes());
     }
 
     private void validateToken(String token) {

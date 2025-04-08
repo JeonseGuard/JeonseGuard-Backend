@@ -1,10 +1,10 @@
-package jeonseguard.backend.region.domain.service;
+package jeonseguard.backend.regioncode.domain.service;
 
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.global.config.properties.RegionCodeProperties;
-import jeonseguard.backend.region.domain.entity.RegionCode;
-import jeonseguard.backend.region.domain.parser.RegionCodeCsvParser;
-import jeonseguard.backend.region.domain.repository.RegionCodeRepository;
+import jeonseguard.backend.regioncode.domain.entity.RegionCode;
+import jeonseguard.backend.regioncode.domain.parser.RegionCodeCsvParser;
+import jeonseguard.backend.regioncode.domain.repository.RegionCodeRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;

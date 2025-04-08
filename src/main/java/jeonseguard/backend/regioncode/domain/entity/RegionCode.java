@@ -1,4 +1,4 @@
-package jeonseguard.backend.region.domain.entity;
+package jeonseguard.backend.regioncode.domain.entity;
 
 import jakarta.persistence.*;
 import jeonseguard.backend.global.entity.CommonBaseEntity;

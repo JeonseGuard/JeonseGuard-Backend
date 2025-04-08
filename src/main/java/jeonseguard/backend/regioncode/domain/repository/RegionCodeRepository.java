@@ -1,6 +1,6 @@
-package jeonseguard.backend.region.domain.repository;
+package jeonseguard.backend.regioncode.domain.repository;
 
-import jeonseguard.backend.region.domain.entity.RegionCode;
+import jeonseguard.backend.regioncode.domain.entity.RegionCode;
 
 import java.util.*;
 

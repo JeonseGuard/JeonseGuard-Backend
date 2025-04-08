@@ -1,7 +1,9 @@
 package jeonseguard.backend.global.config;
 
 import io.lettuce.core.*;
-import org.springframework.beans.factory.annotation.Value;
+import jeonseguard.backend.global.config.properties.RedisProperties;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.lettuce.*;
@@ -11,18 +13,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 @Configuration
+@RequiredArgsConstructor
+@EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig {
-    @Value("${spring.data.redis.host}")
-    private String redisHost;
-
-    @Value("${spring.data.redis.port}")
-    private int redisPort;
-
-    @Value("${spring.data.redis.password}")
-    private String redisPassword;
-
-    @Value("${spring.data.redis.timeout}")
-    private long redisTimeout;
+    private final RedisProperties redisProperties;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
@@ -42,21 +36,21 @@ public class RedisConfig {
     }
 
     private RedisStandaloneConfiguration createRedisConfiguration() {
-        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(redisHost, redisPort);
-        config.setPassword(redisPassword);
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(redisProperties.host(), redisProperties.port());
+        config.setPassword(redisProperties.password());
         return config;
     }
 
     private LettuceClientConfiguration createLettuceClientConfig() {
         return LettuceClientConfiguration.builder()
                 .clientOptions(createClientOptions())
-                .commandTimeout(Duration.ofMillis(redisTimeout))
+                .commandTimeout(Duration.ofMillis(redisProperties.timeout()))
                 .build();
     }
 
     private ClientOptions createClientOptions() {
         return ClientOptions.builder()
-                .timeoutOptions(TimeoutOptions.enabled(Duration.ofMillis(redisTimeout)))
+                .timeoutOptions(TimeoutOptions.enabled(Duration.ofMillis(redisProperties.timeout())))
                 .build();
     }
 }

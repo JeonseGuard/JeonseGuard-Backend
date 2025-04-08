@@ -1,6 +1,6 @@
-package jeonseguard.backend.region.infrastructure.initializer;
+package jeonseguard.backend.regioncode.infrastructure.initializer;
 
-import jeonseguard.backend.region.domain.service.RegionCodeService;
+import jeonseguard.backend.regioncode.domain.service.RegionCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.*;
 import org.springframework.core.io.ClassPathResource;

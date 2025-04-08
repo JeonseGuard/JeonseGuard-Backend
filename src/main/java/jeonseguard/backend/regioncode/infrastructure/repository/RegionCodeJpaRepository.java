@@ -1,6 +1,6 @@
-package jeonseguard.backend.region.infrastructure.repository;
+package jeonseguard.backend.regioncode.infrastructure.repository;
 
-import jeonseguard.backend.region.domain.entity.RegionCode;
+import jeonseguard.backend.regioncode.domain.entity.RegionCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

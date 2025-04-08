@@ -1,7 +1,7 @@
-package jeonseguard.backend.region.infrastructure.repository;
+package jeonseguard.backend.regioncode.infrastructure.repository;
 
-import jeonseguard.backend.region.domain.entity.RegionCode;
-import jeonseguard.backend.region.domain.repository.RegionCodeRepository;
+import jeonseguard.backend.regioncode.domain.entity.RegionCode;
+import jeonseguard.backend.regioncode.domain.repository.RegionCodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
