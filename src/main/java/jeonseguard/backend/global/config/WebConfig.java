@@ -1,7 +1,7 @@
 package jeonseguard.backend.global.config;
 
 import jeonseguard.backend.auth.infrastructure.resolver.AuthenticatedUserArgumentResolver;
-import jeonseguard.backend.global.config.properties.JwtTokenProperties;
+import jeonseguard.backend.global.config.properties.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableConfigurationProperties(JwtTokenProperties.class)
+@EnableConfigurationProperties({JwtTokenProperties.class, KakaoOauthProperties.class})
 public class WebConfig implements WebMvcConfigurer {
     private final AuthenticatedUserArgumentResolver authenticatedUserArgumentResolver;
 
