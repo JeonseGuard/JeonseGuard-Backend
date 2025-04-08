@@ -19,7 +19,7 @@ class DateUtilTest {
         @DisplayName("yyyy.M.d 형식 문자열을 LocalDate로 변환한다.")
         void parseLocalDateTest() {
             // given
-            String rawDate = "1999.1.1";
+            String rawDate = "1999-01-01";
 
             // when
             LocalDate parsedDate = DateUtil.parseDate(rawDate);
@@ -32,7 +32,7 @@ class DateUtilTest {
         @DisplayName("앞뒤 공백이 포함된 날짜 문자열 입력 시, LocalDate로 정상 변환한다.")
         void parseLocalDateWithSpacesTest() {
             // given
-            String rawDate = " 2025.12.10 ";
+            String rawDate = " 2025-12-10 ";
 
             // when
             LocalDate parsedDate = DateUtil.parseDate(rawDate);

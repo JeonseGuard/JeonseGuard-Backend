@@ -9,7 +9,7 @@ import org.apache.commons.csv.*;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -19,7 +19,7 @@ public class RegionCodeCsvParserImpl implements RegionCodeCsvParser {
     @Override
     public List<RegionCode> parse(InputStream input) {
         try (
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input, Charset.forName("EUC-KR")));
                 CSVParser csvParser = CSVParser.parse(reader, createCsvFormat())
         ) {
             List<RegionCode> regionCodes = new ArrayList<>();

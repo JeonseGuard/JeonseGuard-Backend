@@ -8,9 +8,9 @@ public class DateUtil {
     // 입력 파싱 전용
     private static final DateTimeFormatter FLEXIBLE_FORMATTER = new DateTimeFormatterBuilder()
             .appendValue(ChronoField.YEAR, 4)
-            .appendLiteral('.')
+            .appendLiteral('-')
             .appendValue(ChronoField.MONTH_OF_YEAR, 1, 2, SignStyle.NOT_NEGATIVE)
-            .appendLiteral('.')
+            .appendLiteral('-')
             .appendValue(ChronoField.DAY_OF_MONTH, 1, 2, SignStyle.NOT_NEGATIVE)
             .toFormatter();
 
