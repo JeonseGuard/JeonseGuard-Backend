@@ -1,7 +1,6 @@
 package jeonseguard.backend.region.infrastructure.parser;
 
-import jeonseguard.backend.global.exception.error.BusinessException;
-import jeonseguard.backend.global.exception.error.ErrorCode;
+import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.region.domain.entity.RegionCode;
 import org.junit.jupiter.api.*;
 
