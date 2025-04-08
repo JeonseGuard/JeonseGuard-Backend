@@ -7,7 +7,7 @@ import org.springframework.context.annotation.*;
 
 @Configuration
 @RequiredArgsConstructor
-public class QueryDSLConfig {
+public class QuerydslConfig {
     private final EntityManager entityManager;
 
     @Bean
