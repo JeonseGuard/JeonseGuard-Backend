@@ -1,4 +1,4 @@
-package jeonseguard.backend.board.domain.service;
+package jeonseguard.backend.board.application.service;
 
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.HeartFactory;

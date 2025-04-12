@@ -1,4 +1,4 @@
-package jeonseguard.backend.auth.domain.repository;
+package jeonseguard.backend.auth.domain;
 
 public interface LogoutTokenStore {
     void blacklistToken(String accessToken, long accessTokenExpirationTime);

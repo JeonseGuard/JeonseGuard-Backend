@@ -3,7 +3,7 @@ package jeonseguard.backend.board.presentation.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jeonseguard.backend.board.application.BoardFacade;
+import jeonseguard.backend.board.application.facade.BoardFacade;
 import jeonseguard.backend.global.annotation.AuthenticatedUser;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;

@@ -1,6 +1,6 @@
 package jeonseguard.backend.auth.infrastructure.repository;
 
-import jeonseguard.backend.auth.domain.repository.RefreshTokenStore;
+import jeonseguard.backend.auth.domain.RefreshTokenStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;

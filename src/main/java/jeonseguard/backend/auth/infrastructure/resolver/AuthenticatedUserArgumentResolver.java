@@ -2,7 +2,7 @@ package jeonseguard.backend.auth.infrastructure.resolver;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jeonseguard.backend.global.annotation.AuthenticatedUser;
-import jeonseguard.backend.auth.domain.repository.LogoutTokenStore;
+import jeonseguard.backend.auth.domain.LogoutTokenStore;
 import jeonseguard.backend.auth.infrastructure.provider.JwtTokenProvider;
 import jeonseguard.backend.global.exception.error.*;
 import lombok.*;

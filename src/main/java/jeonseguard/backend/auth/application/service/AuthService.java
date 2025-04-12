@@ -1,6 +1,6 @@
-package jeonseguard.backend.auth.domain.service;
+package jeonseguard.backend.auth.application.service;
 
-import jeonseguard.backend.auth.domain.repository.*;
+import jeonseguard.backend.auth.domain.*;
 import jeonseguard.backend.auth.infrastructure.provider.*;
 import jeonseguard.backend.auth.presentation.dto.request.*;
 import jeonseguard.backend.auth.presentation.dto.response.*;

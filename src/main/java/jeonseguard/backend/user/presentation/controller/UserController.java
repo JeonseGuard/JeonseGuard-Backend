@@ -3,7 +3,7 @@ package jeonseguard.backend.user.presentation.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jeonseguard.backend.global.annotation.AuthenticatedUser;
-import jeonseguard.backend.user.application.UserFacade;
+import jeonseguard.backend.user.application.facade.UserFacade;
 import jeonseguard.backend.user.presentation.dto.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

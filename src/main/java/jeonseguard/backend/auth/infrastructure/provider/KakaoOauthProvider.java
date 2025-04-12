@@ -1,6 +1,6 @@
 package jeonseguard.backend.auth.infrastructure.provider;
 
-import jeonseguard.backend.auth.infrastructure.provider.client.KakaoOauthClient;
+import jeonseguard.backend.auth.infrastructure.client.KakaoOauthClient;
 import jeonseguard.backend.auth.presentation.dto.response.*;
 import jeonseguard.backend.global.config.properties.KakaoOauthProperties;
 import jeonseguard.backend.global.exception.error.*;

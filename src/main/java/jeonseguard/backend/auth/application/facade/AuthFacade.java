@@ -1,10 +1,10 @@
-package jeonseguard.backend.auth.application;
+package jeonseguard.backend.auth.application.facade;
 
-import jeonseguard.backend.auth.domain.service.AuthService;
+import jeonseguard.backend.auth.application.service.AuthService;
 import jeonseguard.backend.auth.presentation.dto.request.*;
 import jeonseguard.backend.auth.presentation.dto.response.*;
+import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.domain.entity.User;
-import jeonseguard.backend.user.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

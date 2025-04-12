@@ -1,11 +1,11 @@
-package jeonseguard.backend.board.application;
+package jeonseguard.backend.board.application.facade;
 
+import jeonseguard.backend.board.application.service.*;
 import jeonseguard.backend.board.domain.entity.*;
-import jeonseguard.backend.board.domain.service.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
+import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.domain.entity.User;
-import jeonseguard.backend.user.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;

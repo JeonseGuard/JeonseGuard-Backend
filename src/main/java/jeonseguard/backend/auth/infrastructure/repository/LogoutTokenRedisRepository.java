@@ -1,6 +1,6 @@
 package jeonseguard.backend.auth.infrastructure.repository;
 
-import jeonseguard.backend.auth.domain.repository.LogoutTokenStore;
+import jeonseguard.backend.auth.domain.LogoutTokenStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;

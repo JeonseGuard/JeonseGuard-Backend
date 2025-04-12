@@ -1,7 +1,7 @@
-package jeonseguard.backend.user.application;
+package jeonseguard.backend.user.application.facade;
 
+import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.domain.entity.User;
-import jeonseguard.backend.user.domain.service.UserService;
 import jeonseguard.backend.user.presentation.dto.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

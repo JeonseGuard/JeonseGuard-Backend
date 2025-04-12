@@ -3,7 +3,7 @@ package jeonseguard.backend.auth.presentation.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jeonseguard.backend.auth.application.AuthFacade;
+import jeonseguard.backend.auth.application.facade.AuthFacade;
 import jeonseguard.backend.auth.presentation.dto.request.*;
 import jeonseguard.backend.auth.presentation.dto.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
