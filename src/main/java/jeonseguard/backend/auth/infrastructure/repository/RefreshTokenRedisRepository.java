@@ -12,18 +12,20 @@ import java.util.concurrent.TimeUnit;
 public class RefreshTokenRedisRepository implements RefreshTokenStore {
     private final RedisTemplate<String, String> redisTemplate;
 
+    private static final String KEY_PREFIX = "refresh:";
+
     @Override
     public void saveRefreshToken(Long userId, String refreshToken, long refreshExpirationTime) {
-        redisTemplate.opsForValue().set("refresh:" + userId, refreshToken, refreshExpirationTime, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(KEY_PREFIX + userId, refreshToken, refreshExpirationTime, TimeUnit.SECONDS);
     }
 
     @Override
     public String getRefreshToken(Long userId) {
-        return redisTemplate.opsForValue().get("refresh:" + userId);
+        return redisTemplate.opsForValue().get(KEY_PREFIX + userId);
     }
 
     @Override
     public void removeRefreshToken(Long userId) {
-        redisTemplate.delete("refresh:" + userId);
+        redisTemplate.delete(KEY_PREFIX + userId);
     }
 }
