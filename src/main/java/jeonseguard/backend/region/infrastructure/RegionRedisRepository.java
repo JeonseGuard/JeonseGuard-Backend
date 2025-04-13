@@ -15,7 +15,7 @@ public class RegionRedisRepository implements RegionStore {
     private final RedisTemplate<String, Region> redisTemplate;
 
     private static final String KEY_PREFIX = "region:";
-    private static final long CACHE_EXPIRATION_HOURS = 1L;
+    private static final long CACHE_EXPIRATION_HOURS = 6L;
 
     @Override
     public void save(Region region) {

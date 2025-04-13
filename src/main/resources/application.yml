@@ -59,10 +59,6 @@ security:
       token-uri: ${KAKAO_TOKEN_URL}
       user-info-uri: ${KAKAO_USER_INFO_URL}
 
-region-code:
-  init:
-    final-code: ${REGION_FINAL_CODE}
-
 logging:
   level:
     org.hibernate.sql: debug
