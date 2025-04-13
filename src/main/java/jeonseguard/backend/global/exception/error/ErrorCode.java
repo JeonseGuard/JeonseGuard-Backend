@@ -30,8 +30,8 @@ public enum ErrorCode {
     COMMENT_UPDATE_FORBIDDEN(HttpStatus.FORBIDDEN, "댓글을 수정할 권한이 없습니다."),
     COMMENT_DELETE_FORBIDDEN(HttpStatus.FORBIDDEN, "댓글을 삭제할 권한이 없습니다."),
 
-    // 법정동코드 관련 에러
-    CSV_PARSE_ERROR(HttpStatus.BAD_REQUEST, "CSV 파일 파싱 중 오류가 발생했습니다."),
+    // 행정구역 관련 에러
+    REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "행정구역을 찾을 수 없습니다."),
 
     // 기타 서버 오류
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
