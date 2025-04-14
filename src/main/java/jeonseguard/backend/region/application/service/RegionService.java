@@ -14,19 +14,37 @@ public class RegionService {
     private final RegionStore regionStore;
 
     @Transactional(readOnly = true)
-    public Region getRegionByAddress(String address) {
-        return regionStore.findByAddress(address)
-                .or(() -> regionRepository.findByAddress(address)
-                        .map(region -> {
-                            regionStore.save(region);
-                            return region;
-                        }))
-                .orElseThrow(() -> new BusinessException(ErrorCode.REGION_NOT_FOUND));
+    public String getRegionCode(String address) {
+        return regionStore.findRegionCodeByAddress(address)
+                .orElseGet(() -> getAndCacheRegionCode(address));
+    }
+
+    @Transactional(readOnly = true)
+    public String getSigunguCode(String address) {
+        return regionStore.findSigunguCodeByAddress(address)
+                .orElseGet(() -> getAndCacheSigunguCode(address));
     }
 
     @Transactional
-    public void deleteRegionByAddress(String address) {
+    public void deleteRegion(String address) {
         regionStore.deleteByAddress(address);
         regionRepository.deleteByAddress(address);
+    }
+
+    private String getAndCacheRegionCode(String address) {
+        Region region = getRegionOrThrow(address);
+        regionStore.saveRegionCode(region.getAddress(), region.getRegionCode());
+        return region.getRegionCode();
+    }
+
+    private String getAndCacheSigunguCode(String address) {
+        Region region = getRegionOrThrow(address);
+        regionStore.saveSigunguCode(region.getAddress(), region.getSigunguCode());
+        return region.getSigunguCode();
+    }
+
+    private Region getRegionOrThrow(String address) {
+        return regionRepository.findByAddress(address)
+                .orElseThrow(() -> new BusinessException(ErrorCode.REGION_NOT_FOUND));
     }
 }

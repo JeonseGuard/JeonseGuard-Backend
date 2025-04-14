@@ -1,6 +1,5 @@
 package jeonseguard.backend.region.infrastructure;
 
-import jeonseguard.backend.region.domain.entity.Region;
 import jeonseguard.backend.region.domain.repository.RegionStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -12,24 +11,35 @@ import java.util.concurrent.TimeUnit;
 @Repository
 @RequiredArgsConstructor
 public class RegionRedisRepository implements RegionStore {
-    private final RedisTemplate<String, Region> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    private static final String KEY_PREFIX = "region:";
+    private static final String REGION_CODE_KEY_PREFIX = "region-code:";
+    private static final String SIGUNGU_CODE_KEY_PREFIX = "sigungu-code:";
     private static final long CACHE_EXPIRATION_HOURS = 6L;
 
     @Override
-    public void save(Region region) {
-        redisTemplate.opsForValue().set(KEY_PREFIX + region.getAddress(), region, CACHE_EXPIRATION_HOURS, TimeUnit.HOURS);
+    public void saveRegionCode(String address, String regionCode) {
+        redisTemplate.opsForValue().set(REGION_CODE_KEY_PREFIX + address, regionCode, CACHE_EXPIRATION_HOURS, TimeUnit.HOURS);
     }
 
     @Override
-    public Optional<Region> findByAddress(String address) {
-        Region region = redisTemplate.opsForValue().get(KEY_PREFIX + address);
-        return Optional.ofNullable(region);
+    public void saveSigunguCode(String address, String sigunguCode) {
+        redisTemplate.opsForValue().set(SIGUNGU_CODE_KEY_PREFIX + address, sigunguCode, CACHE_EXPIRATION_HOURS, TimeUnit.HOURS);
+    }
+
+    @Override
+    public Optional<String> findRegionCodeByAddress(String address) {
+        return Optional.ofNullable(redisTemplate.opsForValue().get(REGION_CODE_KEY_PREFIX + address));
+    }
+
+    @Override
+    public Optional<String> findSigunguCodeByAddress(String address) {
+        return Optional.ofNullable(redisTemplate.opsForValue().get(SIGUNGU_CODE_KEY_PREFIX + address));
     }
 
     @Override
     public void deleteByAddress(String address) {
-        redisTemplate.delete(KEY_PREFIX + address);
+        redisTemplate.delete(REGION_CODE_KEY_PREFIX + address);
+        redisTemplate.delete(SIGUNGU_CODE_KEY_PREFIX + address);
     }
 }

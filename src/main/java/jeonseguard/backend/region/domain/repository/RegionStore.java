@@ -1,11 +1,11 @@
 package jeonseguard.backend.region.domain.repository;
 
-import jeonseguard.backend.region.domain.entity.Region;
-
 import java.util.Optional;
 
 public interface RegionStore {
-    void save(Region region);
-    Optional<Region> findByAddress(String address);
+    void saveRegionCode(String address, String regionCode);
+    void saveSigunguCode(String address, String sigunguCode);
+    Optional<String> findRegionCodeByAddress(String address);
+    Optional<String> findSigunguCodeByAddress(String address);
     void deleteByAddress(String address);
 }

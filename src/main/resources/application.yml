@@ -8,6 +8,10 @@ springdoc:
     operations-sorter: alpha
 
 spring:
+  config:
+    activate:
+      on-profile: default
+
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
@@ -31,6 +35,9 @@ spring:
     validate-on-migrate: true
     out-of-order: false
     clean-disabled: true
+    url: ${FLYWAY_DATABASE_URL}
+    user: ${FLYWAY_DATABASE_USERNAME}
+    password: ${FLYWAY_DATABASE_PASSWORD}
 
   data:
     redis:

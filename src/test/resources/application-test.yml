@@ -1,4 +1,8 @@
 spring:
+  config:
+    activate:
+      on-profile: test
+
   datasource:
     url: ${TEST_DATABASE_URL}
     username: ${TEST_DATABASE_USERNAME}
@@ -8,7 +12,7 @@ spring:
   jpa:
     database: mysql
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -22,8 +26,17 @@ spring:
     validate-on-migrate: true
     out-of-order: false
     clean-disabled: true
+    url: ${TEST_FLYWAY_DATABASE_URL}
+    user: ${TEST_FLYWAY_DATABASE_USERNAME}
+    password: ${TEST_FLYWAY_DATABASE_PASSWORD}
+
+  data:
+    redis:
+      host: ${TEST_REDIS_HOST}
+      port: ${TEST_REDIS_PORT}
+      password: ${TEST_REDIS_PASSWORD}
+      timeout: ${TEST_REDIS_TIMEOUT}
 
 logging:
   level:
     org.hibernate.sql: debug
-    org.hibernate.type: trace

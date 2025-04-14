@@ -40,15 +40,15 @@ class RegionRepositoryImplTest {
         @DisplayName("존재하지 않는 주소가 들어오면 Optional.empty()를 반환한다.")
         void findByAddressFailTest() {
             // given
-            String invalidAddress = "서울특별시 종로구 천사동";
-            given(jpaRepository.findByAddress(invalidAddress)).willReturn(Optional.empty());
+            String unknownAddress = "서울특별시 종로구 천사동";
+            given(jpaRepository.findByAddress(unknownAddress)).willReturn(Optional.empty());
 
             // when
-            Optional<Region> result = regionRepository.findByAddress(invalidAddress);
+            Optional<Region> result = regionRepository.findByAddress(unknownAddress);
 
             // then
             assertThat(result).isNotPresent();
-            then(jpaRepository).should().findByAddress(invalidAddress);
+            then(jpaRepository).should().findByAddress(unknownAddress);
         }
 
         @Test
@@ -77,14 +77,14 @@ class RegionRepositoryImplTest {
         @DisplayName("존재하지 않는 주소라도 예외 없이 호출된다.")
         void deleteByAddressFailTest() {
             // given
-            String invalidAddress = "서울특별시 종로구 악마동";
-            willDoNothing().given(jpaRepository).deleteByAddress(invalidAddress);
+            String unknownAddress = "서울특별시 종로구 악마동";
+            willDoNothing().given(jpaRepository).deleteByAddress(unknownAddress);
 
             // when
-            regionRepository.deleteByAddress(invalidAddress);
+            regionRepository.deleteByAddress(unknownAddress);
 
             // then
-            then(jpaRepository).should().deleteByAddress(invalidAddress);
+            then(jpaRepository).should().deleteByAddress(unknownAddress);
         }
 
         @Test
