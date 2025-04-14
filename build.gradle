@@ -5,14 +5,6 @@ plugins {
 	id 'org.flywaydb.flyway' version '10.20.1'
 }
 
-def testEnvFile = file("test.env")
-
-if (testEnvFile.exists()) {
-	def props = new Properties()
-	testEnvFile.withInputStream { props.load(it) }
-	test { environment.putAll(props) }
-}
-
 group = 'jeonseguard'
 version = '0.0.1-SNAPSHOT'
 
