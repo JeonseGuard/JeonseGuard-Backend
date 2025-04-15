@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@DisplayName("DateUtil Test")
+@DisplayName("DateUtil 단위 테스트")
 class DateUtilTest {
 
     @Nested

@@ -6,7 +6,9 @@ build/**
 !**/src/test/**/build/
 
 **/.DS_Store
+**/local.env
 **/dev.env
+**/test.env
 
 ### STS ###
 .apt_generated
