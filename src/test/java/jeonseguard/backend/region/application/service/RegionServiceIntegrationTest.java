@@ -1,8 +1,9 @@
 package jeonseguard.backend.region.application.service;
 
-import jeonseguard.backend.global.exception.error.BusinessException;
-import jeonseguard.backend.global.exception.error.ErrorCode;
+import jeonseguard.backend.global.exception.error.*;
+import jeonseguard.backend.region.domain.entity.Region;
 import jeonseguard.backend.region.domain.repository.*;
+import jeonseguard.backend.region.presentation.dto.DeleteRegionRequest;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,17 @@ class RegionServiceIntegrationTest {
     @Autowired
     private RegionStore regionStore;
 
+    @AfterEach
+    void tearDown() {
+        Region region = Region.builder()
+                .regionCode("1111010100")
+                .sigunguCode("11110")
+                .address("서울특별시 종로구 청운동")
+                .build();
+
+        regionRepository.save(region);
+    }
+
     @Nested
     @DisplayName("getRegionCode 메서드는")
     class getRegionCode {
@@ -38,9 +50,7 @@ class RegionServiceIntegrationTest {
             String unknownAddress = "서울특별시 종로구 천사동";
 
             // when
-            BusinessException ex = Assertions.assertThrows(BusinessException.class, () -> {
-                regionService.getRegionCode(unknownAddress);
-            });
+            BusinessException ex = Assertions.assertThrows(BusinessException.class, () -> regionService.getRegionCode(unknownAddress));
 
             // then
             assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.REGION_NOT_FOUND);
@@ -74,9 +84,7 @@ class RegionServiceIntegrationTest {
             String unknownAddress = "서울특별시 종로구 악마동";
 
             // when
-            BusinessException ex = Assertions.assertThrows(BusinessException.class, () -> {
-                regionService.getRegionCode(unknownAddress);
-            });
+            BusinessException ex = Assertions.assertThrows(BusinessException.class, () -> regionService.getRegionCode(unknownAddress));
 
             // then
             assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.REGION_NOT_FOUND);
@@ -108,9 +116,10 @@ class RegionServiceIntegrationTest {
         void deleteRegionTest() {
             // given
             String address = "서울특별시 종로구 청운동";
+            DeleteRegionRequest request = new DeleteRegionRequest(address);
 
             // when
-            regionService.deleteRegion(address);
+            regionService.deleteRegion(request);
 
             // then
             assertThat(regionStore.findRegionCodeByAddress(address)).isEmpty();

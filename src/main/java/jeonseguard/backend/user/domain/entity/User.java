@@ -33,4 +33,8 @@ public class User extends CommonBaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Comment> comments;
+
+    public boolean isAdmin() {
+        return this.role == Role.ROLE_ADMIN;
+    }
 }

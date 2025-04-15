@@ -15,11 +15,11 @@ import static org.mockito.BDDMockito.*;
 @DisplayName("RegionRepositoryImpl 단위 테스트")
 class RegionRepositoryImplTest {
 
-    @Mock
-    private RegionJpaRepository jpaRepository;
-
     @InjectMocks
     private RegionRepositoryImpl regionRepository;
+
+    @Mock
+    private RegionJpaRepository jpaRepository;
 
     private Region region;
 

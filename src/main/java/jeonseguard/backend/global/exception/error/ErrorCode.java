@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
-    // 회원 관련 예외
+    // 회원 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다."),
 
     // 인증 관련 예외
@@ -32,6 +32,7 @@ public enum ErrorCode {
 
     // 행정구역 관련 에러
     REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "행정구역을 찾을 수 없습니다."),
+    REGION_DELETE_FORBIDDEN(HttpStatus.FORBIDDEN, "행정구역을 삭제할 권한이 없습니다."),
 
     // 기타 서버 오류
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
