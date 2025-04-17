@@ -1,6 +1,6 @@
 package jeonseguard.backend.auth.infrastructure.client;
 
-import jeonseguard.backend.auth.presentation.dto.response.*;
+import jeonseguard.backend.auth.infrastructure.dto.*;
 import jeonseguard.backend.global.exception.error.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
