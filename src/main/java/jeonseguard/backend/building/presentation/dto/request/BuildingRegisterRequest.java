@@ -1,8 +1,10 @@
 package jeonseguard.backend.building.presentation.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record BuildingRegisterRequest(
         @Schema(description = "주소")
         @NotBlank(message = "주소를 입력해 주세요.")
