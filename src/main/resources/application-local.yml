@@ -58,6 +58,12 @@ security:
       token-uri: ${KAKAO_TOKEN_URL}
       user-info-uri: ${KAKAO_USER_INFO_URL}
 
+building:
+  api:
+    service-key: ${BUILDING_SERVICE_KEY}
+    list-size: ${BUILDING_LIST_SIZE}
+    page-size: ${BUILDING_PAGE_SIZE}
+
 logging:
   level:
     org.hibernate.sql: debug
