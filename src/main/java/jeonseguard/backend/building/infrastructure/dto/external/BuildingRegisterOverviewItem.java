@@ -1,9 +1,10 @@
-package jeonseguard.backend.building.infrastructure.dto;
+package jeonseguard.backend.building.infrastructure.dto.external;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record BuildingOverviewResponse(
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record BuildingRegisterOverviewItem(
         @Schema(description = "대지면적 (m^2)")
         @JsonProperty("platArea")
         String landArea,

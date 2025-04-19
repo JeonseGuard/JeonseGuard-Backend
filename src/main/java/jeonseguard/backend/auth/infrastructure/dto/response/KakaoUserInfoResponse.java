@@ -1,7 +1,8 @@
-package jeonseguard.backend.auth.infrastructure.dto;
+package jeonseguard.backend.auth.infrastructure.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jeonseguard.backend.auth.infrastructure.dto.external.KakaoAccount;
 
 public record KakaoUserInfoResponse(
         @Schema(description = "카카오 ID")

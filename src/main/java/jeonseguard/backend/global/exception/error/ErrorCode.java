@@ -34,6 +34,9 @@ public enum ErrorCode {
     REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "행정구역을 찾을 수 없습니다."),
     REGION_DELETE_FORBIDDEN(HttpStatus.FORBIDDEN, "행정구역을 삭제할 권한이 없습니다."),
 
+    // 건축물대장 조회 관련 에러
+    BUILDING_REGISTER_OVERVIEW_FETCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "건축물대장 표제부 정보를 가져오는 데 실패했습니다."),
+
     // 기타 서버 오류
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),

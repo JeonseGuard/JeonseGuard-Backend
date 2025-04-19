@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record BuildingRegisterRequest(
+public record BuildingAddressRequest(
         @Schema(description = "주소")
         @NotBlank(message = "주소를 입력해 주세요.")
         @Size(min = 10, max = 25, message = "주소는 10자 이상 25자 이하로 입력해 주세요.")
