@@ -41,7 +41,7 @@ class RegionServiceIntegrationTest {
 
     @Nested
     @DisplayName("getRegionCode 메서드는")
-    class getRegionCode {
+    class GetRegionCode {
 
         @Test
         @DisplayName("존재하지 않는 주소가 들어오면 예외가 발생한다.")
@@ -75,7 +75,7 @@ class RegionServiceIntegrationTest {
 
     @Nested
     @DisplayName("getSigunguCode 메서드는")
-    class getSigunguCode {
+    class GetSigunguCode {
 
         @Test
         @DisplayName("존재하지 않는 주소가 들어오면 예외가 발생한다.")
@@ -109,7 +109,7 @@ class RegionServiceIntegrationTest {
 
     @Nested
     @DisplayName("deleteRegion 메서드는")
-    class deleteRegionByAddress {
+    class DeleteRegionByAddress {
 
         @Test
         @DisplayName("올바른 주소가 들어오면, 행정구역 정보를 DB와 캐시 모두에서 삭제한다.")

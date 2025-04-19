@@ -13,7 +13,17 @@ class DateUtilTest {
 
     @Nested
     @DisplayName("parseDate 메서드는")
-    class parsedDate {
+    class ParsedDate {
+
+        @Test
+        @DisplayName("잘못된 형식의 문자열이 들어오면 예외가 발생한다.")
+        void parseLocalDateFailTest() {
+            // given
+            String rawDate = "2025/12/10";
+
+            // when & then
+            assertThrows(DateTimeParseException.class, () -> DateUtil.parseDate(rawDate));
+        }
 
         @Test
         @DisplayName("yyyy.M.d 형식 문자열을 LocalDate로 변환한다.")
@@ -40,21 +50,11 @@ class DateUtilTest {
             // then
             assertThat(parsedDate).isEqualTo(LocalDate.of(2025, 12, 10));
         }
-
-        @Test
-        @DisplayName("잘못된 형식의 문자열이 들어오면 예외가 발생한다.")
-        void parseLocalDateFailTest() {
-            // given
-            String rawDate = "2025/12/10";
-
-            // when & then
-            assertThrows(DateTimeParseException.class, () -> DateUtil.parseDate(rawDate));
-        }
     }
 
     @Nested
     @DisplayName("formatDate 메서드는")
-    class formatDate {
+    class FormatDate {
 
         @Test
         @DisplayName("LocalDate가 주어졌을 때, yyyy.MM.dd 형식 문자열로 변환한다.")

@@ -34,7 +34,7 @@ class RegionRepositoryImplTest {
 
     @Nested
     @DisplayName("findByAddress 메서드는")
-    class findByAddress {
+    class FindByAddress {
 
         @Test
         @DisplayName("존재하지 않는 주소가 들어오면 Optional.empty()를 반환한다.")
@@ -71,7 +71,7 @@ class RegionRepositoryImplTest {
 
     @Nested
     @DisplayName("deleteByAddress 메서드는")
-    class deleteByAddress {
+    class DeleteByAddress {
 
         @Test
         @DisplayName("존재하지 않는 주소라도 예외 없이 호출된다.")

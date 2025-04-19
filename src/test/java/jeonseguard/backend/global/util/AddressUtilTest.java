@@ -19,8 +19,7 @@ class AddressUtilTest {
             // when & then
             assertThatThrownBy(() -> AddressUtil.extractRegionCode(null))
                     .isInstanceOf(BusinessException.class)
-                    .extracting("errorCode")
-                    .isEqualTo(ErrorCode.INVALID_REGION_CODE);
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.INVALID_REGION_CODE);
         }
 
         @Test
@@ -32,8 +31,7 @@ class AddressUtilTest {
             // when & then
             assertThatThrownBy(() -> AddressUtil.extractRegionCode(tooShort))
                     .isInstanceOf(BusinessException.class)
-                    .extracting("errorCode")
-                    .isEqualTo(ErrorCode.INVALID_REGION_CODE);
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.INVALID_REGION_CODE);
         }
 
         @Test
@@ -45,8 +43,7 @@ class AddressUtilTest {
             // when & then
             assertThatThrownBy(() -> AddressUtil.extractRegionCode(tooLong))
                     .isInstanceOf(BusinessException.class)
-                    .extracting("errorCode")
-                    .isEqualTo(ErrorCode.INVALID_REGION_CODE);
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.INVALID_REGION_CODE);
         }
 
         @Test
@@ -74,8 +71,7 @@ class AddressUtilTest {
             // when & then
             assertThatThrownBy(() -> AddressUtil.formatBunji(null))
                     .isInstanceOf(BusinessException.class)
-                    .extracting("errorCode")
-                    .isEqualTo(ErrorCode.INVALID_BUNJI_FORMAT);
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.INVALID_BUNJI_FORMAT);
         }
 
         @Test
@@ -87,8 +83,7 @@ class AddressUtilTest {
             // when & then
             assertThatThrownBy(() -> AddressUtil.formatBunji(tooLong))
                     .isInstanceOf(BusinessException.class)
-                    .extracting("errorCode")
-                    .isEqualTo(ErrorCode.INVALID_BUNJI_FORMAT);
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.INVALID_BUNJI_FORMAT);
         }
 
         @Test
@@ -100,8 +95,7 @@ class AddressUtilTest {
             // when & then
             assertThatThrownBy(() -> AddressUtil.formatBunji(invalidFormatString))
                     .isInstanceOf(BusinessException.class)
-                    .extracting("errorCode")
-                    .isEqualTo(ErrorCode.INVALID_BUNJI_FORMAT);
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.INVALID_BUNJI_FORMAT);
         }
 
         @Test
