@@ -21,6 +21,9 @@ public record BuildingAddressRequest(
         @Schema(description = "동명칭")
         String dongName,
 
+        @Schema(description = "층명칭")
+        String floorName,
+
         @Schema(description = "호명칭")
         String hoName
 ) {

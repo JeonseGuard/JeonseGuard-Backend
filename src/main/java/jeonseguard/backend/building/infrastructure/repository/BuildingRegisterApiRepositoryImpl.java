@@ -1,7 +1,7 @@
 package jeonseguard.backend.building.infrastructure.repository;
 
 import jeonseguard.backend.building.domain.BuildingRegisterApiRepository;
-import jeonseguard.backend.building.infrastructure.dto.external.BuildingRegisterOverviewItem;
+import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.global.config.properties.BuildingProperties;
 import jeonseguard.backend.global.dto.OpenApiResponse;
@@ -29,6 +29,11 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
                 .blockOptional()
                 .map(OpenApiResponse::getItem)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_OVERVIEW_FETCH_ERROR));
+    }
+
+    @Override
+    public BuildingRegisterFloorItem fetchBuildingRegisterFloor(BuildingRegisterRequest request) {
+        return null;
     }
 
     private URI buildUri(String uri, BuildingRegisterRequest request) {
