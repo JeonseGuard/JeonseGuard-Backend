@@ -33,7 +33,14 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
 
     @Override
     public BuildingRegisterFloorItem fetchBuildingRegisterFloor(BuildingRegisterRequest request) {
-        return null;
+        return webClient.get()
+                .uri(buildUri(buildingProperties.floorUri(), request))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterFloorItem>>() {})
+                .blockOptional()
+                .map(OpenApiResponse::getItem)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_FLOOR_FETCH_ERROR));
+
     }
 
     private URI buildUri(String uri, BuildingRegisterRequest request) {
@@ -46,7 +53,7 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
                 .queryParam("ji", request.ji())
                 .queryParam("_type", "json")
                 .queryParam("numOfRows", buildingProperties.listSize())
-                .queryParam("pageNo", buildingProperties.pageSize())
+                .queryParam("pageNo", buildingProperties.pageSize()) // 핵심
                 .build(true)
                 .toUri();
     }
