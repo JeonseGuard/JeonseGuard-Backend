@@ -36,7 +36,7 @@ public enum ErrorCode {
     INVALID_REGION_CODE(HttpStatus.BAD_REQUEST, "유효하지 않은 법정동코드입니다."),
 
     // 건축물대장 조회 관련 에러
-    INVALID_BUNJI_FORMAT(HttpStatus.BAD_REQUEST, "번지/지번 값은 1 ~ 4자리 숫자여야 합니다."),
+    INVALID_BUNJI_FORMAT(HttpStatus.BAD_REQUEST, "번지/지번 값은 1~4자리 숫자 문자열이어야 합니다."),
     BUILDING_REGISTER_OVERVIEW_FETCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "건축물대장 표제부 정보를 가져오는 데 실패했습니다."),
 
 
