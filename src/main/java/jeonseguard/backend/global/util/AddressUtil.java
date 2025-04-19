@@ -1,7 +1,9 @@
 package jeonseguard.backend.global.util;
 
 import jeonseguard.backend.global.exception.error.*;
+import lombok.*;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AddressUtil {
     private static final String BUNJI_REGEX = "^\\d{1,4}$";
 

@@ -2,7 +2,9 @@ package jeonseguard.backend.user.domain.factory;
 
 import jeonseguard.backend.auth.infrastructure.dto.response.KakaoUserInfoResponse;
 import jeonseguard.backend.user.domain.entity.*;
+import lombok.*;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserFactory {
     public static User fromResponse(KakaoUserInfoResponse response) {
         return User.builder()
