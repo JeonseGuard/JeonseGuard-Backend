@@ -8,7 +8,6 @@ public record BuildingProperties(
         String floorUri,
         String serviceKey,
         String categoryCode,
-        String listSize,
-        String pageSize
+        String listSize
 ) {
 }

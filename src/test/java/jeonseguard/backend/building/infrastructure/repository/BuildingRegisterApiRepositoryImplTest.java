@@ -43,13 +43,15 @@ class BuildingRegisterApiRepositoryImplTest {
     @InjectMocks
     BuildingRegisterApiRepositoryImpl repository;
 
+    private String pageNumber1;
+
     @BeforeEach
     void setUp() {
         when(buildingProperties.overviewUri()).thenReturn("https://example.com");
         when(buildingProperties.serviceKey()).thenReturn("test-key");
         when(buildingProperties.categoryCode()).thenReturn("1");
         when(buildingProperties.listSize()).thenReturn("10");
-        when(buildingProperties.pageSize()).thenReturn("1");
+        pageNumber1 = "1";
     }
 
     @Nested
@@ -67,7 +69,7 @@ class BuildingRegisterApiRepositoryImplTest {
             when(responseSpec.bodyToMono(any(ParameterizedTypeReference.class))).thenReturn(Mono.empty());
 
             // when & then
-            assertThatThrownBy(() -> repository.fetchBuildingRegisterOverview(request))
+            assertThatThrownBy(() -> repository.fetchBuildingRegisterOverview(pageNumber1, request))
                     .isInstanceOf(BusinessException.class)
                     .hasFieldOrPropertyWithValue("errorCode", ErrorCode.BUILDING_REGISTER_OVERVIEW_FETCH_ERROR);
         }
@@ -92,7 +94,7 @@ class BuildingRegisterApiRepositoryImplTest {
             when(responseSpec.bodyToMono(any(ParameterizedTypeReference.class))).thenReturn(Mono.just(apiResponse));
 
             // when & then
-            assertThatThrownBy(() -> repository.fetchBuildingRegisterOverview(request))
+            assertThatThrownBy(() -> repository.fetchBuildingRegisterOverview(pageNumber1, request))
                     .isInstanceOf(BusinessException.class)
                     .hasFieldOrPropertyWithValue("errorCode", ErrorCode.BUILDING_REGISTER_OVERVIEW_FETCH_ERROR);
         }
@@ -116,7 +118,7 @@ class BuildingRegisterApiRepositoryImplTest {
             when(responseSpec.bodyToMono(any(ParameterizedTypeReference.class))).thenReturn(Mono.just(apiResponse));
 
             // when
-            BuildingRegisterOverviewItem result = repository.fetchBuildingRegisterOverview(request);
+            BuildingRegisterOverviewItem result = repository.fetchBuildingRegisterOverview(pageNumber1, request);
 
             // then
             assertThat(result).isNotNull();

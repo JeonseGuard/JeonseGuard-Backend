@@ -65,7 +65,6 @@ building:
     service-key: ${BUILDING_SERVICE_KEY}
     category-code: ${BUILDING_CATEGORY_CODE}
     list-size: ${BUILDING_LIST_SIZE}
-    page-size: ${BUILDING_PAGE_SIZE}
 
 logging:
   level:

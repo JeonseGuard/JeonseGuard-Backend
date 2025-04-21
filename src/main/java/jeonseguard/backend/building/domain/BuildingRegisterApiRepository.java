@@ -4,6 +4,6 @@ import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 
 public interface BuildingRegisterApiRepository {
-    BuildingRegisterOverviewItem fetchBuildingRegisterOverview(BuildingRegisterRequest request);
-    BuildingRegisterFloorItem fetchBuildingRegisterFloor(BuildingRegisterRequest request);
+    BuildingRegisterOverviewItem fetchBuildingRegisterOverview(String pageNumber, BuildingRegisterRequest request);
+    BuildingRegisterFloorItem fetchBuildingRegisterFloor(String pageNumber, BuildingRegisterRequest request);
 }

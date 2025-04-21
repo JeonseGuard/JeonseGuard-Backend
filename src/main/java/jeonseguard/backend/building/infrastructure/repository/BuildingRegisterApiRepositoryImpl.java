@@ -21,9 +21,9 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
     private final BuildingProperties buildingProperties;
 
     @Override
-    public BuildingRegisterOverviewItem fetchBuildingRegisterOverview(BuildingRegisterRequest request) {
+    public BuildingRegisterOverviewItem fetchBuildingRegisterOverview(String pageNumber, BuildingRegisterRequest request) {
         return webClient.get()
-                .uri(buildUri(buildingProperties.overviewUri(), request))
+                .uri(buildUri(buildingProperties.overviewUri(), pageNumber, request))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterOverviewItem>>() {})
                 .blockOptional()
@@ -32,18 +32,17 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
     }
 
     @Override
-    public BuildingRegisterFloorItem fetchBuildingRegisterFloor(BuildingRegisterRequest request) {
+    public BuildingRegisterFloorItem fetchBuildingRegisterFloor(String pageNumber, BuildingRegisterRequest request) {
         return webClient.get()
-                .uri(buildUri(buildingProperties.floorUri(), request))
+                .uri(buildUri(buildingProperties.floorUri(), pageNumber, request))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterFloorItem>>() {})
                 .blockOptional()
                 .map(OpenApiResponse::getItem)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_FLOOR_FETCH_ERROR));
-
     }
 
-    private URI buildUri(String uri, BuildingRegisterRequest request) {
+    private URI buildUri(String uri, String pageNumber, BuildingRegisterRequest request) {
         return UriComponentsBuilder.fromUriString(uri)
                 .queryParam("serviceKey", buildingProperties.serviceKey())
                 .queryParam("sigunguCd", request.sigunguCode())
@@ -53,7 +52,7 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
                 .queryParam("ji", request.ji())
                 .queryParam("_type", "json")
                 .queryParam("numOfRows", buildingProperties.listSize())
-                .queryParam("pageNo", buildingProperties.pageSize()) // 핵심
+                .queryParam("pageNo", pageNumber)
                 .build(true)
                 .toUri();
     }
