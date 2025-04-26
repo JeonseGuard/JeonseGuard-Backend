@@ -46,7 +46,7 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
     @Override
     public List<BuildingRegisterAreaItem> fetchBuildingRegisterArea(String pageNumber, BuildingRegisterRequest request) {
         return webClient.get()
-                .uri(buildUri(buildingProperties.floorUri(), pageNumber, request))
+                .uri(buildUri(buildingProperties.areaUri(), pageNumber, request))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterAreaItem>>() {})
                 .blockOptional()

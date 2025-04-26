@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record BuildingProperties(
         String overviewUri,
         String floorUri,
+        String areaUri,
         String serviceKey,
         String categoryCode,
         String listSize

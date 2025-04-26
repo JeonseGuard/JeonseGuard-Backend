@@ -1,6 +1,6 @@
 package jeonseguard.backend.building.infrastructure.repository;
 
-import jeonseguard.backend.building.infrastructure.dto.external.BuildingRegisterOverviewItem;
+import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.global.config.properties.BuildingProperties;
 import jeonseguard.backend.global.dto.OpenApiResponse;
@@ -25,33 +25,42 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings({"rawtypes", "unchecked"})
 class BuildingRegisterApiRepositoryImplTest {
 
-    @Mock
-    WebClient webClient;
-
-    @Mock
-    WebClient.RequestHeadersUriSpec uriSpec;
-
-    @Mock
-    WebClient.RequestHeadersSpec headersSpec;
-
-    @Mock
-    WebClient.ResponseSpec responseSpec;
-
-    @Mock
-    BuildingProperties buildingProperties;
-
-    @InjectMocks
-    BuildingRegisterApiRepositoryImpl repository;
-
-    private String pageNumber1;
+    @Mock private WebClient webClient;
+    @Mock private WebClient.RequestHeadersUriSpec uriSpec;
+    @Mock private WebClient.RequestHeadersSpec headersSpec;
+    @Mock private WebClient.ResponseSpec responseSpec;
+    @Mock private BuildingProperties buildingProperties;
+    @InjectMocks private BuildingRegisterApiRepositoryImpl repository;
 
     @BeforeEach
     void setUp() {
-        when(buildingProperties.overviewUri()).thenReturn("https://example.com");
-        when(buildingProperties.serviceKey()).thenReturn("test-key");
-        when(buildingProperties.categoryCode()).thenReturn("1");
-        when(buildingProperties.listSize()).thenReturn("10");
-        pageNumber1 = "1";
+        lenient().when(buildingProperties.overviewUri()).thenReturn("https://example.com/overview");
+        lenient().when(buildingProperties.floorUri()).thenReturn("https://example.com/floor");
+        lenient().when(buildingProperties.areaUri()).thenReturn("https://example.com/area");
+        lenient().when(buildingProperties.serviceKey()).thenReturn("test-key");
+        lenient().when(buildingProperties.categoryCode()).thenReturn("0");
+        lenient().when(buildingProperties.listSize()).thenReturn("10");
+    }
+
+    private <T> void mockWebClientResponse(List<T> items) {
+        OpenApiResponse<T> apiResponse = new OpenApiResponse<>(
+                new OpenApiResponse.Response<>(
+                        new OpenApiResponse.Body<>(
+                                new OpenApiResponse.Items<>(items)
+                        )
+                )
+        );
+        when(webClient.get()).thenReturn(uriSpec);
+        when(uriSpec.uri(any(URI.class))).thenReturn(headersSpec);
+        when(headersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(any(ParameterizedTypeReference.class))).thenReturn(Mono.just(apiResponse));
+    }
+
+    private void mockWebClientEmpty() {
+        when(webClient.get()).thenReturn(uriSpec);
+        when(uriSpec.uri(any(URI.class))).thenReturn(headersSpec);
+        when(headersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(any(ParameterizedTypeReference.class))).thenReturn(Mono.empty());
     }
 
     @Nested
@@ -59,70 +68,109 @@ class BuildingRegisterApiRepositoryImplTest {
     class FetchBuildingRegisterOverview {
 
         @Test
-        @DisplayName("OpenApiResponse가 null이면, BUILDING_REGISTER_OVERVIEW_FETCH_ERROR 예외가 발생한다.")
+        @DisplayName("응답이 없으면 BUILDING_REGISTER_OVERVIEW_FETCH_ERROR 예외를 던진다")
         void throwExceptionWhenResponseIsNull() {
             // given
             BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
-            when(webClient.get()).thenReturn(uriSpec);
-            when(uriSpec.uri(any(URI.class))).thenReturn(headersSpec);
-            when(headersSpec.retrieve()).thenReturn(responseSpec);
-            when(responseSpec.bodyToMono(any(ParameterizedTypeReference.class))).thenReturn(Mono.empty());
+            mockWebClientEmpty();
 
             // when & then
-            assertThatThrownBy(() -> repository.fetchBuildingRegisterOverview(pageNumber1, request))
+            assertThatThrownBy(() -> repository.fetchBuildingRegisterOverview("1", request))
                     .isInstanceOf(BusinessException.class)
                     .hasFieldOrPropertyWithValue("errorCode", ErrorCode.BUILDING_REGISTER_OVERVIEW_FETCH_ERROR);
         }
 
         @Test
-        @DisplayName("OpenApiResponse.getItem()이 null이면, BUILDING_REGISTER_OVERVIEW_FETCH_ERROR 예외가 발생한다.")
-        void throwExceptionWhenItemIsNull() {
-            // given
-            BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
-            OpenApiResponse<BuildingRegisterOverviewItem> apiResponse = new OpenApiResponse<>(
-                    new OpenApiResponse.Response<>(
-                            new OpenApiResponse.Body<>(
-                                    new OpenApiResponse.Items<>(
-                                            List.of()
-                                    )
-                            )
-                    )
-            );
-            when(webClient.get()).thenReturn(uriSpec);
-            when(uriSpec.uri(any(URI.class))).thenReturn(headersSpec);
-            when(headersSpec.retrieve()).thenReturn(responseSpec);
-            when(responseSpec.bodyToMono(any(ParameterizedTypeReference.class))).thenReturn(Mono.just(apiResponse));
-
-            // when & then
-            assertThatThrownBy(() -> repository.fetchBuildingRegisterOverview(pageNumber1, request))
-                    .isInstanceOf(BusinessException.class)
-                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.BUILDING_REGISTER_OVERVIEW_FETCH_ERROR);
-        }
-
-        @Test
-        @DisplayName("정상적인 요청 시, BuildingRegisterOverviewItem을 반환한다.")
-        void fetchBuildingRegisterOverviewSuccessTest() {
+        @DisplayName("정상적으로 리스트를 반환한다")
+        void fetchBuildingRegisterOverviewSuccess() {
             // given
             BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
             BuildingRegisterOverviewItem item = new BuildingRegisterOverviewItem("100.0", "80.0", "철근콘크리트", "공동주택");
-            OpenApiResponse<BuildingRegisterOverviewItem> apiResponse = new OpenApiResponse<>(
-                    new OpenApiResponse.Response<>(
-                            new OpenApiResponse.Body<>(
-                                    new OpenApiResponse.Items<>(List.of(item))
-                            )
-                    )
-            );
-            when(webClient.get()).thenReturn(uriSpec);
-            when(uriSpec.uri(any(URI.class))).thenReturn(headersSpec);
-            when(headersSpec.retrieve()).thenReturn(responseSpec);
-            when(responseSpec.bodyToMono(any(ParameterizedTypeReference.class))).thenReturn(Mono.just(apiResponse));
+            mockWebClientResponse(List.of(item));
 
             // when
-            BuildingRegisterOverviewItem result = repository.fetchBuildingRegisterOverview(pageNumber1, request);
+            List<BuildingRegisterOverviewItem> result = repository.fetchBuildingRegisterOverview("1", request);
 
             // then
-            assertThat(result).isNotNull();
-            assertThat(result.buildingPurpose()).isEqualTo("공동주택");
+            assertThat(result)
+                    .isNotEmpty()
+                    .hasSize(1)
+                    .extracting(BuildingRegisterOverviewItem::buildingPurpose)
+                    .containsExactly("공동주택");
+        }
+    }
+
+    @Nested
+    @DisplayName("fetchBuildingRegisterFloor 메서드는")
+    class FetchBuildingRegisterFloor {
+
+        @Test
+        @DisplayName("응답이 없으면 BUILDING_REGISTER_FLOOR_FETCH_ERROR 예외를 던진다")
+        void throwExceptionWhenResponseIsNull() {
+            // given
+            BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
+            mockWebClientEmpty();
+
+            // when & then
+            assertThatThrownBy(() -> repository.fetchBuildingRegisterFloor("1", request))
+                    .isInstanceOf(BusinessException.class)
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.BUILDING_REGISTER_FLOOR_FETCH_ERROR);
+        }
+
+        @Test
+        @DisplayName("정상적으로 리스트를 반환한다")
+        void fetchBuildingRegisterFloorSuccess() {
+            // given
+            BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
+            BuildingRegisterFloorItem item = new BuildingRegisterFloorItem("철근콘크리트", "공동주택", "도시형생활주택");
+            mockWebClientResponse(List.of(item));
+
+            // when
+            List<BuildingRegisterFloorItem> result = repository.fetchBuildingRegisterFloor("1", request);
+
+            // then
+            assertThat(result)
+                    .isNotEmpty()
+                    .hasSize(1)
+                    .extracting(BuildingRegisterFloorItem::floorStructure)
+                    .containsExactly("철근콘크리트");
+        }
+    }
+
+    @Nested
+    @DisplayName("fetchBuildingRegisterArea 메서드는")
+    class FetchBuildingRegisterArea {
+
+        @Test
+        @DisplayName("응답이 없으면 BUILDING_REGISTER_AREA_FETCH_ERROR 예외를 던진다")
+        void throwExceptionWhenResponseIsNull() {
+            // given
+            BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
+            mockWebClientEmpty();
+
+            // when & then
+            assertThatThrownBy(() -> repository.fetchBuildingRegisterArea("1", request))
+                    .isInstanceOf(BusinessException.class)
+                    .hasFieldOrPropertyWithValue("errorCode", ErrorCode.BUILDING_REGISTER_AREA_FETCH_ERROR);
+        }
+
+        @Test
+        @DisplayName("정상적으로 리스트를 반환한다")
+        void fetchBuildingRegisterAreaSuccess() {
+            // given
+            BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
+            BuildingRegisterAreaItem item = new BuildingRegisterAreaItem("전유", "84.5");
+            mockWebClientResponse(List.of(item));
+
+            // when
+            List<BuildingRegisterAreaItem> result = repository.fetchBuildingRegisterArea("1", request);
+
+            // then
+            assertThat(result)
+                    .isNotEmpty()
+                    .hasSize(1)
+                    .extracting(BuildingRegisterAreaItem::useType)
+                    .containsExactly("전유");
         }
     }
 }
