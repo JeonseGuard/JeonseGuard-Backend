@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,25 +22,36 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
     private final BuildingProperties buildingProperties;
 
     @Override
-    public BuildingRegisterOverviewItem fetchBuildingRegisterOverview(String pageNumber, BuildingRegisterRequest request) {
+    public List<BuildingRegisterOverviewItem> fetchBuildingRegisterOverview(String pageNumber, BuildingRegisterRequest request) {
         return webClient.get()
                 .uri(buildUri(buildingProperties.overviewUri(), pageNumber, request))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterOverviewItem>>() {})
                 .blockOptional()
-                .map(OpenApiResponse::getItem)
+                .map(OpenApiResponse::getItems)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_OVERVIEW_FETCH_ERROR));
     }
 
     @Override
-    public BuildingRegisterFloorItem fetchBuildingRegisterFloor(String pageNumber, BuildingRegisterRequest request) {
+    public List<BuildingRegisterFloorItem> fetchBuildingRegisterFloor(String pageNumber, BuildingRegisterRequest request) {
         return webClient.get()
                 .uri(buildUri(buildingProperties.floorUri(), pageNumber, request))
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterFloorItem>>() {})
                 .blockOptional()
-                .map(OpenApiResponse::getItem)
+                .map(OpenApiResponse::getItems)
                 .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_FLOOR_FETCH_ERROR));
+    }
+
+    @Override
+    public List<BuildingRegisterAreaItem> fetchBuildingRegisterArea(String pageNumber, BuildingRegisterRequest request) {
+        return webClient.get()
+                .uri(buildUri(buildingProperties.floorUri(), pageNumber, request))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterAreaItem>>() {})
+                .blockOptional()
+                .map(OpenApiResponse::getItems)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_AREA_FETCH_ERROR));
     }
 
     private URI buildUri(String uri, String pageNumber, BuildingRegisterRequest request) {
@@ -53,6 +65,8 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
                 .queryParam("_type", "json")
                 .queryParam("numOfRows", buildingProperties.listSize())
                 .queryParam("pageNo", pageNumber)
+                .queryParamIfPresent("dongNm", Optional.ofNullable(request.dongName()).filter(name -> !name.isBlank()))
+                .queryParamIfPresent("hoNm", Optional.ofNullable(request.hoName()).filter(name -> !name.isBlank()))
                 .build(true)
                 .toUri();
     }

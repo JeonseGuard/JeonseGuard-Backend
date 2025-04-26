@@ -40,8 +40,12 @@ public enum ErrorCode {
     BUILDING_REGISTER_OVERVIEW_FETCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "건축물대장 표제부 정보를 가져오는 데 실패했습니다."),
 
     // 건축물대장 층별 조회 관련 에러
-    FLOOR_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "건축물대장 층별 정보를 찾을 수 없습니다."),
+    BUILDING_FLOOR_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "건축물대장 층별 정보를 찾을 수 없습니다."),
     BUILDING_REGISTER_FLOOR_FETCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "건축물대장 층별 정보를 가져오는 데 실패했습니다."),
+
+    // 건축물대장 전유/공용면적 조회 관련 에러
+    BUILDING_AREA_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "건축물대장 전유/공용면적 정보를 찾을 수 없습니다."),
+    BUILDING_REGISTER_AREA_FETCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "건축물대장 전유/공용면적 정보를 가져오는 데 실패했습니다."),
 
     // 기타 서버 오류
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),

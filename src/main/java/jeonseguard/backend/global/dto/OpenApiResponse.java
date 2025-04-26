@@ -8,10 +8,6 @@ import java.util.List;
 public record OpenApiResponse<T>(
         Response<T> response
 ) {
-    public T getItem() {
-        return getItems().isEmpty() ? null : getItems().get(0);
-    }
-
     public List<T> getItems() {
         return response.body.items.item;
     }
