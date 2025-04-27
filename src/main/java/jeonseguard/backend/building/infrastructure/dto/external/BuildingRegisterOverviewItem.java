@@ -9,6 +9,10 @@ public record BuildingRegisterOverviewItem(
         @JsonProperty("dongNm")
         String dongNumber,
 
+        @Schema(description = "도로명주소")
+        @JsonProperty("newPlatPlc")
+        String newAddress,
+
         @Schema(description = "대지면적 (m^2)")
         @JsonProperty("platArea")
         String landArea,
