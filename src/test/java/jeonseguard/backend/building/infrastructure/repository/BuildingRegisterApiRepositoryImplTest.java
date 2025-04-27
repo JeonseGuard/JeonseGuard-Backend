@@ -85,7 +85,7 @@ class BuildingRegisterApiRepositoryImplTest {
         void fetchBuildingRegisterOverviewSuccess() {
             // given
             BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
-            BuildingRegisterOverviewItem item = new BuildingRegisterOverviewItem("15", "서울특별시 종로구 천사로100길 56-1", "100.0", "80.0", "철근콘크리트", "공동주택");
+            BuildingRegisterOverviewItem item = new BuildingRegisterOverviewItem("별관동", "서울특별시 종로구 천사로100길 56-1", "100.0", "80.0", "철근콘크리트", "공동주택");
             mockWebClientResponse(List.of(item));
 
             // when
@@ -122,7 +122,7 @@ class BuildingRegisterApiRepositoryImplTest {
         void fetchBuildingRegisterFloorSuccess() {
             // given
             BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
-            BuildingRegisterFloorItem item = new BuildingRegisterFloorItem("15", "40층", "철근콘크리트", "공동주택", "도시형생활주택");
+            BuildingRegisterFloorItem item = new BuildingRegisterFloorItem("15동", "40층", "철근콘크리트", "공동주택", "도시형생활주택");
             mockWebClientResponse(List.of(item));
 
             // when
@@ -159,7 +159,7 @@ class BuildingRegisterApiRepositoryImplTest {
         void fetchBuildingRegisterAreaSuccess() {
             // given
             BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
-            BuildingRegisterAreaItem item = new BuildingRegisterAreaItem("40", "501호", "전유", "84.5");
+            BuildingRegisterAreaItem item = new BuildingRegisterAreaItem("40동", "501호", "전유", "84.5");
             mockWebClientResponse(List.of(item));
 
             // when

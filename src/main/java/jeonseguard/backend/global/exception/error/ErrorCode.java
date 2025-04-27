@@ -35,8 +35,11 @@ public enum ErrorCode {
     REGION_DELETE_FORBIDDEN(HttpStatus.FORBIDDEN, "행정구역을 삭제할 권한이 없습니다."),
     INVALID_REGION_CODE(HttpStatus.BAD_REQUEST, "유효하지 않은 법정동코드입니다."),
 
-    // 건축물대장 표제부 조회 관련 에러
+    // 주소 관련 에러
+    INVALID_DONG_NAME_FORMAT(HttpStatus.BAD_REQUEST, "동명칭의 형식이 올바르지 않습니다."),
     INVALID_BUNJI_FORMAT(HttpStatus.BAD_REQUEST, "번지/지번의 형식이 올바르지 않습니다."),
+
+    // 건축물대장 표제부 조회 관련 에러
     BUILDING_OVERVIEW_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "건축물대장 표제부 정보를 찾을 수 없습니다."),
     BUILDING_REGISTER_OVERVIEW_FETCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "건축물대장 표제부 정보를 가져오는 데 실패했습니다."),
 

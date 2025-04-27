@@ -20,4 +20,11 @@ public class AddressUtil {
         }
         return String.format("%04d", Integer.parseInt(bunji));
     }
+
+    public static String formatDongName(String dongName) {
+        if (dongName == null || dongName.isBlank()) {
+            throw new BusinessException(ErrorCode.INVALID_DONG_NAME_FORMAT);
+        }
+        return dongName.substring(0, dongName.length() - 1);
+    }
 }
