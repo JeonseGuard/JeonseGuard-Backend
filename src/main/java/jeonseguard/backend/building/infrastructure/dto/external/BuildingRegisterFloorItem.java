@@ -5,6 +5,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record BuildingRegisterFloorItem(
+        @Schema(description = "동번호")
+        @JsonProperty("dongNm")
+        String dongNumber,
+
+        @Schema(description = "층명칭")
+        @JsonProperty("flrNoNm")
+        String floorName,
+
         @Schema(description = "층별 구조")
         @JsonProperty("strctCdNm")
         String floorStructure,

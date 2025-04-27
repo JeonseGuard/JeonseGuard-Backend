@@ -85,7 +85,7 @@ class BuildingRegisterApiRepositoryImplTest {
         void fetchBuildingRegisterOverviewSuccess() {
             // given
             BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
-            BuildingRegisterOverviewItem item = new BuildingRegisterOverviewItem("100.0", "80.0", "철근콘크리트", "공동주택");
+            BuildingRegisterOverviewItem item = new BuildingRegisterOverviewItem("15", "100.0", "80.0", "철근콘크리트", "공동주택");
             mockWebClientResponse(List.of(item));
 
             // when
@@ -122,7 +122,7 @@ class BuildingRegisterApiRepositoryImplTest {
         void fetchBuildingRegisterFloorSuccess() {
             // given
             BuildingRegisterRequest request = mock(BuildingRegisterRequest.class);
-            BuildingRegisterFloorItem item = new BuildingRegisterFloorItem("철근콘크리트", "공동주택", "도시형생활주택");
+            BuildingRegisterFloorItem item = new BuildingRegisterFloorItem("15", "40층", "철근콘크리트", "공동주택", "도시형생활주택");
             mockWebClientResponse(List.of(item));
 
             // when

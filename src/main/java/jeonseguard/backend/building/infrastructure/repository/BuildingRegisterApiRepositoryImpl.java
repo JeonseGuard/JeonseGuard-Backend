@@ -65,7 +65,7 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
                 .queryParam("_type", "json")
                 .queryParam("numOfRows", buildingProperties.listSize())
                 .queryParam("pageNo", pageNumber)
-                .queryParamIfPresent("dongNm", Optional.ofNullable(request.dongName()).filter(name -> !name.isBlank()))
+                .queryParamIfPresent("dongNm", Optional.ofNullable(request.dongNumber()).filter(number -> !number.isBlank()))
                 .queryParamIfPresent("hoNm", Optional.ofNullable(request.hoName()).filter(name -> !name.isBlank()))
                 .build(true)
                 .toUri();

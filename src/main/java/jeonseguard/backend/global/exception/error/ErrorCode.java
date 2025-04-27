@@ -37,6 +37,7 @@ public enum ErrorCode {
 
     // 건축물대장 표제부 조회 관련 에러
     INVALID_BUNJI_FORMAT(HttpStatus.BAD_REQUEST, "번지/지번의 형식이 올바르지 않습니다."),
+    BUILDING_OVERVIEW_INFO_NOT_FOUND(HttpStatus.NOT_FOUND, "건축물대장 표제부 정보를 찾을 수 없습니다."),
     BUILDING_REGISTER_OVERVIEW_FETCH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "건축물대장 표제부 정보를 가져오는 데 실패했습니다."),
 
     // 건축물대장 층별 조회 관련 에러

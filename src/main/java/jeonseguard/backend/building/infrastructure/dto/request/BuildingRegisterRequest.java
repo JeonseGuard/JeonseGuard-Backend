@@ -17,8 +17,8 @@ public record BuildingRegisterRequest(
         @Schema(description = "지")
         String ji,
 
-        @Schema(description = "동명칭")
-        String dongName,
+        @Schema(description = "동번호")
+        String dongNumber,
 
         @Schema(description = "층명칭")
         String floorName,
