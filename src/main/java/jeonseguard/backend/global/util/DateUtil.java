@@ -2,7 +2,9 @@ package jeonseguard.backend.global.util;
 
 import java.time.LocalDate;
 import java.time.format.*;
+import lombok.*;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DateUtil {
     // 입력 파싱 전용
     private static final DateTimeFormatter FLEXIBLE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");

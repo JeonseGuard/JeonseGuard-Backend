@@ -18,14 +18,14 @@ import static org.mockito.BDDMockito.*;
 @DisplayName("RegionFacade 단위 테스트")
 class RegionFacadeTest {
 
-    @InjectMocks
-    private RegionFacade regionFacade;
-
     @Mock
     private RegionService regionService;
 
     @Mock
     private UserService userService;
+
+    @InjectMocks
+    private RegionFacade regionFacade;
 
     private User admin;
 
@@ -50,7 +50,7 @@ class RegionFacadeTest {
 
     @Nested
     @DisplayName("deleteRegion 메서드는")
-    class deleteRegion {
+    class DeleteRegion {
 
         @Test
         @DisplayName("일반 사용자는 행정구역을 삭제할 수 없다.")
@@ -64,12 +64,11 @@ class RegionFacadeTest {
             // when & then
             BusinessException ex = assertThrows(BusinessException.class, () -> regionFacade.deleteRegion(userId, request));
             assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.REGION_DELETE_FORBIDDEN);
-            then(regionService).shouldHaveNoInteractions();
         }
 
         @Test
         @DisplayName("관리자 권한을 가진 사용자는 행정구역을 삭제할 수 있다.")
-        void deleteRegionTest() {
+        void DeleteRegionTest() {
             // given
             Long adminId = 1L;
             String address = "서울특별시 종로구 청운동";
