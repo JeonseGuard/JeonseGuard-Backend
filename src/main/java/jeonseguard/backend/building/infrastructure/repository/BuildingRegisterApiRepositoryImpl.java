@@ -16,8 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.*;
 import java.util.*;
 
-import static jeonseguard.backend.global.util.StringUtil.encode;
-
 @Repository
 @RequiredArgsConstructor
 public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRepository {
@@ -59,7 +57,7 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
 
     private URI buildUri(String uri, String pageNumber, BuildingRegisterRequest request) {
         return UriComponentsBuilder.fromUriString(uri)
-                .queryParam("serviceKey", encode(buildingProperties.serviceKey()))
+                .queryParam("serviceKey", StringUtil.encode(buildingProperties.serviceKey()))
                 .queryParam("sigunguCd", request.sigunguCode())
                 .queryParam("bjdongCd", request.regionCode())
                 .queryParam("platGbCd", buildingProperties.categoryCode())
