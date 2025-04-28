@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Region", description = "행정구역 정보 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/region")
+@RequestMapping("/api/v1/region")
 public class RegionController {
     private final RegionFacade regionFacade;
 

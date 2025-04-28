@@ -3,6 +3,9 @@ package jeonseguard.backend.global.util;
 import lombok.*;
 import org.springframework.util.StringUtils;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtil {
     public static boolean isSameText(String a, String b) {
@@ -11,5 +14,9 @@ public class StringUtil {
 
     public static boolean isOptionalSameText(String requestValue, String targetValue) {
         return !StringUtils.hasText(requestValue) || isSameText(requestValue, targetValue);
+    }
+
+    public static String encode(String value) {
+        return value != null ? URLEncoder.encode(value, StandardCharsets.UTF_8) : null;
     }
 }

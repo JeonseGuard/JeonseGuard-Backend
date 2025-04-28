@@ -6,14 +6,17 @@ import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterR
 import jeonseguard.backend.global.config.properties.BuildingProperties;
 import jeonseguard.backend.global.dto.OpenApiResponse;
 import jeonseguard.backend.global.exception.error.*;
+import jeonseguard.backend.global.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
+import java.net.*;
 import java.util.*;
+
+import static jeonseguard.backend.global.util.StringUtil.encode;
 
 @Repository
 @RequiredArgsConstructor
@@ -56,7 +59,7 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
 
     private URI buildUri(String uri, String pageNumber, BuildingRegisterRequest request) {
         return UriComponentsBuilder.fromUriString(uri)
-                .queryParam("serviceKey", buildingProperties.serviceKey())
+                .queryParam("serviceKey", encode(buildingProperties.serviceKey()))
                 .queryParam("sigunguCd", request.sigunguCode())
                 .queryParam("bjdongCd", request.regionCode())
                 .queryParam("platGbCd", buildingProperties.categoryCode())
@@ -65,8 +68,8 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
                 .queryParam("_type", "json")
                 .queryParam("numOfRows", buildingProperties.listSize())
                 .queryParam("pageNo", pageNumber)
-                .queryParamIfPresent("dongNm", Optional.ofNullable(request.dongNumber()).filter(number -> !number.isBlank()))
-                .queryParamIfPresent("hoNm", Optional.ofNullable(request.hoName()).filter(name -> !name.isBlank()))
+                .queryParamIfPresent("dongNm", Optional.ofNullable(request.dongName()).filter(name -> !name.isBlank()).map(StringUtil::encode))
+                .queryParamIfPresent("hoNm", Optional.ofNullable(request.hoName()).filter(name -> !name.isBlank()).map(StringUtil::encode))
                 .build(true)
                 .toUri();
     }
