@@ -27,7 +27,6 @@ public class BuildingRegisterService {
                 .orElseGet(() -> getBuildingRegisterOverview(pageNumber + 1, request));
     }
 
-
     @Transactional(readOnly = true)
     public BuildingRegisterFloorItem getBuildingRegisterFloor(int pageNumber, BuildingRegisterRequest request) {
         List<BuildingRegisterFloorItem> items = fetchBuildingRegisterFloor(pageNumber, request);

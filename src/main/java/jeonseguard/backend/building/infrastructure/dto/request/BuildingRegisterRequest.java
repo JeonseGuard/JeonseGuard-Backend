@@ -26,4 +26,15 @@ public record BuildingRegisterRequest(
         @Schema(description = "호명칭")
         String hoName
 ) {
+        public static BuildingRegisterRequest of(String regionCode, String sigunguCode, String bun, String ji, String dongName, String floorName, String hoName) {
+                return new BuildingRegisterRequest(
+                        regionCode,
+                        sigunguCode,
+                        bun,
+                        ji,
+                        dongName,
+                        floorName,
+                        hoName
+                );
+        }
 }

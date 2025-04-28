@@ -1,6 +1,7 @@
 package jeonseguard.backend.building.presentation.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jeonseguard.backend.building.infrastructure.dto.external.*;
 
 public record BuildingRegisterResponse(
         @Schema(description = "도로명주소")
@@ -28,6 +29,19 @@ public record BuildingRegisterResponse(
         String floorDetailPurpose,
 
         @Schema(description = "전유면적 (m^2)")
-        String area
+        String exclusiveArea
 ) {
+        public static BuildingRegisterResponse of(BuildingRegisterOverviewItem overviewItem, BuildingRegisterFloorItem floorItem, BuildingRegisterAreaItem areaItem) {
+                return new BuildingRegisterResponse(
+                        overviewItem.newAddress(),
+                        overviewItem.landArea(),
+                        overviewItem.buildingArea(),
+                        overviewItem.buildingStructure(),
+                        overviewItem.buildingPurpose(),
+                        floorItem.floorStructure(),
+                        floorItem.floorPurpose(),
+                        floorItem.floorDetailPurpose(),
+                        areaItem.area()
+                );
+        }
 }
