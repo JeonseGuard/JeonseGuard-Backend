@@ -59,7 +59,7 @@ public class BoardController {
 
     @Operation(summary = "댓글 수정", description = "댓글을 수정합니다.")
     @PatchMapping("/comments/{commentId}")
-    public ResponseEntity<Void> updateComment(@AuthenticatedUser Long userId, @PathVariable Long commentId, @RequestBody UpdateCommentRequest request) {
+    public ResponseEntity<Void> updateComment(@AuthenticatedUser Long userId, @PathVariable Long commentId, @Valid @RequestBody UpdateCommentRequest request) {
         boardFacade.updateComment(userId, commentId, request);
         return ResponseEntity.noContent().build();
     }

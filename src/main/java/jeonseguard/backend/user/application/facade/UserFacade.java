@@ -2,7 +2,7 @@ package jeonseguard.backend.user.application.facade;
 
 import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.domain.entity.User;
-import jeonseguard.backend.user.presentation.dto.UserInfoResponse;
+import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -5,7 +5,7 @@ import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.domain.factory.UserFactory;
 import jeonseguard.backend.user.domain.repository.UserRepository;
-import jeonseguard.backend.user.presentation.dto.UserInfoResponse;
+import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +45,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateProfileImage(User user, String imageUrl) {
-        user.updateProfileImage(imageUrl);
+    public void updateProfileImage(User user, String profileImage) {
+        user.updateProfileImage(profileImage);
     }
 }
