@@ -4,7 +4,7 @@ import jeonseguard.backend.building.application.service.BuildingRegisterService;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.building.presentation.dto.request.BuildingAddressRequest;
 import jeonseguard.backend.building.presentation.dto.response.BuildingRegisterResponse;
-import jeonseguard.backend.region.application.service.RegionService;
+import jeonseguard.backend.region.application.RegionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

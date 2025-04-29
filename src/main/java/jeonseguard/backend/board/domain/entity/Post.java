@@ -6,6 +6,8 @@ import jeonseguard.backend.global.entity.CommonBaseEntity;
 import jeonseguard.backend.user.domain.entity.User;
 import lombok.*;
 
+import static org.springframework.util.StringUtils.hasText;
+
 @Entity
 @Builder
 @Getter
@@ -34,10 +36,10 @@ public class Post extends CommonBaseEntity {
     private User user;
 
     public void updatePost(String title, String content, String updatedBy) {
-        if (title != null && !title.isBlank()) {
+        if (hasText(title)) {
             this.title = title;
         }
-        if (content != null && !content.isBlank()) {
+        if (hasText(content)) {
             this.content = content;
         }
         this.updatedBy = updatedBy;

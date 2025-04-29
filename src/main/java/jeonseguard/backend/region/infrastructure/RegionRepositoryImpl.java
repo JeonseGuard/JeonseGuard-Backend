@@ -21,9 +21,4 @@ public class RegionRepositoryImpl implements RegionRepository {
     public Optional<Region> findByAddress(String address) {
         return jpaRepository.findByAddress(address);
     }
-
-    @Override
-    public void deleteByAddress(String address) {
-        jpaRepository.deleteByAddress(address);
-    }
 }

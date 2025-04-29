@@ -7,6 +7,8 @@ import lombok.*;
 
 import java.util.List;
 
+import static org.springframework.util.StringUtils.hasText;
+
 @Entity
 @Builder
 @Getter
@@ -33,6 +35,18 @@ public class User extends CommonBaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Comment> comments;
+
+    public void updateNickname(String nickname) {
+        if (hasText(nickname)) {
+            this.nickname = nickname;
+        }
+    }
+
+    public void updateProfileImage(String profileImage) {
+        if (hasText(profileImage)) {
+            this.profileImage = profileImage;
+        }
+    }
 
     public boolean isAdmin() {
         return this.role == Role.ROLE_ADMIN;

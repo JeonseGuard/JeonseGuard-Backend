@@ -7,5 +7,4 @@ public interface RegionStore {
     void saveSigunguCode(String address, String sigunguCode);
     Optional<String> findRegionCodeByAddress(String address);
     Optional<String> findSigunguCodeByAddress(String address);
-    void deleteByAddress(String address);
 }

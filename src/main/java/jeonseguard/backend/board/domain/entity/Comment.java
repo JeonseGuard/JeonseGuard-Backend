@@ -6,6 +6,8 @@ import jeonseguard.backend.global.entity.CommonBaseEntity;
 import jeonseguard.backend.user.domain.entity.User;
 import lombok.*;
 
+import static org.springframework.util.StringUtils.hasText;
+
 @Entity
 @Builder
 @Getter
@@ -30,7 +32,7 @@ public class Comment extends CommonBaseEntity {
     private User user;
 
     public void updateComment(String content, String updatedBy) {
-        if (content != null && !content.isEmpty()) {
+        if (hasText(content)) {
             this.content = content;
         }
         this.updatedBy = updatedBy;

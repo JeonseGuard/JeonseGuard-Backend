@@ -1,9 +1,8 @@
-package jeonseguard.backend.region.application.service;
+package jeonseguard.backend.region.application;
 
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.region.domain.entity.Region;
 import jeonseguard.backend.region.domain.repository.*;
-import jeonseguard.backend.region.presentation.dto.DeleteRegionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +23,6 @@ public class RegionService {
     public String getSigunguCode(String address) {
         return regionStore.findSigunguCodeByAddress(address)
                 .orElseGet(() -> getAndCacheSigunguCode(address));
-    }
-
-    @Transactional
-    public void deleteRegion(DeleteRegionRequest request) {
-        regionStore.deleteByAddress(request.address());
-        regionRepository.deleteByAddress(request.address());
     }
 
     private String getAndCacheRegionCode(String address) {
