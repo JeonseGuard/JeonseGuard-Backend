@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface RegionJpaRepository extends JpaRepository<Region, Long> {
     Optional<Region> findByAddress(String address);
-    void deleteByAddress(String address);
 }

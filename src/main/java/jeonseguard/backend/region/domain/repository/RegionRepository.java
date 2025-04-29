@@ -7,5 +7,4 @@ import java.util.Optional;
 public interface RegionRepository {
     void save(Region region);
     Optional<Region> findByAddress(String address);
-    void deleteByAddress(String address);
 }

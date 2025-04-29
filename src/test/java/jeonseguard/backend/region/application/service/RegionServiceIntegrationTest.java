@@ -1,6 +1,7 @@
 package jeonseguard.backend.region.application.service;
 
 import jeonseguard.backend.global.exception.error.*;
+import jeonseguard.backend.region.application.RegionService;
 import jeonseguard.backend.region.domain.entity.Region;
 import jeonseguard.backend.region.domain.repository.*;
 import jeonseguard.backend.region.presentation.dto.DeleteRegionRequest;

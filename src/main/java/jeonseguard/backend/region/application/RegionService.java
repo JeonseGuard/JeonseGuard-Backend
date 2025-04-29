@@ -1,4 +1,4 @@
-package jeonseguard.backend.region.application.service;
+package jeonseguard.backend.region.application;
 
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.region.domain.entity.Region;

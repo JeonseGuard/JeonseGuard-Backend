@@ -36,10 +36,4 @@ public class RegionRedisRepository implements RegionStore {
     public Optional<String> findSigunguCodeByAddress(String address) {
         return Optional.ofNullable(redisTemplate.opsForValue().get(SIGUNGU_CODE_KEY_PREFIX + address));
     }
-
-    @Override
-    public void deleteByAddress(String address) {
-        redisTemplate.delete(REGION_CODE_KEY_PREFIX + address);
-        redisTemplate.delete(SIGUNGU_CODE_KEY_PREFIX + address);
-    }
 }
