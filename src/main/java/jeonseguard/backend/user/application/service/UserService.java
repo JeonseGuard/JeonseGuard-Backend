@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
 
+    // getUserInfo
+
     @Transactional
     public User getOrCreateUser(KakaoUserInfoResponse response) {
         return userRepository.findByKakaoId(response.kakaoId())
@@ -29,5 +31,15 @@ public class UserService {
     @Transactional
     public User createUser(KakaoUserInfoResponse response) {
         return userRepository.save(UserFactory.fromResponse(response));
+    }
+
+    @Transactional
+    public void updateNickname(User user, String nickname) {
+        user.updateNickname(nickname);
+    }
+
+    @Transactional
+    public void updateProfileImage(User user, String imageUrl) {
+        user.updateProfileImage(imageUrl);
     }
 }
