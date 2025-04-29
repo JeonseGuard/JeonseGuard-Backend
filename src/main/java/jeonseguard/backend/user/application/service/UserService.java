@@ -5,7 +5,8 @@ import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.domain.factory.UserFactory;
 import jeonseguard.backend.user.domain.repository.UserRepository;
-import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
+import jeonseguard.backend.user.presentation.dto.request.UpdateNicknameRequest;
+import jeonseguard.backend.user.presentation.dto.request.UpdateProfileImageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-    @Transactional(readOnly = true)
-    public UserInfoResponse getUserInfo(Long userId) {
-        return userRepository.findById(userId)
-                .map(UserInfoResponse::fromEntity)
-                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-    }
 
     @Transactional
     public User getOrCreateUser(KakaoUserInfoResponse response) {
@@ -40,12 +34,12 @@ public class UserService {
     }
 
     @Transactional
-    public void updateNickname(User user, String nickname) {
-        user.updateNickname(nickname);
+    public void updateNickname(User user, UpdateNicknameRequest request) {
+        user.updateNickname(request.newNickname());
     }
 
     @Transactional
-    public void updateProfileImage(User user, String profileImage) {
-        user.updateProfileImage(profileImage);
+    public void updateProfileImage(User user, UpdateProfileImageRequest request) {
+        user.updateProfileImage(request.newProfileImage());
     }
 }

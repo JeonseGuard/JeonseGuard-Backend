@@ -2,6 +2,8 @@ package jeonseguard.backend.user.application.facade;
 
 import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.domain.entity.User;
+import jeonseguard.backend.user.presentation.dto.request.UpdateNicknameRequest;
+import jeonseguard.backend.user.presentation.dto.request.UpdateProfileImageRequest;
 import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,8 +13,18 @@ import org.springframework.stereotype.Component;
 public class UserFacade {
     private final UserService userService;
 
-    public UserInfoResponse getUser(Long userId) {
+    public UserInfoResponse getUserInfo(Long userId) {
         User user = userService.getUser(userId);
         return UserInfoResponse.fromEntity(user);
+    }
+
+    public void updateNickname(Long userId, UpdateNicknameRequest request) {
+        User user = userService.getUser(userId);
+        userService.updateNickname(user, request);
+    }
+
+    public void updateProfileImage(Long userId, UpdateProfileImageRequest request) {
+        User user = userService.getUser(userId);
+        userService.updateProfileImage(user, request);
     }
 }
