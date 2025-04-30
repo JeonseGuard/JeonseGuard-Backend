@@ -19,13 +19,13 @@ public class CacheConfig {
 
     @Bean
     public CacheManager redisCacheManager() {
-        RedisCacheConfiguration defaultConfig = createCacheConfigWithTtl(Duration.ofMinutes(30));
+        RedisCacheConfiguration defaultCacheConfig = createRedisCacheConfig(Duration.ofMinutes(30));
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
-        cacheConfigs.put("user", defaultConfig);
-        return buildCacheManager(defaultConfig, cacheConfigs);
+        cacheConfigs.put("user", defaultCacheConfig);
+        return buildCacheManager(defaultCacheConfig, cacheConfigs);
     }
 
-    private RedisCacheConfiguration createCacheConfigWithTtl(Duration ttl) {
+    private RedisCacheConfiguration createRedisCacheConfig(Duration ttl) {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
@@ -33,9 +33,9 @@ public class CacheConfig {
                 .entryTtl(ttl);
     }
 
-    private RedisCacheManager buildCacheManager(RedisCacheConfiguration defaultConfig, Map<String, RedisCacheConfiguration> cacheConfigs) {
+    private RedisCacheManager buildCacheManager(RedisCacheConfiguration defaultCacheConfig, Map<String, RedisCacheConfiguration> cacheConfigs) {
         return RedisCacheManager.builder(redisConnectionFactory)
-                .cacheDefaults(defaultConfig)
+                .cacheDefaults(defaultCacheConfig)
                 .withInitialCacheConfigurations(cacheConfigs)
                 .build();
     }

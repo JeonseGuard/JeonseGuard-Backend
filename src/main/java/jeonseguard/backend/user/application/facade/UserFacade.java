@@ -13,8 +13,7 @@ public class UserFacade {
     private final UserService userService;
 
     public UserInfoResponse getUserInfo(Long userId) {
-        User user = userService.getUser(userId);
-        return UserInfoResponse.fromEntity(user);
+        return userService.getUserInfo(userId);
     }
 
     public void updateNickname(Long userId, UpdateNicknameRequest request) {
