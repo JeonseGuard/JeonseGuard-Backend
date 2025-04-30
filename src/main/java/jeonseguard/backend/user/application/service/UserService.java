@@ -7,6 +7,7 @@ import jeonseguard.backend.user.domain.factory.UserFactory;
 import jeonseguard.backend.user.domain.repository.UserRepository;
 import jeonseguard.backend.user.presentation.dto.request.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class UserService {
                 .orElseGet(() -> createUser(response));
     }
 
+    @Cacheable(value = "user", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)
     public User getUser(Long userId) {
         return userRepository.findById(userId)
@@ -32,11 +34,13 @@ public class UserService {
         return userRepository.save(UserFactory.fromResponse(response));
     }
 
+    @CacheEvict(value = "user", key = "'user::id:' + #user.id")
     @Transactional
     public void updateNickname(User user, UpdateNicknameRequest request) {
         user.updateNickname(request.newNickname());
     }
 
+    @CacheEvict(value = "user", key = "'user::id:' + #user.id")
     @Transactional
     public void updateProfileImage(User user, UpdateProfileImageRequest request) {
         user.updateProfileImage(request.newProfileImage());
