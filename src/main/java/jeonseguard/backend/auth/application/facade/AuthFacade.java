@@ -16,8 +16,8 @@ public class AuthFacade {
     private final UserService userService;
 
     public TokenResponse login(LoginRequest request) {
-        KakaoUserInfoResponse kakaoUserInfo = authService.getKakaoUserInfo(request);
-        User user = userService.getOrCreateUser(kakaoUserInfo);
+        KakaoUserInfoResponse response = authService.getKakaoUserInfo(request);
+        User user = userService.getOrCreateUser(response);
         return authService.getTokens(user.getId());
     }
 

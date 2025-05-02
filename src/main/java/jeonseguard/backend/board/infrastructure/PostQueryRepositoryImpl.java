@@ -72,7 +72,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 .selectFrom(post)
                 .where(
                         post.id.eq(postId),
-                        post.user.id.eq(userId),
+                        post.userId.eq(userId),
                         post.category.eq(category)
                 )
                 .fetchOne()

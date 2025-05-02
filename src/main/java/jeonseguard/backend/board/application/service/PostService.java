@@ -7,6 +7,7 @@ import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
+import jeonseguard.backend.user.infrastructure.dto.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -36,8 +37,8 @@ public class PostService {
     }
 
     @Transactional
-    public Post createPost(User user, String category, CreatePostRequest request) {
-        Post post = PostFactory.fromRequest(user, parseCategory(category), request);
+    public Post createPost(String category, UserInfoResponse response, CreatePostRequest request) {
+        Post post = PostFactory.fromRequest(parseCategory(category), response, request);
         return postRepository.save(post);
     }
 
@@ -54,7 +55,7 @@ public class PostService {
     }
 
     private void validatePostAuthor(Long userId, Post post, ErrorCode errorCode) {
-        if (!post.getUser().getId().equals(userId)) {
+        if (!post.getUserId().equals(userId)) {
             throw new BusinessException(errorCode);
         }
     }

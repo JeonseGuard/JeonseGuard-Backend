@@ -32,8 +32,8 @@ public class BoardFacade {
     }
 
     public CreatePostResponse createPost(Long userId, String category, CreatePostRequest request) {
-        User user = userService.getUser(userId);
-        Post post = postService.createPost(user, category, request);
+        UserInfoResponse response = userService.getUserInfo(userId);
+        Post post = postService.createPost(category, response, request);
         return CreatePostResponse.fromEntity(post);
     }
 
@@ -49,15 +49,15 @@ public class BoardFacade {
     }
 
     public CreateCommentResponse createComment(Long userId, Long postId, CreateCommentRequest request) {
-        UserInfoResponse response = userService.getUserInfo(userId);
-        Comment comment = commentService.createComment(postId, response, request);
+        UserInfoResponse user = userService.getUserInfo(userId);
+        Comment comment = commentService.createComment(postId, user, request);
         return CreateCommentResponse.fromEntity(comment);
     }
 
     public void updateComment(Long userId, Long commentId, UpdateCommentRequest request) {
-        UserInfoResponse response = userService.getUserInfo(userId);
+        UserInfoResponse user = userService.getUserInfo(userId);
         Comment comment = commentService.getComment(commentId);
-        commentService.updateComment(userId, comment, response, request);
+        commentService.updateComment(userId, comment, user, request);
     }
 
     public void deleteComment(Long userId, Long commentId) {

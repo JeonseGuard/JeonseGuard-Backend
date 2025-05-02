@@ -25,17 +25,19 @@ public class BuildingFacade {
         return BuildingRegisterResponse.of(overviewItem, floorItem, areaItem);
     }
 
-    public BuildingRegisterRequest convertToBuildingRegisterRequest(BuildingAddressRequest addressRequest) {
+    private BuildingRegisterRequest convertToBuildingRegisterRequest(BuildingAddressRequest addressRequest) {
         String address = addressRequest.address();
-        RegionInfoResponse regionInfoResponse = regionService.getRegionInfo(address);
-        String parsedRegionCode = extractRegionCode(regionInfoResponse.regionCode());
-        String sigunguCode = regionInfoResponse.sigunguCode();
+        RegionInfoResponse response = regionService.getRegionInfo(address);
+        String parsedRegionCode = extractRegionCode(response.regionCode());
+        String sigunguCode = response.sigunguCode();
         String bun = formatBunji(addressRequest.bun());
         String ji = addressRequest.ji() != null ? formatBunji(addressRequest.ji()) : null;
         String dongNumber = addressRequest.dongName() != null ? formatDongName(addressRequest.dongName()) : null;
         String dongName = addressRequest.dongName() != null ? addressRequest.dongName() : null;
+        String floorNumber = addressRequest.floorName() != null ? formatFloorName(addressRequest.floorName()) : null;
         String floorName = addressRequest.floorName() != null ? addressRequest.floorName() : null;
+        String hoNumber = addressRequest.hoName() != null ? formatHoName(addressRequest.hoName()) : null;
         String hoName = addressRequest.hoName() != null ? addressRequest.hoName() : null;
-        return BuildingRegisterRequest.of(parsedRegionCode, sigunguCode, bun, ji, dongNumber, dongName, floorName, hoName);
+        return BuildingRegisterRequest.of(parsedRegionCode, sigunguCode, bun, ji, dongNumber, dongName, floorNumber, floorName, hoNumber, hoName);
     }
 }

@@ -18,12 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
 
-    @Transactional
-    public User getOrCreateUser(KakaoUserInfoResponse response) {
-        return userRepository.findByKakaoId(response.kakaoId())
-                .orElseGet(() -> createUser(response));
-    }
-
     @Cacheable(value = "user", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)
     public UserDetailResponse getUserDetail(Long userId) {
@@ -38,6 +32,12 @@ public class UserService {
         return userRepository.findById(userId)
                 .map(UserInfoResponse::fromEntity)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    @Transactional
+    public User getOrCreateUser(KakaoUserInfoResponse response) {
+        return userRepository.findByKakaoId(response.kakaoId())
+                .orElseGet(() -> createUser(response));
     }
 
     @Transactional(readOnly = true)

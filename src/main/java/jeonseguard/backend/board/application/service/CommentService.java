@@ -32,14 +32,14 @@ public class CommentService {
 
     @Transactional
     public Comment createComment(Long postId, UserInfoResponse response, CreateCommentRequest request) {
-        Comment comment = CommentFactory.fromRequest(postId, response.userId(), response.nickname(), request);
+        Comment comment = CommentFactory.fromRequest(postId, response, request);
         return commentRepository.save(comment);
     }
 
     @Transactional
-    public void updateComment(Long userId, Comment comment, UserInfoResponse response, UpdateCommentRequest request) {
+    public void updateComment(Long userId, Comment comment, UserInfoResponse user, UpdateCommentRequest request) {
         validateCommentAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
-        comment.updateComment(request.newContent(), response.nickname());
+        comment.updateComment(request.newContent(), user.nickname());
     }
 
     @Transactional
