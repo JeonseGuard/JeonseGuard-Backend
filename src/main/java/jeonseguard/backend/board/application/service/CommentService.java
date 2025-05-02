@@ -6,7 +6,7 @@ import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.CommentResponse;
 import jeonseguard.backend.global.exception.error.*;
-import jeonseguard.backend.user.domain.entity.User;
+import jeonseguard.backend.user.infrastructure.dto.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,15 +31,15 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment createComment(Long postId, User user, CreateCommentRequest request) {
-        Comment comment = CommentFactory.fromRequest(postId, user, request);
+    public Comment createComment(Long postId, UserInfoResponse response, CreateCommentRequest request) {
+        Comment comment = CommentFactory.fromRequest(postId, response.userId(), response.nickname(), request);
         return commentRepository.save(comment);
     }
 
     @Transactional
-    public void updateComment(Long userId, User user, Comment comment, UpdateCommentRequest request) {
+    public void updateComment(Long userId, Comment comment, UserInfoResponse response, UpdateCommentRequest request) {
         validateCommentAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
-        comment.updateComment(request.newContent(), user.getNickname());
+        comment.updateComment(request.newContent(), response.nickname());
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class CommentService {
     }
 
     private void validateCommentAuthor(Long userId, Comment comment, ErrorCode errorCode) {
-        if (!comment.getUser().getId().equals(userId)) {
+        if (!comment.getUserId().equals(userId)) {
             throw new BusinessException(errorCode);
         }
     }

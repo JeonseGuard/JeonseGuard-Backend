@@ -33,9 +33,6 @@ public class User extends CommonBaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Comment> comments;
-
     public void updateNickname(String nickname) {
         if (hasText(nickname)) {
             this.nickname = nickname;

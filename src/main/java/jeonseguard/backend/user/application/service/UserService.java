@@ -5,6 +5,7 @@ import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.domain.factory.UserFactory;
 import jeonseguard.backend.user.domain.repository.UserRepository;
+import jeonseguard.backend.user.infrastructure.dto.UserInfoResponse;
 import jeonseguard.backend.user.presentation.dto.request.*;
 import jeonseguard.backend.user.presentation.dto.respone.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,14 @@ public class UserService {
     public UserDetailResponse getUserDetail(Long userId) {
         return userRepository.findById(userId)
                 .map(UserDetailResponse::fromEntity)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    @Cacheable(value = "user", key = "'user::id:' + #userId")
+    @Transactional(readOnly = true)
+    public UserInfoResponse getUserInfo(Long userId) {
+        return userRepository.findById(userId)
+                .map(UserInfoResponse::fromEntity)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 

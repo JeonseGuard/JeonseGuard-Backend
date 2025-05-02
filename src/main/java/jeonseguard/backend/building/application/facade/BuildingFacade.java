@@ -27,7 +27,7 @@ public class BuildingFacade {
 
     public BuildingRegisterRequest convertToBuildingRegisterRequest(BuildingAddressRequest addressRequest) {
         String address = addressRequest.address();
-        RegionInfoResponse regionInfoResponse = regionService.getRegion(address);
+        RegionInfoResponse regionInfoResponse = regionService.getRegionInfo(address);
         String parsedRegionCode = extractRegionCode(regionInfoResponse.regionCode());
         String sigunguCode = regionInfoResponse.sigunguCode();
         String bun = formatBunji(addressRequest.bun());

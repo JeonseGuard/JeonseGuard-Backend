@@ -6,6 +6,7 @@ import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.domain.entity.User;
+import jeonseguard.backend.user.infrastructure.dto.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
@@ -48,15 +49,15 @@ public class BoardFacade {
     }
 
     public CreateCommentResponse createComment(Long userId, Long postId, CreateCommentRequest request) {
-        User user = userService.getUser(userId);
-        Comment comment = commentService.createComment(postId, user, request);
+        UserInfoResponse response = userService.getUserInfo(userId);
+        Comment comment = commentService.createComment(postId, response, request);
         return CreateCommentResponse.fromEntity(comment);
     }
 
     public void updateComment(Long userId, Long commentId, UpdateCommentRequest request) {
-        User user = userService.getUser(userId);
+        UserInfoResponse response = userService.getUserInfo(userId);
         Comment comment = commentService.getComment(commentId);
-        commentService.updateComment(userId, user, comment, request);
+        commentService.updateComment(userId, comment, response, request);
     }
 
     public void deleteComment(Long userId, Long commentId) {
