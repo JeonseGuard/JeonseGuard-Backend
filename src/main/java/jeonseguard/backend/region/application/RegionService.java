@@ -1,9 +1,10 @@
 package jeonseguard.backend.region.application;
 
 import jeonseguard.backend.global.exception.error.*;
-import jeonseguard.backend.region.domain.entity.Region;
-import jeonseguard.backend.region.domain.repository.*;
+import jeonseguard.backend.region.domain.repository.RegionRepository;
+import jeonseguard.backend.region.infrastructure.dto.RegionResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,34 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RegionService {
     private final RegionRepository regionRepository;
-    private final RegionStore regionStore;
 
+    @Cacheable(value = "region", key = "'region::address' + #address")
     @Transactional(readOnly = true)
-    public String getRegionCode(String address) {
-        return regionStore.findRegionCodeByAddress(address)
-                .orElseGet(() -> getAndCacheRegionCode(address));
-    }
-
-    @Transactional(readOnly = true)
-    public String getSigunguCode(String address) {
-        return regionStore.findSigunguCodeByAddress(address)
-                .orElseGet(() -> getAndCacheSigunguCode(address));
-    }
-
-    private String getAndCacheRegionCode(String address) {
-        Region region = getRegion(address);
-        regionStore.saveRegionCode(region.getAddress(), region.getRegionCode());
-        return region.getRegionCode();
-    }
-
-    private String getAndCacheSigunguCode(String address) {
-        Region region = getRegion(address);
-        regionStore.saveSigunguCode(region.getAddress(), region.getSigunguCode());
-        return region.getSigunguCode();
-    }
-
-    private Region getRegion(String address) {
+    public RegionResponse getRegion(String address) {
         return regionRepository.findByAddress(address)
+                .map(RegionResponse::fromEntity)
                 .orElseThrow(() -> new BusinessException(ErrorCode.REGION_NOT_FOUND));
     }
 }

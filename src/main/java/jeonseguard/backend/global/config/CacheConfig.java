@@ -22,6 +22,7 @@ public class CacheConfig {
         RedisCacheConfiguration defaultCacheConfig = createRedisCacheConfig(Duration.ofMinutes(30));
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
         cacheConfigs.put("user", defaultCacheConfig);
+        cacheConfigs.put("region", defaultCacheConfig);
         return buildCacheManager(defaultCacheConfig, cacheConfigs);
     }
 

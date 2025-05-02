@@ -5,6 +5,7 @@ import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterR
 import jeonseguard.backend.building.presentation.dto.request.BuildingAddressRequest;
 import jeonseguard.backend.building.presentation.dto.response.BuildingRegisterResponse;
 import jeonseguard.backend.region.application.RegionService;
+import jeonseguard.backend.region.infrastructure.dto.RegionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +27,9 @@ public class BuildingFacade {
 
     public BuildingRegisterRequest convertToBuildingRegisterRequest(BuildingAddressRequest addressRequest) {
         String address = addressRequest.address();
-        String regionCode = regionService.getRegionCode(address);
-        String parsedRegionCode = extractRegionCode(regionCode);
-        String sigunguCode = regionService.getSigunguCode(address);
+        RegionResponse regionResponse = regionService.getRegion(address);
+        String parsedRegionCode = extractRegionCode(regionResponse.regionCode());
+        String sigunguCode = regionResponse.sigunguCode();
         String bun = formatBunji(addressRequest.bun());
         String ji = addressRequest.ji() != null ? formatBunji(addressRequest.ji()) : null;
         String dongNumber = addressRequest.dongName() != null ? formatDongName(addressRequest.dongName()) : null;
