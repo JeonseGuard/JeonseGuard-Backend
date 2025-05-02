@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import jeonseguard.backend.global.annotation.AuthenticatedUser;
 import jeonseguard.backend.user.application.facade.UserFacade;
 import jeonseguard.backend.user.presentation.dto.request.*;
-import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
+import jeonseguard.backend.user.presentation.dto.respone.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "User", description = "사용자 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/user")
+@RequestMapping("/api/v3/user")
 public class UserController {
     private final UserFacade userFacade;
 
     @Operation(summary = "사용자 개인 정보 조회", description = "JWT 토큰을 기반으로 현재 로그인한 사용자의 개인 정보를 가져옵니다.")
-    @GetMapping("/info")
-    public ResponseEntity<UserInfoResponse> getUserInfo(@AuthenticatedUser Long userId) {
-        return ResponseEntity.ok(userFacade.getUserInfo(userId));
+    @GetMapping("/me")
+    public ResponseEntity<UserDetailResponse> getUserDetail(@AuthenticatedUser Long userId) {
+        return ResponseEntity.ok(userFacade.getUserDetail(userId));
     }
 
     @Operation(summary = "사용자 닉네임 수정", description = "현재 로그인한 사용자의 닉네임을 수정합니다.")

@@ -2,7 +2,7 @@ package jeonseguard.backend.region.application;
 
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.region.domain.repository.RegionRepository;
-import jeonseguard.backend.region.infrastructure.dto.RegionResponse;
+import jeonseguard.backend.region.infrastructure.dto.RegionInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,9 @@ public class RegionService {
 
     @Cacheable(value = "region", key = "'region::address' + #address")
     @Transactional(readOnly = true)
-    public RegionResponse getRegion(String address) {
+    public RegionInfoResponse getRegionInfo(String address) {
         return regionRepository.findByAddress(address)
-                .map(RegionResponse::fromEntity)
+                .map(RegionInfoResponse::fromEntity)
                 .orElseThrow(() -> new BusinessException(ErrorCode.REGION_NOT_FOUND));
     }
 }

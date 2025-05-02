@@ -6,7 +6,7 @@ import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.domain.factory.UserFactory;
 import jeonseguard.backend.user.domain.repository.UserRepository;
 import jeonseguard.backend.user.presentation.dto.request.*;
-import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
+import jeonseguard.backend.user.presentation.dto.respone.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,9 @@ public class UserService {
 
     @Cacheable(value = "user", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)
-    public UserInfoResponse getUserInfo(Long userId) {
+    public UserDetailResponse getUserDetail(Long userId) {
         return userRepository.findById(userId)
-                .map(UserInfoResponse::fromEntity)
+                .map(UserDetailResponse::fromEntity)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
