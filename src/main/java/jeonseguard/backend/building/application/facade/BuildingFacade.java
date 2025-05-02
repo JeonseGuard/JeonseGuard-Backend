@@ -31,9 +31,10 @@ public class BuildingFacade {
         String sigunguCode = regionService.getSigunguCode(address);
         String bun = formatBunji(addressRequest.bun());
         String ji = addressRequest.ji() != null ? formatBunji(addressRequest.ji()) : null;
-        String dongName = addressRequest.dongName() != null ? formatDongName(addressRequest.dongName()) : null;
+        String dongNumber = addressRequest.dongName() != null ? formatDongName(addressRequest.dongName()) : null;
+        String dongName = addressRequest.dongName() != null ? addressRequest.dongName() : null;
         String floorName = addressRequest.floorName() != null ? addressRequest.floorName() : null;
         String hoName = addressRequest.hoName() != null ? addressRequest.hoName() : null;
-        return BuildingRegisterRequest.of(parsedRegionCode, sigunguCode, bun, ji, dongName, floorName, hoName);
+        return BuildingRegisterRequest.of(parsedRegionCode, sigunguCode, bun, ji, dongNumber, dongName, floorName, hoName);
     }
 }

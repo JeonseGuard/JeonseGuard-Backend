@@ -22,7 +22,7 @@ public class BuildingRegisterService {
     public BuildingRegisterOverviewItem getBuildingRegisterOverview(int pageNumber, BuildingRegisterRequest request) {
         List<BuildingRegisterOverviewItem> items = fetchBuildingRegisterOverview(pageNumber, request);
         return items.stream()
-                .filter(item -> !hasText(request.dongName()) || isSameText(request.dongName(), item.dongName()))
+                .filter(item -> !hasText(request.dongName()) || isSameText(request.dongName(), item.dongName()) || isSameText(request.dongNumber(), item.dongName()))
                 .findFirst()
                 .orElseGet(() -> getBuildingRegisterOverview(pageNumber + 1, request));
     }
@@ -31,7 +31,7 @@ public class BuildingRegisterService {
     public BuildingRegisterFloorItem getBuildingRegisterFloor(int pageNumber, BuildingRegisterRequest request) {
         List<BuildingRegisterFloorItem> items = fetchBuildingRegisterFloor(pageNumber, request);
         return items.stream()
-                .filter(item -> !hasText(request.dongName()) || isSameText(request.dongName(), item.dongName()))
+                .filter(item -> !hasText(request.dongName()) || isSameText(request.dongName(), item.dongName()) || isSameText(request.dongNumber(), item.dongName()))
                 .filter(item -> isSameText(request.floorName(), item.floorName()))
                 .findFirst()
                 .orElseGet(() -> getBuildingRegisterFloor(pageNumber + 1, request));

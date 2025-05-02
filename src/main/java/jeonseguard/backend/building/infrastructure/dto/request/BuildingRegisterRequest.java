@@ -17,6 +17,9 @@ public record BuildingRegisterRequest(
         @Schema(description = "지")
         String ji,
 
+        @Schema(description = "동번호")
+        String dongNumber,
+
         @Schema(description = "동명칭")
         String dongName,
 
@@ -26,12 +29,13 @@ public record BuildingRegisterRequest(
         @Schema(description = "호명칭")
         String hoName
 ) {
-        public static BuildingRegisterRequest of(String regionCode, String sigunguCode, String bun, String ji, String dongName, String floorName, String hoName) {
+        public static BuildingRegisterRequest of(String regionCode, String sigunguCode, String bun, String ji, String dongNumber, String dongName, String floorName, String hoName) {
                 return new BuildingRegisterRequest(
                         regionCode,
                         sigunguCode,
                         bun,
                         ji,
+                        dongNumber,
                         dongName,
                         floorName,
                         hoName
