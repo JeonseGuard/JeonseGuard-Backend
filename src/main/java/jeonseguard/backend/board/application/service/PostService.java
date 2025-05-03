@@ -5,9 +5,11 @@ import jeonseguard.backend.board.domain.factory.PostFactory;
 import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.infrastructure.dto.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
+import jeonseguard.backend.board.presentation.dto.response.PostPageResponse;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +20,13 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostQueryRepository postQueryRepository;
 
+    @Cacheable(value = "postPage", key = "'post::category:' + #category + ':page:' + #pageable.pageNumber")
     @Transactional(readOnly = true)
-    public Page<PostResponse> getPostPage(String category, Pageable pageable) {
+    public PostPageResponse getPosts(String category, Pageable pageable) {
         return postQueryRepository.findAllWithCounts(parseCategory(category), pageable);
     }
 
+    @Cacheable(value = "postDetail", key = "'post::id:' + #postId")
     @Transactional(readOnly = true)
     public PostDetailResponse getPostDetail(Long userId, Long postId, String category) {
         return postQueryRepository.findDetailByUserIdAndIdAndCategory(userId, postId, category)
@@ -35,18 +39,27 @@ public class PostService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
+    @CacheEvict(value = "postPage", allEntries = true)
     @Transactional
     public Post createPost(String category, UserDetailResponse response, CreatePostRequest request) {
         Post post = PostFactory.from(parseCategory(category), response, request);
         return postRepository.save(post);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id"),
+            @CacheEvict(value = "postPage", allEntries = true)
+    })
     @Transactional
     public void updatePost(Long userId, Post post, UserDetailResponse response, UpdatePostRequest request) {
         validatePostAuthor(userId, post, ErrorCode.POST_UPDATE_FORBIDDEN);
         post.updatePost(request.newTitle(), request.newContent(), response.nickname());
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id"),
+            @CacheEvict(value = "postPage", allEntries = true)
+    })
     @Transactional
     public void deletePost(Long userId, Post post) {
         validatePostAuthor(userId, post, ErrorCode.POST_DELETE_FORBIDDEN);

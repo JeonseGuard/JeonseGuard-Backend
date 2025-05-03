@@ -1,10 +1,12 @@
 package jeonseguard.backend.board.infrastructure.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public record PostDetailResponse(
         @Schema(description = "게시글 ID") Long postId,
         @Schema(description = "제목") String title,

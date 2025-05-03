@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.repository.PostQueryRepository;
 import jeonseguard.backend.board.infrastructure.dto.*;
+import jeonseguard.backend.board.presentation.dto.response.PostPageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     private final QHeart heart = QHeart.heart;
 
     @Override
-    public Page<PostResponse> findAllWithCounts(BoardCategory category, Pageable pageable) {
+    public PostPageResponse findAllWithCounts(BoardCategory category, Pageable pageable) {
         List<PostResponse> posts = queryFactory
                 .select(new QPostResponse(
                         post.id,
@@ -44,7 +45,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 .where(post.category.eq(category))
                 .fetchOne()).orElse(0L);
 
-        return new PageImpl<>(posts, pageable, total);
+        Page<PostResponse> page = new PageImpl<>(posts, pageable, total);
+
+        return PostPageResponse.from(page);
     }
 
     @Override

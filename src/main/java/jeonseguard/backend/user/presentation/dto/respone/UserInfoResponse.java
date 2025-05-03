@@ -1,8 +1,10 @@
 package jeonseguard.backend.user.presentation.dto.respone;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jeonseguard.backend.user.domain.entity.User;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public record UserInfoResponse(
         @Schema(description = "사용자 ID") Long userId,
         @Schema(description = "닉네임") String nickname,
