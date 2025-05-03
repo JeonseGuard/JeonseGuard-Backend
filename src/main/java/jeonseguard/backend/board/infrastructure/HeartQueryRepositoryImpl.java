@@ -1,12 +1,12 @@
 package jeonseguard.backend.board.infrastructure;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jeonseguard.backend.board.domain.entity.*;
+import jeonseguard.backend.board.domain.entity.QHeart;
 import jeonseguard.backend.board.domain.repository.HeartQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -15,27 +15,23 @@ public class HeartQueryRepositoryImpl implements HeartQueryRepository {
     private final QHeart heart = QHeart.heart;
 
     @Override
-    public boolean existsByTarget(Long userId, Long targetId, HeartTarget target) {
+    public boolean existsByUserIdAndPostId(Long userId, Long postId) {
         return queryFactory
                 .selectOne()
                 .from(heart)
                 .where(
                         heart.userId.eq(userId),
-                        heart.targetId.eq(targetId),
-                        heart.target.eq(target)
+                        heart.postId.eq(postId)
                 )
                 .fetchFirst() != null;
     }
 
     @Override
-    public long countByTarget(Long targetId, HeartTarget target) {
+    public long countByPostId(Long postId) {
         return Optional.ofNullable(queryFactory
                 .select(heart.count())
                 .from(heart)
-                .where(
-                        heart.targetId.eq(targetId),
-                        heart.target.eq(target)
-                )
+                .where(heart.postId.eq(postId))
                 .fetchOne()).orElse(0L);
     }
 }

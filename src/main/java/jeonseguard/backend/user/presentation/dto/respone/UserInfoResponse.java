@@ -1,4 +1,4 @@
-package jeonseguard.backend.user.infrastructure.dto;
+package jeonseguard.backend.user.presentation.dto.respone;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jeonseguard.backend.user.domain.entity.User;

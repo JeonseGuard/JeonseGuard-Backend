@@ -1,6 +1,6 @@
 package jeonseguard.backend.board.infrastructure;
 
-import jeonseguard.backend.board.domain.entity.*;
+import jeonseguard.backend.board.domain.entity.Heart;
 import jeonseguard.backend.board.domain.repository.HeartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,12 +16,12 @@ public class HeartRepositoryImpl implements HeartRepository {
     }
 
     @Override
-    public boolean existsByUserIdAndTargetIdAndTarget(Long userId, Long targetId, HeartTarget target) {
-        return jpaRepository.existsByUserIdAndTargetIdAndTarget(userId, targetId, target);
+    public boolean existsByUserIdAndPostId(Long userId, Long postId) {
+        return jpaRepository.existsByUserIdAndPostId(userId, postId);
     }
 
     @Override
-    public void deleteByUserIdAndTargetIdAndTarget(Long userId, Long targetId, HeartTarget target) {
-        jpaRepository.deleteByUserIdAndTargetIdAndTarget(userId, targetId, target);
+    public void deleteByUserIdAndPostId(Long userId, Long postId) {
+        jpaRepository.deleteByUserIdAndPostId(userId, postId);
     }
 }

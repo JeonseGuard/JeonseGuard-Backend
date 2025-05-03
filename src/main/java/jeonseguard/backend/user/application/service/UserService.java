@@ -5,9 +5,9 @@ import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.domain.factory.UserFactory;
 import jeonseguard.backend.user.domain.repository.UserRepository;
-import jeonseguard.backend.user.infrastructure.dto.UserInfoResponse;
+import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import jeonseguard.backend.user.presentation.dto.request.*;
-import jeonseguard.backend.user.presentation.dto.respone.UserDetailResponse;
+import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
@@ -20,17 +20,17 @@ public class UserService {
 
     @Cacheable(value = "user", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)
-    public UserDetailResponse getUserDetail(Long userId) {
+    public UserInfoResponse getUserInfo(Long userId) {
         return userRepository.findById(userId)
-                .map(UserDetailResponse::fromEntity)
+                .map(UserInfoResponse::fromEntity)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
     @Cacheable(value = "user", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)
-    public UserInfoResponse getUserInfo(Long userId) {
+    public UserDetailResponse getUserDetail(Long userId) {
         return userRepository.findById(userId)
-                .map(UserInfoResponse::fromEntity)
+                .map(UserDetailResponse::fromEntity)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
@@ -48,7 +48,8 @@ public class UserService {
 
     @Transactional
     public User createUser(KakaoUserInfoResponse response) {
-        return userRepository.save(UserFactory.fromResponse(response));
+        User user = UserFactory.fromResponse(response);
+        return userRepository.save(user);
     }
 
     @CacheEvict(value = "user", key = "'user::id:' + #user.id")

@@ -6,7 +6,7 @@ import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.CommentResponse;
 import jeonseguard.backend.global.exception.error.*;
-import jeonseguard.backend.user.infrastructure.dto.UserInfoResponse;
+import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentResponse> getComments(Long userId, Long postId) {
-        return commentQueryRepository.findAllByIdAndPostIdAndTarget(userId, postId, HeartTarget.COMMENT);
+        return commentQueryRepository.findAllByIdAndPostId(userId, postId);
     }
 
     @Transactional(readOnly = true)
@@ -31,15 +31,15 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment createComment(Long postId, UserInfoResponse response, CreateCommentRequest request) {
-        Comment comment = CommentFactory.fromRequest(postId, response, request);
+    public Comment createComment(Long postId, UserDetailResponse response, CreateCommentRequest request) {
+        Comment comment = CommentFactory.from(postId, response, request);
         return commentRepository.save(comment);
     }
 
     @Transactional
-    public void updateComment(Long userId, Comment comment, UserInfoResponse user, UpdateCommentRequest request) {
+    public void updateComment(Long userId, Comment comment, UserDetailResponse response, UpdateCommentRequest request) {
         validateCommentAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
-        comment.updateComment(request.newContent(), user.nickname());
+        comment.updateComment(request.newContent(), response.nickname());
     }
 
     @Transactional

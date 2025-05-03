@@ -7,7 +7,7 @@ import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
-import jeonseguard.backend.user.infrastructure.dto.UserInfoResponse;
+import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -37,8 +37,8 @@ public class PostService {
     }
 
     @Transactional
-    public Post createPost(String category, UserInfoResponse response, CreatePostRequest request) {
-        Post post = PostFactory.fromRequest(parseCategory(category), response, request);
+    public Post createPost(String category, UserDetailResponse response, CreatePostRequest request) {
+        Post post = PostFactory.from(parseCategory(category), response, request);
         return postRepository.save(post);
     }
 

@@ -76,10 +76,4 @@ public class BoardController {
     public ResponseEntity<HeartResponse> togglePostHeart(@AuthenticatedUser Long userId, @PathVariable Long postId) {
         return ResponseEntity.ok(boardFacade.togglePostHeart(userId, postId));
     }
-
-    @Operation(summary = "댓글 좋아요", description = "댓글에 좋아요를 누르거나 취소합니다.")
-    @PostMapping("/comments/{commentId}/hearts")
-    public ResponseEntity<HeartResponse> toggleCommentHeart(@AuthenticatedUser Long userId, @PathVariable Long commentId) {
-        return ResponseEntity.ok(boardFacade.toggleCommentHeart(userId, commentId));
-    }
 }

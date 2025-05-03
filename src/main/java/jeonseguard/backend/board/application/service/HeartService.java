@@ -1,6 +1,6 @@
 package jeonseguard.backend.board.application.service;
 
-import jeonseguard.backend.board.domain.entity.*;
+import jeonseguard.backend.board.domain.entity.Heart;
 import jeonseguard.backend.board.domain.factory.HeartFactory;
 import jeonseguard.backend.board.domain.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -14,21 +14,21 @@ public class HeartService {
     private final HeartQueryRepository heartQueryRepository;
 
     @Transactional(readOnly = true)
-    public boolean hasHeart(Long userId, Long targetId, HeartTarget target) {
-        return heartQueryRepository.existsByTarget(userId, targetId, target);
+    public boolean hasHeart(Long userId, Long postId) {
+        return heartQueryRepository.existsByUserIdAndPostId(userId, postId);
     }
 
     @Transactional(readOnly = true)
-    public long countHeart(Long targetId, HeartTarget target) {
-        return heartQueryRepository.countByTarget(targetId, target);
+    public long countHeart(Long postId) {
+        return heartQueryRepository.countByPostId(postId);
     }
 
     @Transactional
-    public void toggleHeart(Long userId, Long targetId, HeartTarget target) {
-        if (heartRepository.existsByUserIdAndTargetIdAndTarget(userId, targetId, target)) {
-            heartRepository.deleteByUserIdAndTargetIdAndTarget(userId, targetId, target);
+    public void toggleHeart(Long userId, Long postId) {
+        if (heartRepository.existsByUserIdAndPostId(userId, postId)) {
+            heartRepository.deleteByUserIdAndPostId(userId, postId);
         } else {
-            Heart heart = HeartFactory.createHeart(userId, targetId, target);
+            Heart heart = HeartFactory.from(userId, postId);
             heartRepository.save(heart);
         }
     }

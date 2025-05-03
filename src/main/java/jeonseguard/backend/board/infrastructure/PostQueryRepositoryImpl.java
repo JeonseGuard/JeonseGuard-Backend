@@ -95,17 +95,16 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 "({0})",
                 JPAExpressions.select(heart.count().longValue())
                         .from(heart)
-                        .where(heart.targetId.eq(post.id)
-                                .and(heart.target.eq(HeartTarget.POST)))
+                        .where(heart.postId.eq(post.id))
         );
     }
 
     private BooleanExpression heartStatus(Long userId) {
         return JPAExpressions.selectOne()
                 .from(heart)
-                .where(heart.targetId.eq(post.id)
-                        .and(heart.target.eq(HeartTarget.POST))
-                        .and(heart.userId.eq(userId)))
+                .where(heart.postId.eq(post.id)
+                        .and(heart.userId.eq(userId))
+                )
                 .exists();
     }
 }
