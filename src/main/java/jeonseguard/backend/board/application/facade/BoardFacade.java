@@ -2,10 +2,10 @@ package jeonseguard.backend.board.application.facade;
 
 import jeonseguard.backend.board.application.service.*;
 import jeonseguard.backend.board.domain.entity.*;
+import jeonseguard.backend.board.infrastructure.dto.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.user.application.service.UserService;
-import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -21,14 +21,15 @@ public class BoardFacade {
     private final HeartService heartService;
     private final UserService userService;
 
-    public Page<PostResponse> getPosts(String category, Pageable pageable) {
-        return postService.getPosts(category, pageable);
+    public PostPageResponse getPosts(String category, Pageable pageable) {
+        Page<PostResponse> page = postService.getPostPage(category, pageable);
+        return PostPageResponse.from(page);
     }
 
     public PostInfoResponse getPost(Long userId, Long postId, String category) {
-        PostDetailResponse post = postService.getPostDetail(userId, postId, category);
+        PostDetailResponse response = postService.getPostDetail(userId, postId, category);
         List<CommentResponse> comments = commentService.getComments(userId, postId);
-        return PostInfoResponse.of(post, comments);
+        return PostInfoResponse.of(response, comments);
     }
 
     public CreatePostResponse createPost(Long userId, String category, CreatePostRequest request) {
@@ -38,9 +39,9 @@ public class BoardFacade {
     }
 
     public void updatePost(Long userId, Long postId, String category, UpdatePostRequest request) {
-        User user = userService.getUser(userId);
+        UserDetailResponse response = userService.getUserDetail(userId);
         Post post = postService.getPost(userId, postId, category);
-        postService.updatePost(userId, user, post, request);
+        postService.updatePost(userId, post, response, request);
     }
 
     public void deletePost(Long userId, Long postId, String category) {

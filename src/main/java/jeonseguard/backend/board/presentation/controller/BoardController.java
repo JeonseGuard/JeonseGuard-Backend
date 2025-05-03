@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Board", description = "게시판 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/board")
+@RequestMapping("/api/v2/board")
 public class BoardController {
     private final BoardFacade boardFacade;
 
     @Operation(summary = "게시글 전체 조회", description = "모든 게시글을 페이지네이션과 함깨 조회합니다.")
     @GetMapping("/{category}")
-    public ResponseEntity<Page<PostResponse>> getPosts(@PathVariable String category, Pageable pageable) {
+    public ResponseEntity<PostPageResponse> getPosts(@PathVariable String category, Pageable pageable) {
         return ResponseEntity.ok(boardFacade.getPosts(category, pageable));
     }
 

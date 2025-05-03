@@ -1,6 +1,7 @@
 package jeonseguard.backend.board.presentation.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jeonseguard.backend.board.infrastructure.dto.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,16 +17,16 @@ public record PostInfoResponse(
         @Schema(description = "게시글 좋아요 상태") Boolean heartStatus,
         @Schema(description = "댓글 목록") List<CommentResponse> comments
 ) {
-    public static PostInfoResponse of(PostDetailResponse post, List<CommentResponse> comments) {
+    public static PostInfoResponse of(PostDetailResponse response, List<CommentResponse> comments) {
         return new PostInfoResponse(
-                post.postId(),
-                post.title(),
-                post.content(),
-                post.category(),
-                post.creator(),
-                post.createdDateTime(),
-                post.heartCount(),
-                post.heartStatus(),
+                response.postId(),
+                response.title(),
+                response.content(),
+                response.category(),
+                response.creator(),
+                response.createdDateTime(),
+                response.heartCount(),
+                response.heartStatus(),
                 comments
         );
     }

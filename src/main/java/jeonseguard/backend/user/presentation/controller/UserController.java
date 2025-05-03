@@ -19,9 +19,9 @@ public class UserController {
     private final UserFacade userFacade;
 
     @Operation(summary = "사용자 개인 정보 조회", description = "JWT 토큰을 기반으로 현재 로그인한 사용자의 개인 정보를 가져옵니다.")
-    @GetMapping("/me")
-    public ResponseEntity<UserInfoResponse> getUser(@AuthenticatedUser Long userId) {
-        return ResponseEntity.ok(userFacade.getUser(userId));
+    @GetMapping("/info")
+    public ResponseEntity<UserInfoResponse> getUserInfo(@AuthenticatedUser Long userId) {
+        return ResponseEntity.ok(userFacade.getUserInfo(userId));
     }
 
     @Operation(summary = "사용자 닉네임 수정", description = "현재 로그인한 사용자의 닉네임을 수정합니다.")

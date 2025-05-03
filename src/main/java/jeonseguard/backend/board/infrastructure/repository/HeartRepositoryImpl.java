@@ -1,4 +1,4 @@
-package jeonseguard.backend.board.infrastructure;
+package jeonseguard.backend.board.infrastructure.repository;
 
 import jeonseguard.backend.board.domain.entity.Heart;
 import jeonseguard.backend.board.domain.repository.HeartRepository;

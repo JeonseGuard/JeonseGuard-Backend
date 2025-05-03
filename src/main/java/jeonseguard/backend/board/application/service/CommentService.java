@@ -4,7 +4,7 @@ import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.CommentFactory;
 import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
-import jeonseguard.backend.board.presentation.dto.response.CommentResponse;
+import jeonseguard.backend.board.infrastructure.dto.CommentResponse;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;

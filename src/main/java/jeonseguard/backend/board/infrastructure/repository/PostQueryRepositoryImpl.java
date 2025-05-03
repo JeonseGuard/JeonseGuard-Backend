@@ -1,11 +1,11 @@
-package jeonseguard.backend.board.infrastructure;
+package jeonseguard.backend.board.infrastructure.repository;
 
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.repository.PostQueryRepository;
-import jeonseguard.backend.board.presentation.dto.response.*;
+import jeonseguard.backend.board.infrastructure.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;

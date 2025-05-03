@@ -1,9 +1,9 @@
-package jeonseguard.backend.board.infrastructure;
+package jeonseguard.backend.board.infrastructure.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jeonseguard.backend.board.domain.entity.QComment;
 import jeonseguard.backend.board.domain.repository.CommentQueryRepository;
-import jeonseguard.backend.board.presentation.dto.response.*;
+import jeonseguard.backend.board.infrastructure.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

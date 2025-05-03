@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class UserFacade {
     private final UserService userService;
 
-    public UserInfoResponse getUser(Long userId) {
+    public UserInfoResponse getUserInfo(Long userId) {
         return userService.getUserInfo(userId);
     }
 

@@ -3,10 +3,9 @@ package jeonseguard.backend.board.application.service;
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.PostFactory;
 import jeonseguard.backend.board.domain.repository.*;
+import jeonseguard.backend.board.infrastructure.dto.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
-import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.global.exception.error.*;
-import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -20,7 +19,7 @@ public class PostService {
     private final PostQueryRepository postQueryRepository;
 
     @Transactional(readOnly = true)
-    public Page<PostResponse> getPosts(String category, Pageable pageable) {
+    public Page<PostResponse> getPostPage(String category, Pageable pageable) {
         return postQueryRepository.findAllWithCounts(parseCategory(category), pageable);
     }
 
@@ -43,9 +42,9 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(Long userId, User user, Post post, UpdatePostRequest request) {
+    public void updatePost(Long userId, Post post, UserDetailResponse response, UpdatePostRequest request) {
         validatePostAuthor(userId, post, ErrorCode.POST_UPDATE_FORBIDDEN);
-        post.updatePost(request.newTitle(), request.newContent(), user.getNickname());
+        post.updatePost(request.newTitle(), request.newContent(), response.nickname());
     }
 
     @Transactional

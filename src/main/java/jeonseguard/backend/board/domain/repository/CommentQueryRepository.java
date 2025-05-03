@@ -1,6 +1,6 @@
 package jeonseguard.backend.board.domain.repository;
 
-import jeonseguard.backend.board.presentation.dto.response.CommentResponse;
+import jeonseguard.backend.board.infrastructure.dto.CommentResponse;
 
 import java.util.List;
 

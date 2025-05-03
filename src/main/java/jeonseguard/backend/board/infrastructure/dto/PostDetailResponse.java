@@ -1,4 +1,4 @@
-package jeonseguard.backend.board.presentation.dto.response;
+package jeonseguard.backend.board.infrastructure.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;

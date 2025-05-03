@@ -6,7 +6,7 @@ import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserFactory {
-    public static User fromResponse(KakaoUserInfoResponse response) {
+    public static User from(KakaoUserInfoResponse response) {
         return User.builder()
                 .kakaoId(response.kakaoId())
                 .nickname(response.getNickname())

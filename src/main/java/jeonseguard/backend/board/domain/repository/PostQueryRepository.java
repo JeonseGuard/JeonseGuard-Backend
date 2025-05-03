@@ -1,7 +1,7 @@
 package jeonseguard.backend.board.domain.repository;
 
 import jeonseguard.backend.board.domain.entity.*;
-import jeonseguard.backend.board.presentation.dto.response.*;
+import jeonseguard.backend.board.infrastructure.dto.*;
 import org.springframework.data.domain.*;
 
 import java.util.Optional;

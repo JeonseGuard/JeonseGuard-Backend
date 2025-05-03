@@ -1,4 +1,4 @@
-package jeonseguard.backend.board.infrastructure;
+package jeonseguard.backend.board.infrastructure.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jeonseguard.backend.board.domain.entity.QHeart;

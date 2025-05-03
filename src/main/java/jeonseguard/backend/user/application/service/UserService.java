@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
 
-    @Cacheable(value = "user", key = "'user::id:' + #userId")
+    @Cacheable(value = "userInfo", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)
     public UserInfoResponse getUserInfo(Long userId) {
         return userRepository.findById(userId)
@@ -26,7 +26,7 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
-    @Cacheable(value = "user", key = "'user::id:' + #userId")
+    @Cacheable(value = "userDetail", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)
     public UserDetailResponse getUserDetail(Long userId) {
         return userRepository.findById(userId)
@@ -48,17 +48,23 @@ public class UserService {
 
     @Transactional
     public User createUser(KakaoUserInfoResponse response) {
-        User user = UserFactory.fromResponse(response);
+        User user = UserFactory.from(response);
         return userRepository.save(user);
     }
 
-    @CacheEvict(value = "user", key = "'user::id:' + #user.id")
+    @Caching(evict = {
+            @CacheEvict(value = "userInfo", key = "'user::id:' + #user.id"),
+            @CacheEvict(value = "userDetail", key = "'user::id:' + #user.id")
+    })
     @Transactional
     public void updateNickname(User user, UpdateNicknameRequest request) {
         user.updateNickname(request.newNickname());
     }
 
-    @CacheEvict(value = "user", key = "'user::id:' + #user.id")
+    @Caching(evict = {
+            @CacheEvict(value = "userInfo", key = "'user::id:' + #user.id"),
+            @CacheEvict(value = "userDetail", key = "'user::id:' + #user.id")
+    })
     @Transactional
     public void updateProfileImage(User user, UpdateProfileImageRequest request) {
         user.updateProfileImage(request.newProfileImage());

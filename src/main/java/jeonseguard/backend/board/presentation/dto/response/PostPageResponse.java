@@ -1,6 +1,7 @@
 package jeonseguard.backend.board.presentation.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jeonseguard.backend.board.infrastructure.dto.PostResponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

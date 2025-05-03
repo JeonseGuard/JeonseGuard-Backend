@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegionService {
     private final RegionRepository regionRepository;
 
-    @Cacheable(value = "region", key = "'region::address' + #address")
+    @Cacheable(value = "regionDetail", key = "'region::address:' + #address")
     @Transactional(readOnly = true)
     public RegionDetailResponse getRegionDetail(String address) {
         return regionRepository.findByAddress(address)
