@@ -23,7 +23,7 @@ public class BoardFacade {
 
     public PostPageResponse getPosts(String category, Pageable pageable) {
         Page<PostResponse> page = postService.getPostPage(category, pageable);
-        return PostPageResponse.from(page);
+        return PostPageResponse.of(page);
     }
 
     public PostInfoResponse getPost(Long userId, Long postId, String category) {

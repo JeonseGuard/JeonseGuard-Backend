@@ -13,7 +13,7 @@ public record PostPageResponse(
         @Schema(description = "현재 페이지 번호") int pageNumber,
         @Schema(description = "게시글 목록") List<PostResponse> posts
 ) {
-    public static PostPageResponse from(Page<PostResponse> page) {
+    public static PostPageResponse of(Page<PostResponse> page) {
         return new PostPageResponse(
                 page.getTotalPages(),
                 page.getTotalElements(),

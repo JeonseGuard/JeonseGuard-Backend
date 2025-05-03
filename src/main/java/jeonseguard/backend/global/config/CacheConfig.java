@@ -24,6 +24,7 @@ public class CacheConfig {
         cacheConfigs.put("userInfo", defaultCacheConfig);
         cacheConfigs.put("userDetail", defaultCacheConfig);
         cacheConfigs.put("regionDetail", defaultCacheConfig);
+        cacheConfigs.put("commentList", defaultCacheConfig);
         return buildCacheManager(defaultCacheConfig, cacheConfigs);
     }
 

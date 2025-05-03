@@ -3,11 +3,13 @@ package jeonseguard.backend.board.application.service;
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.CommentFactory;
 import jeonseguard.backend.board.domain.repository.*;
-import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.infrastructure.dto.CommentResponse;
+import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final CommentQueryRepository commentQueryRepository;
 
+    @Cacheable(value = "commentList", key = "'comment::postId:' + #postId")
     @Transactional(readOnly = true)
     public List<CommentResponse> getComments(Long userId, Long postId) {
         return commentQueryRepository.findAllByIdAndPostId(userId, postId);
@@ -30,18 +33,21 @@ public class CommentService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
     }
 
+    @CacheEvict(value = "commentList", key = "'comment::postId:' + #postId")
     @Transactional
     public Comment createComment(Long postId, UserDetailResponse response, CreateCommentRequest request) {
         Comment comment = CommentFactory.from(postId, response, request);
         return commentRepository.save(comment);
     }
 
+    @CacheEvict(value = "commentList", key = "'comment::postId:' + #comment.postId")
     @Transactional
     public void updateComment(Long userId, Comment comment, UserDetailResponse response, UpdateCommentRequest request) {
         validateCommentAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
         comment.updateComment(request.newContent(), response.nickname());
     }
 
+    @CacheEvict(value = "commentList", key = "'comment::postId:' + #comment.postId")
     @Transactional
     public void deleteComment(Long userId, Comment comment) {
         validateCommentAuthor(userId, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
