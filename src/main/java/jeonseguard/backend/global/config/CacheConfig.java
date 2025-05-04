@@ -33,9 +33,10 @@ public class CacheConfig {
         cacheConfigs.put("postPage", defaultRedisCacheConfig);
         cacheConfigs.put("postDetail", defaultRedisCacheConfig);
         cacheConfigs.put("commentList", defaultRedisCacheConfig);
-        cacheConfigs.put("regionDetail", defaultRedisCacheConfig);
         cacheConfigs.put("userInfo", defaultRedisCacheConfig);
         cacheConfigs.put("userDetail", defaultRedisCacheConfig);
+        cacheConfigs.put("regionDetail", defaultRedisCacheConfig);
+        cacheConfigs.put("buildingRegister", defaultRedisCacheConfig);
         return buildRedisCacheManager(defaultRedisCacheConfig, cacheConfigs);
     }
 

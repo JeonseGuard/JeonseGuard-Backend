@@ -7,6 +7,7 @@ import jeonseguard.backend.building.presentation.dto.response.BuildingRegisterRe
 import jeonseguard.backend.region.application.RegionService;
 import jeonseguard.backend.region.infrastructure.dto.RegionDetailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import static jeonseguard.backend.global.util.AddressUtil.*;
@@ -17,6 +18,15 @@ public class BuildingFacade {
     private final BuildingRegisterService buildingRegisterService;
     private final RegionService regionService;
 
+    @Cacheable(
+            value = "buildingRegister",
+            key = "'buildingRegister::address:' + "
+                    + "#addressRequest.address + ':' + "
+                    + "#addressRequest.bun + ':' + "
+                    + "(#addressRequest.ji != null ? #addressRequest.ji : '') + ':' + "
+                    + "(#addressRequest.dongName != null ? #addressRequest.dongName : '') + ':' + "
+                    + "(#addressRequest.floorName != null ? #addressRequest.floorName : '')"
+    )
     public BuildingRegisterResponse getBuildingRegister(BuildingAddressRequest addressRequest) {
         BuildingRegisterRequest request = convertToBuildingRegisterRequest(addressRequest);
         var overviewItem = buildingRegisterService.getBuildingRegisterOverview(1, request);
