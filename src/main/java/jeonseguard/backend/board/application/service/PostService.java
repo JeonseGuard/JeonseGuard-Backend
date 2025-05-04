@@ -2,6 +2,7 @@ package jeonseguard.backend.board.application.service;
 
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.PostFactory;
+import jeonseguard.backend.board.domain.policy.PostPolicy;
 import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.infrastructure.dto.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
@@ -51,7 +52,7 @@ public class PostService {
     })
     @Transactional
     public void updatePost(Long userId, Post post, UserDetailResponse response, UpdatePostRequest request) {
-        validatePostAuthor(userId, post, ErrorCode.POST_UPDATE_FORBIDDEN);
+        PostPolicy.validateAuthor(userId, post, ErrorCode.POST_UPDATE_FORBIDDEN);
         post.updatePost(request.newTitle(), request.newContent(), response.nickname());
     }
 
@@ -62,14 +63,8 @@ public class PostService {
     })
     @Transactional
     public void deletePost(Long userId, Post post) {
-        validatePostAuthor(userId, post, ErrorCode.POST_DELETE_FORBIDDEN);
+        PostPolicy.validateAuthor(userId, post, ErrorCode.POST_DELETE_FORBIDDEN);
         postRepository.delete(post);
-    }
-
-    private void validatePostAuthor(Long userId, Post post, ErrorCode errorCode) {
-        if (!post.getUserId().equals(userId)) {
-            throw new BusinessException(errorCode);
-        }
     }
 
     private BoardCategory parseCategory(String category) {
