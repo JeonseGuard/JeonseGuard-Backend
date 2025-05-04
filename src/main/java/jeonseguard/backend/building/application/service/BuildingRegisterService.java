@@ -22,7 +22,7 @@ public class BuildingRegisterService {
     public BuildingRegisterOverviewItem getBuildingRegisterOverview(int pageNumber, BuildingRegisterRequest request) {
         List<BuildingRegisterOverviewItem> items = fetchBuildingRegisterOverview(pageNumber, request);
         return items.stream()
-                .filter(item -> !hasText(request.dongName()) || isSameText(request.dongName(), item.dongName()))
+                .filter(item -> !hasText(request.dongName()) || isSameText(request.dongName(), item.dongName()) || isSameText(request.dongNumber(), item.dongName()))
                 .findFirst()
                 .orElseGet(() -> getBuildingRegisterOverview(pageNumber + 1, request));
     }
@@ -31,8 +31,8 @@ public class BuildingRegisterService {
     public BuildingRegisterFloorItem getBuildingRegisterFloor(int pageNumber, BuildingRegisterRequest request) {
         List<BuildingRegisterFloorItem> items = fetchBuildingRegisterFloor(pageNumber, request);
         return items.stream()
-                .filter(item -> !hasText(request.dongName()) || isSameText(request.dongName(), item.dongName()))
-                .filter(item -> isSameText(request.floorName(), item.floorName()))
+                .filter(item -> !hasText(request.dongName()) || isSameText(request.dongName(), item.dongName()) || isSameText(request.dongNumber(), item.dongName()))
+                .filter(item -> isSameText(request.floorName(), item.floorName()) || isSameText(request.floorNumber(), item.floorName()))
                 .findFirst()
                 .orElseGet(() -> getBuildingRegisterFloor(pageNumber + 1, request));
     }
@@ -42,8 +42,8 @@ public class BuildingRegisterService {
         List<BuildingRegisterAreaItem> items = fetchBuildingRegisterArea(pageNumber, request);
         return items.stream()
                 .filter(item -> "전유".equals(item.useType()))
-                .filter(item -> isOptionalSameText(request.dongName(), item.dongName()))
-                .filter(item -> isOptionalSameText(request.hoName(), item.hoName()))
+                .filter(item -> isOptionalSameText(request.dongName(), item.dongName()) || isOptionalSameText(request.dongNumber(), item.dongName()))
+                .filter(item -> isOptionalSameText(request.hoName(), item.hoName()) || isOptionalSameText(request.hoNumber(), item.hoName()))
                 .findFirst()
                 .orElseGet(() -> getBuildingRegisterArea(pageNumber + 1, request));
     }

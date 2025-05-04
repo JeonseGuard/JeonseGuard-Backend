@@ -1,4 +1,4 @@
-package jeonseguard.backend.region.infrastructure;
+package jeonseguard.backend.region.infrastructure.repository;
 
 import jeonseguard.backend.region.domain.entity.Region;
 import org.springframework.data.jpa.repository.JpaRepository;

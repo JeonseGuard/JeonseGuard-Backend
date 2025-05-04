@@ -1,6 +1,8 @@
 package jeonseguard.backend.region.infrastructure;
 
 import jeonseguard.backend.region.domain.entity.Region;
+import jeonseguard.backend.region.infrastructure.repository.RegionJpaRepository;
+import jeonseguard.backend.region.infrastructure.repository.RegionRepositoryImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;

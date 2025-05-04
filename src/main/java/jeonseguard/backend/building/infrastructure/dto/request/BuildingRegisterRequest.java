@@ -17,23 +17,35 @@ public record BuildingRegisterRequest(
         @Schema(description = "지")
         String ji,
 
+        @Schema(description = "동번호")
+        String dongNumber,
+
         @Schema(description = "동명칭")
         String dongName,
+
+        @Schema(description = "층번호")
+        String floorNumber,
 
         @Schema(description = "층명칭")
         String floorName,
 
+        @Schema(description = "호번호")
+        String hoNumber,
+
         @Schema(description = "호명칭")
         String hoName
 ) {
-        public static BuildingRegisterRequest of(String regionCode, String sigunguCode, String bun, String ji, String dongName, String floorName, String hoName) {
+        public static BuildingRegisterRequest of(String regionCode, String sigunguCode, String bun, String ji, String dongNumber, String dongName, String floorNumber, String floorName, String hoNumber, String hoName) {
                 return new BuildingRegisterRequest(
                         regionCode,
                         sigunguCode,
                         bun,
                         ji,
+                        dongNumber,
                         dongName,
+                        floorNumber,
                         floorName,
+                        hoNumber,
                         hoName
                 );
         }

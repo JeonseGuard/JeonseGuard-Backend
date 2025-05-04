@@ -1,11 +1,8 @@
 package jeonseguard.backend.user.domain.entity;
 
 import jakarta.persistence.*;
-import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.global.entity.CommonBaseEntity;
 import lombok.*;
-
-import java.util.List;
 
 import static org.springframework.util.StringUtils.hasText;
 
@@ -29,12 +26,6 @@ public class User extends CommonBaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Post> posts;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Comment> comments;
 
     public void updateNickname(String nickname) {
         if (hasText(nickname)) {

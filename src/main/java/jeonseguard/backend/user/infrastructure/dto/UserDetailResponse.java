@@ -1,24 +1,24 @@
-package jeonseguard.backend.user.presentation.dto.respone;
+package jeonseguard.backend.user.infrastructure.dto;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jeonseguard.backend.user.domain.entity.User;
+import jeonseguard.backend.user.domain.entity.*;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public record UserInfoResponse(
+public record UserDetailResponse(
         @Schema(description = "사용자 ID") Long userId,
         @Schema(description = "닉네임") String nickname,
         @Schema(description = "프로필 이미지") String profileImage,
         @Schema(description = "이메일") String email,
-        @Schema(description = "역할") String role
+        @Schema(description = "역할") Role role
 ) {
-    public static UserInfoResponse fromEntity(User user) {
-        return new UserInfoResponse(
+    public static UserDetailResponse fromEntity(User user) {
+        return new UserDetailResponse(
                 user.getId(),
                 user.getNickname(),
                 user.getProfileImage(),
                 user.getEmail(),
-                user.getRole().toString()
+                user.getRole()
         );
     }
 }

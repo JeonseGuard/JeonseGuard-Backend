@@ -2,11 +2,13 @@ package jeonseguard.backend.board.application.facade;
 
 import jeonseguard.backend.board.application.service.*;
 import jeonseguard.backend.board.domain.entity.*;
+import jeonseguard.backend.board.infrastructure.dto.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
 import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.user.application.service.UserService;
-import jeonseguard.backend.user.domain.entity.User;
+import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
@@ -20,43 +22,46 @@ public class BoardFacade {
     private final HeartService heartService;
     private final UserService userService;
 
-    public Page<PostResponse> getPosts(String category, Pageable pageable) {
-        return postService.getPosts(category, pageable);
+    @Cacheable(value = "postPage", key = "'post::category:' + #category + ':page:' + #pageable.pageNumber")
+    public PostPageResponse getPostPageByCategory(String category, Pageable pageable) {
+        Page<PostResponse> page = postService.getPostPageByCategory(category, pageable);
+        return PostPageResponse.from(page);
     }
 
-    public PostInfoResponse getPost(Long userId, Long postId, String category) {
-        PostDetailResponse post = postService.getPostDetail(userId, postId, category);
-        List<CommentResponse> comments = commentService.getComments(userId, postId);
-        return PostInfoResponse.of(post, comments);
+    @Cacheable(value = "postInfo", key = "'post::id:' + #postId")
+    public PostInfoResponse getPostInfo(Long userId, Long postId) {
+        PostDetailResponse response = postService.getPostDetail(userId, postId);
+        List<CommentResponse> comments = commentService.getComments(postId);
+        return PostInfoResponse.of(response, comments);
     }
 
-    public CreatePostResponse createPost(Long userId, String category, CreatePostRequest request) {
-        User user = userService.getUser(userId);
-        Post post = postService.createPost(user, category, request);
+    public CreatePostResponse createPostByCategory(Long userId, String category, CreatePostRequest request) {
+        UserDetailResponse response = userService.getUserDetail(userId);
+        Post post = postService.createPostByCategory(category, response, request);
         return CreatePostResponse.fromEntity(post);
     }
 
-    public void updatePost(Long userId, Long postId, String category, UpdatePostRequest request) {
-        User user = userService.getUser(userId);
-        Post post = postService.getPost(userId, postId, category);
-        postService.updatePost(userId, user, post, request);
+    public void updatePost(Long userId, Long postId, UpdatePostRequest request) {
+        UserDetailResponse response = userService.getUserDetail(userId);
+        Post post = postService.getPost(postId);
+        postService.updatePost(userId, post, response, request);
     }
 
-    public void deletePost(Long userId, Long postId, String category) {
-        Post post = postService.getPost(userId, postId, category);
+    public void deletePost(Long userId, Long postId) {
+        Post post = postService.getPost(postId);
         postService.deletePost(userId, post);
     }
 
     public CreateCommentResponse createComment(Long userId, Long postId, CreateCommentRequest request) {
-        User user = userService.getUser(userId);
-        Comment comment = commentService.createComment(postId, user, request);
+        UserDetailResponse response = userService.getUserDetail(userId);
+        Comment comment = commentService.createComment(postId, response, request);
         return CreateCommentResponse.fromEntity(comment);
     }
 
     public void updateComment(Long userId, Long commentId, UpdateCommentRequest request) {
-        User user = userService.getUser(userId);
+        UserDetailResponse response = userService.getUserDetail(userId);
         Comment comment = commentService.getComment(commentId);
-        commentService.updateComment(userId, user, comment, request);
+        commentService.updateComment(userId, comment, response, request);
     }
 
     public void deleteComment(Long userId, Long commentId) {
@@ -64,18 +69,10 @@ public class BoardFacade {
         commentService.deleteComment(userId, comment);
     }
 
-    public HeartResponse togglePostHeart(Long userId, Long targetId) {
-        return toggleHeart(userId, targetId, HeartTarget.POST);
-    }
-
-    public HeartResponse toggleCommentHeart(Long userId, Long targetId) {
-        return toggleHeart(userId, targetId, HeartTarget.COMMENT);
-    }
-
-    private HeartResponse toggleHeart(Long userId, Long targetId, HeartTarget target) {
-        heartService.toggleHeart(userId, targetId, target);
-        long heartCount = heartService.countHeart(targetId, target);
-        boolean heartStatus = heartService.hasHeart(userId, targetId, target);
+    public HeartResponse togglePostHeart(Long userId, Long postId) {
+        heartService.toggleHeart(userId, postId);
+        long heartCount = heartService.countHeart(postId);
+        boolean heartStatus = heartService.hasHeart(userId, postId);
         return HeartResponse.of(heartCount, heartStatus);
     }
 }

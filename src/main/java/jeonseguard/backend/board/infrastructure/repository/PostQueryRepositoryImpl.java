@@ -1,11 +1,11 @@
-package jeonseguard.backend.board.infrastructure;
+package jeonseguard.backend.board.infrastructure.repository;
 
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.repository.PostQueryRepository;
-import jeonseguard.backend.board.presentation.dto.response.*;
+import jeonseguard.backend.board.infrastructure.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
@@ -48,13 +48,13 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     }
 
     @Override
-    public Optional<PostDetailResponse> findDetailByUserIdAndIdAndCategory(Long userId, Long postId, String category) {
+    public Optional<PostDetailResponse> findDetailByUserIdAndId(Long userId, Long postId) {
         return Optional.ofNullable(queryFactory
                 .select(new QPostDetailResponse(
                         post.id,
                         post.title,
                         post.content,
-                        Expressions.constant(category),
+                        post.category.stringValue(),
                         post.createdBy,
                         post.createdAt,
                         heartCount(),
@@ -62,19 +62,6 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 ))
                 .from(post)
                 .where(post.id.eq(postId))
-                .fetchOne()
-        );
-    }
-
-    @Override
-    public Optional<Post> findByUserIdAndIdAndCategory(Long userId, Long postId, BoardCategory category) {
-        return Optional.ofNullable(queryFactory
-                .selectFrom(post)
-                .where(
-                        post.id.eq(postId),
-                        post.user.id.eq(userId),
-                        post.category.eq(category)
-                )
                 .fetchOne()
         );
     }
@@ -95,17 +82,16 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 "({0})",
                 JPAExpressions.select(heart.count().longValue())
                         .from(heart)
-                        .where(heart.targetId.eq(post.id)
-                                .and(heart.target.eq(HeartTarget.POST)))
+                        .where(heart.postId.eq(post.id))
         );
     }
 
     private BooleanExpression heartStatus(Long userId) {
         return JPAExpressions.selectOne()
                 .from(heart)
-                .where(heart.targetId.eq(post.id)
-                        .and(heart.target.eq(HeartTarget.POST))
-                        .and(heart.userId.eq(userId)))
+                .where(heart.postId.eq(post.id)
+                        .and(heart.userId.eq(userId))
+                )
                 .exists();
     }
 }

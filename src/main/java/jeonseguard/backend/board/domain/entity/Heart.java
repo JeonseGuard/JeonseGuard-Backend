@@ -10,12 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Heart extends CommonBaseEntity {
-    @Column(nullable = false)
-    private Long targetId;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private HeartTarget target;
+    @Column(name = "post_id", nullable = false)
+    private Long postId;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;

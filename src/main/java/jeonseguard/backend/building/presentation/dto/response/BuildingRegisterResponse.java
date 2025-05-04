@@ -1,8 +1,10 @@
 package jeonseguard.backend.building.presentation.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jeonseguard.backend.building.infrastructure.dto.external.*;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public record BuildingRegisterResponse(
         @Schema(description = "도로명주소")
         String newAddress,

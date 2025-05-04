@@ -1,4 +1,4 @@
-package jeonseguard.backend.user.infrastructure;
+package jeonseguard.backend.user.infrastructure.repository;
 
 import jeonseguard.backend.user.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

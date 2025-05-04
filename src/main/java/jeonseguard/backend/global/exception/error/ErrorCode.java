@@ -37,6 +37,8 @@ public enum ErrorCode {
 
     // 주소 관련 에러
     INVALID_DONG_NAME_FORMAT(HttpStatus.BAD_REQUEST, "동명칭의 형식이 올바르지 않습니다."),
+    INVALID_FLOOR_NAME_FORMAT(HttpStatus.BAD_REQUEST, "층명칭의 형식이 올바르지 않습니다."),
+    INVALID_HO_NAME_FORMAT(HttpStatus.BAD_REQUEST, "호명칭의 형식이 올바르지 않습니다."),
     INVALID_BUNJI_FORMAT(HttpStatus.BAD_REQUEST, "번지/지번의 형식이 올바르지 않습니다."),
 
     // 건축물대장 표제부 조회 관련 에러
