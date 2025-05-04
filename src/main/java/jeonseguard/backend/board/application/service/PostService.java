@@ -37,6 +37,12 @@ public class PostService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
+    @Transactional(readOnly = true)
+    public Post getPost(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
+    }
+
     @CacheEvict(value = "postPage", allEntries = true)
     @Transactional
     public Post createPostByCategory(String category, UserDetailResponse response, CreatePostRequest request) {
