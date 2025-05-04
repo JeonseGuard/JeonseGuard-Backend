@@ -26,6 +26,7 @@ public class HeartService {
 
     @Caching(evict = {
             @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postInfo", key = "'post::id:' + #postId"),
             @CacheEvict(value = "postDetail", key = "'post::id:' + #postId")
     })
     @Transactional

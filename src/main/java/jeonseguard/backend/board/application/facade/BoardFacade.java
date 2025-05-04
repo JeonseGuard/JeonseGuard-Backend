@@ -28,17 +28,12 @@ public class BoardFacade {
         return PostPageResponse.from(page);
     }
 
+    @Cacheable(value = "postInfo", key = "'post::id:' + #postId")
     public PostInfoResponse getPostInfo(Long userId, Long postId) {
         PostDetailResponse response = postService.getPostDetail(userId, postId);
         List<CommentResponse> comments = commentService.getComments(postId);
         return PostInfoResponse.of(response, comments);
     }
-
-//    public PostInfoResponse getPostByCategory(Long userId, Long postId) {
-//        PostDetailResponse response = postService.getPostDetailByCategory(userId, postId, category);
-//        List<CommentResponse> comments = commentService.getComments(userId, postId);
-//        return PostInfoResponse.of(response, comments);
-//    }
 
     public CreatePostResponse createPostByCategory(Long userId, String category, CreatePostRequest request) {
         UserDetailResponse response = userService.getUserDetail(userId);

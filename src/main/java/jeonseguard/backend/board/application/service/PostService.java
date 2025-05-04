@@ -52,6 +52,7 @@ public class PostService {
 
     @Caching(evict = {
             @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postInfo", key = "'post::id:' + #post.id"),
             @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id")
     })
     @Transactional
@@ -62,6 +63,7 @@ public class PostService {
 
     @Caching(evict = {
             @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postInfo", key = "'post::id:' + #post.id"),
             @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id")
     })
     @Transactional
