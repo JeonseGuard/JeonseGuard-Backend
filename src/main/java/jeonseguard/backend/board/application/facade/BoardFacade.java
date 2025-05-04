@@ -8,6 +8,7 @@ import jeonseguard.backend.board.presentation.dto.response.*;
 import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +22,10 @@ public class BoardFacade {
     private final HeartService heartService;
     private final UserService userService;
 
+    @Cacheable(value = "postPage", key = "'post::category:' + #category + ':page:' + #pageable.pageNumber")
     public PostPageResponse getPostPageByCategory(String category, Pageable pageable) {
-        return postService.getPostPageByCategory(category, pageable);
+        Page<PostResponse> page = postService.getPostPageByCategory(category, pageable);
+        return PostPageResponse.from(page);
     }
 
     public PostInfoResponse getPostByCategory(Long userId, Long postId, String category) {

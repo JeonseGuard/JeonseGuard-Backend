@@ -5,6 +5,7 @@ import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.presentation.dto.request.*;
 import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,8 +13,10 @@ import org.springframework.stereotype.Component;
 public class UserFacade {
     private final UserService userService;
 
+    @Cacheable(value = "userInfo", key = "'user::id:' + #userId")
     public UserInfoResponse getUserInfo(Long userId) {
-        return userService.getUserInfo(userId);
+        User user = userService.getUser(userId);
+        return UserInfoResponse.fromEntity(user);
     }
 
     public void updateNickname(Long userId, UpdateNicknameRequest request) {

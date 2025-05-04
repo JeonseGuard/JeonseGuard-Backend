@@ -7,7 +7,6 @@ import jeonseguard.backend.user.domain.factory.UserFactory;
 import jeonseguard.backend.user.domain.repository.UserRepository;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import jeonseguard.backend.user.presentation.dto.request.*;
-import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
@@ -17,14 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-    @Cacheable(value = "userInfo", key = "'user::id:' + #userId")
-    @Transactional(readOnly = true)
-    public UserInfoResponse getUserInfo(Long userId) {
-        return userRepository.findById(userId)
-                .map(UserInfoResponse::fromEntity)
-                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-    }
 
     @Cacheable(value = "userDetail", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)

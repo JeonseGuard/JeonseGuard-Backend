@@ -5,7 +5,6 @@ import jeonseguard.backend.board.domain.factory.PostFactory;
 import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.infrastructure.dto.*;
 import jeonseguard.backend.board.presentation.dto.request.*;
-import jeonseguard.backend.board.presentation.dto.response.PostPageResponse;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostQueryRepository postQueryRepository;
 
-    @Cacheable(value = "postPage", key = "'post::category:' + #category + ':page:' + #pageable.pageNumber")
     @Transactional(readOnly = true)
-    public PostPageResponse getPostPageByCategory(String category, Pageable pageable) {
+    public Page<PostResponse> getPostPageByCategory(String category, Pageable pageable) {
         return postQueryRepository.findAllWithCounts(parseCategory(category), pageable);
     }
 
