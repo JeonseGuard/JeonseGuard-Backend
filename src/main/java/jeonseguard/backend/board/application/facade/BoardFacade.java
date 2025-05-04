@@ -21,8 +21,8 @@ public class BoardFacade {
     private final HeartService heartService;
     private final UserService userService;
 
-    public PostPageResponse getPosts(String category, Pageable pageable) {
-        return postService.getPosts(category, pageable);
+    public PostPageResponse getPostPage(String category, Pageable pageable) {
+        return postService.getPostPage(category, pageable);
     }
 
     public PostInfoResponse getPost(Long userId, Long postId, String category) {

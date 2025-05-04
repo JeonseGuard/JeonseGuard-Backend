@@ -33,8 +33,8 @@ public class CommentService {
     }
 
     @Caching(evict = {
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #postId"),
             @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postDetail", key = "'post::id:' + #postId"),
             @CacheEvict(value = "commentList", key = "'comment::postId:' + #postId")
     })
     @Transactional
@@ -44,8 +44,8 @@ public class CommentService {
     }
 
     @Caching(evict = {
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #comment.postId"),
             @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postDetail", key = "'post::id:' + #comment.postId"),
             @CacheEvict(value = "commentList", key = "'comment::postId:' + #comment.postId")
     })
     @Transactional
@@ -55,8 +55,8 @@ public class CommentService {
     }
 
     @Caching(evict = {
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #comment.postId"),
             @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postDetail", key = "'post::id:' + #comment.postId"),
             @CacheEvict(value = "commentList", key = "'comment::postId:' + #comment.postId")
     })
     @Transactional

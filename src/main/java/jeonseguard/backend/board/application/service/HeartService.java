@@ -4,6 +4,7 @@ import jeonseguard.backend.board.domain.entity.Heart;
 import jeonseguard.backend.board.domain.factory.HeartFactory;
 import jeonseguard.backend.board.domain.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,10 @@ public class HeartService {
         return heartQueryRepository.countByPostId(postId);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postDetail", key = "'post::id:' + #postId")
+    })
     @Transactional
     public void toggleHeart(Long userId, Long postId) {
         if (heartRepository.existsByUserIdAndPostId(userId, postId)) {

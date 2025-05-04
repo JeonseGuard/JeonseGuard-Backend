@@ -22,7 +22,7 @@ public class PostService {
 
     @Cacheable(value = "postPage", key = "'post::category:' + #category + ':page:' + #pageable.pageNumber")
     @Transactional(readOnly = true)
-    public PostPageResponse getPosts(String category, Pageable pageable) {
+    public PostPageResponse getPostPage(String category, Pageable pageable) {
         return postQueryRepository.findAllWithCounts(parseCategory(category), pageable);
     }
 
@@ -47,8 +47,8 @@ public class PostService {
     }
 
     @Caching(evict = {
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id"),
-            @CacheEvict(value = "postPage", allEntries = true)
+            @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id")
     })
     @Transactional
     public void updatePost(Long userId, Post post, UserDetailResponse response, UpdatePostRequest request) {
@@ -57,8 +57,8 @@ public class PostService {
     }
 
     @Caching(evict = {
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id"),
-            @CacheEvict(value = "postPage", allEntries = true)
+            @CacheEvict(value = "postPage", allEntries = true),
+            @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id")
     })
     @Transactional
     public void deletePost(Long userId, Post post) {
