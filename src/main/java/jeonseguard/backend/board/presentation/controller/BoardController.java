@@ -21,33 +21,33 @@ public class BoardController {
 
     @Operation(summary = "카테고리별 게시글 전체 조회", description = "카테고리별 게시글을 페이지네이션 방식으로 전체 조회합니다.")
     @GetMapping("/{category}")
-    public ResponseEntity<PostPageResponse> getPostPage(@PathVariable String category, Pageable pageable) {
-        return ResponseEntity.ok(boardFacade.getPostPage(category, pageable));
+    public ResponseEntity<PostPageResponse> getPostPageByCategory(@PathVariable String category, Pageable pageable) {
+        return ResponseEntity.ok(boardFacade.getPostPageByCategory(category, pageable));
     }
 
     @Operation(summary = "카테고리별 게시글 상세 조회", description = "게시글 ID를 이용하여, 카테고리별 게시글을 조회합니다.")
     @GetMapping("/{category}/{postId}")
-    public ResponseEntity<PostInfoResponse> getPost(@AuthenticatedUser Long userId, @PathVariable Long postId, @PathVariable String category) {
-        return ResponseEntity.ok(boardFacade.getPost(userId, postId, category));
+    public ResponseEntity<PostInfoResponse> getPostByCategory(@AuthenticatedUser Long userId, @PathVariable Long postId, @PathVariable String category) {
+        return ResponseEntity.ok(boardFacade.getPostByCategory(userId, postId, category));
     }
 
     @Operation(summary = "카테고리별 게시글 생성", description = "카테고리별 게시글을 생성합니다.")
     @PostMapping("/{category}/posts")
-    public ResponseEntity<CreatePostResponse> createPost(@AuthenticatedUser Long userId, @PathVariable String category, @Valid @RequestBody CreatePostRequest request) {
-        return ResponseEntity.ok(boardFacade.createPost(userId, category, request));
+    public ResponseEntity<CreatePostResponse> createPostByCategory(@AuthenticatedUser Long userId, @PathVariable String category, @Valid @RequestBody CreatePostRequest request) {
+        return ResponseEntity.ok(boardFacade.createPostByCategory(userId, category, request));
     }
 
     @Operation(summary = "카테고리별 게시글 수정", description = "카테고리별 게시글을 수정합니다.")
     @PatchMapping("/{category}/{postId}")
-    public ResponseEntity<Void> updatePost(@AuthenticatedUser Long userId, @PathVariable Long postId, @PathVariable String category, @RequestBody UpdatePostRequest request) {
-        boardFacade.updatePost(userId, postId, category, request);
+    public ResponseEntity<Void> updatePostByCategory(@AuthenticatedUser Long userId, @PathVariable Long postId, @PathVariable String category, @RequestBody UpdatePostRequest request) {
+        boardFacade.updatePostByCategory(userId, postId, category, request);
         return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "카테고리별 게시글 삭제", description = "게카테고리별 시글을 삭제합니다.")
     @DeleteMapping("/{category}/{postId}")
-    public ResponseEntity<Void> deletePost(@AuthenticatedUser Long userId, @PathVariable Long postId, @PathVariable String category) {
-        boardFacade.deletePost(userId, postId, category);
+    public ResponseEntity<Void> deletePostByCategory(@AuthenticatedUser Long userId, @PathVariable Long postId, @PathVariable String category) {
+        boardFacade.deletePostByCategory(userId, postId, category);
         return ResponseEntity.noContent().build();
     }
 

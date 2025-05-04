@@ -21,30 +21,30 @@ public class BoardFacade {
     private final HeartService heartService;
     private final UserService userService;
 
-    public PostPageResponse getPostPage(String category, Pageable pageable) {
-        return postService.getPostPage(category, pageable);
+    public PostPageResponse getPostPageByCategory(String category, Pageable pageable) {
+        return postService.getPostPageByCategory(category, pageable);
     }
 
-    public PostInfoResponse getPost(Long userId, Long postId, String category) {
-        PostDetailResponse response = postService.getPostDetail(userId, postId, category);
+    public PostInfoResponse getPostByCategory(Long userId, Long postId, String category) {
+        PostDetailResponse response = postService.getPostDetailByCategory(userId, postId, category);
         List<CommentResponse> comments = commentService.getComments(userId, postId);
         return PostInfoResponse.of(response, comments);
     }
 
-    public CreatePostResponse createPost(Long userId, String category, CreatePostRequest request) {
+    public CreatePostResponse createPostByCategory(Long userId, String category, CreatePostRequest request) {
         UserDetailResponse response = userService.getUserDetail(userId);
-        Post post = postService.createPost(category, response, request);
+        Post post = postService.createPostByCategory(category, response, request);
         return CreatePostResponse.fromEntity(post);
     }
 
-    public void updatePost(Long userId, Long postId, String category, UpdatePostRequest request) {
+    public void updatePostByCategory(Long userId, Long postId, String category, UpdatePostRequest request) {
         UserDetailResponse response = userService.getUserDetail(userId);
-        Post post = postService.getPost(userId, postId, category);
+        Post post = postService.getPostByCategory(userId, postId, category);
         postService.updatePost(userId, post, response, request);
     }
 
-    public void deletePost(Long userId, Long postId, String category) {
-        Post post = postService.getPost(userId, postId, category);
+    public void deletePostByCategory(Long userId, Long postId, String category) {
+        Post post = postService.getPostByCategory(userId, postId, category);
         postService.deletePost(userId, post);
     }
 

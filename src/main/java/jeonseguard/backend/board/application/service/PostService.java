@@ -22,26 +22,26 @@ public class PostService {
 
     @Cacheable(value = "postPage", key = "'post::category:' + #category + ':page:' + #pageable.pageNumber")
     @Transactional(readOnly = true)
-    public PostPageResponse getPostPage(String category, Pageable pageable) {
+    public PostPageResponse getPostPageByCategory(String category, Pageable pageable) {
         return postQueryRepository.findAllWithCounts(parseCategory(category), pageable);
     }
 
     @Cacheable(value = "postDetail", key = "'post::id:' + #postId")
     @Transactional(readOnly = true)
-    public PostDetailResponse getPostDetail(Long userId, Long postId, String category) {
+    public PostDetailResponse getPostDetailByCategory(Long userId, Long postId, String category) {
         return postQueryRepository.findDetailByUserIdAndIdAndCategory(userId, postId, category)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
-    public Post getPost(Long userId, Long postId, String category) {
+    public Post getPostByCategory(Long userId, Long postId, String category) {
         return postQueryRepository.findByUserIdAndIdAndCategory(userId, postId, parseCategory(category))
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
     @CacheEvict(value = "postPage", allEntries = true)
     @Transactional
-    public Post createPost(String category, UserDetailResponse response, CreatePostRequest request) {
+    public Post createPostByCategory(String category, UserDetailResponse response, CreatePostRequest request) {
         Post post = PostFactory.from(parseCategory(category), response, request);
         return postRepository.save(post);
     }
