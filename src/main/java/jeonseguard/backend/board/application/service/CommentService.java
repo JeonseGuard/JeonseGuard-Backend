@@ -2,6 +2,7 @@ package jeonseguard.backend.board.application.service;
 
 import jeonseguard.backend.board.domain.entity.*;
 import jeonseguard.backend.board.domain.factory.CommentFactory;
+import jeonseguard.backend.board.domain.policy.CommentPolicy;
 import jeonseguard.backend.board.domain.repository.*;
 import jeonseguard.backend.board.infrastructure.dto.CommentResponse;
 import jeonseguard.backend.board.presentation.dto.request.*;
@@ -52,7 +53,7 @@ public class CommentService {
     })
     @Transactional
     public void updateComment(Long userId, Comment comment, UserDetailResponse response, UpdateCommentRequest request) {
-        validateCommentAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
+        CommentPolicy.validateAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
         comment.updateComment(request.newContent(), response.nickname());
     }
 
@@ -64,13 +65,9 @@ public class CommentService {
     })
     @Transactional
     public void deleteComment(Long userId, Comment comment) {
-        validateCommentAuthor(userId, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
+        CommentPolicy.validateAuthor(userId, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
         commentRepository.delete(comment);
     }
 
-    private void validateCommentAuthor(Long userId, Comment comment, ErrorCode errorCode) {
-        if (!comment.getUserId().equals(userId)) {
-            throw new BusinessException(errorCode);
-        }
-    }
+
 }
