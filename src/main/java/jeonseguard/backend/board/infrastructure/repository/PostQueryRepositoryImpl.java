@@ -48,13 +48,13 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     }
 
     @Override
-    public Optional<PostDetailResponse> findDetailByUserIdAndIdAndCategory(Long userId, Long postId, String category) {
+    public Optional<PostDetailResponse> findDetailByUserIdAndId(Long userId, Long postId) {
         return Optional.ofNullable(queryFactory
                 .select(new QPostDetailResponse(
                         post.id,
                         post.title,
                         post.content,
-                        Expressions.constant(category),
+                        post.category.stringValue(),
                         post.createdBy,
                         post.createdAt,
                         heartCount(),

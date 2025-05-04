@@ -26,8 +26,8 @@ public class PostService {
 
     @Cacheable(value = "postDetail", key = "'post::id:' + #postId")
     @Transactional(readOnly = true)
-    public PostDetailResponse getPostDetailByCategory(Long userId, Long postId, String category) {
-        return postQueryRepository.findDetailByUserIdAndIdAndCategory(userId, postId, category)
+    public PostDetailResponse getPostDetail(Long userId, Long postId) {
+        return postQueryRepository.findDetailByUserIdAndId(userId, postId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 

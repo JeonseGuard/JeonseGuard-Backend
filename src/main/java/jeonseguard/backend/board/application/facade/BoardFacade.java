@@ -28,11 +28,17 @@ public class BoardFacade {
         return PostPageResponse.from(page);
     }
 
-    public PostInfoResponse getPostByCategory(Long userId, Long postId, String category) {
-        PostDetailResponse response = postService.getPostDetailByCategory(userId, postId, category);
-        List<CommentResponse> comments = commentService.getComments(userId, postId);
+    public PostInfoResponse getPostInfo(Long userId, Long postId) {
+        PostDetailResponse response = postService.getPostDetail(userId, postId);
+        List<CommentResponse> comments = commentService.getComments(postId);
         return PostInfoResponse.of(response, comments);
     }
+
+//    public PostInfoResponse getPostByCategory(Long userId, Long postId) {
+//        PostDetailResponse response = postService.getPostDetailByCategory(userId, postId, category);
+//        List<CommentResponse> comments = commentService.getComments(userId, postId);
+//        return PostInfoResponse.of(response, comments);
+//    }
 
     public CreatePostResponse createPostByCategory(Long userId, String category, CreatePostRequest request) {
         UserDetailResponse response = userService.getUserDetail(userId);

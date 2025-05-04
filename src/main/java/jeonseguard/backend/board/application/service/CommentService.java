@@ -22,8 +22,8 @@ public class CommentService {
 
     @Cacheable(value = "commentList", key = "'comment::postId:' + #postId")
     @Transactional(readOnly = true)
-    public List<CommentResponse> getComments(Long userId, Long postId) {
-        return commentQueryRepository.findAllByIdAndPostId(userId, postId);
+    public List<CommentResponse> getComments(Long postId) {
+        return commentQueryRepository.findAllByPostId(postId);
     }
 
     @Transactional(readOnly = true)

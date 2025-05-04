@@ -16,7 +16,7 @@ public class CommentQueryRepositoryImpl implements CommentQueryRepository {
     private final QComment comment = QComment.comment;
 
     @Override
-    public List<CommentResponse> findAllByIdAndPostId(Long userId, Long postId) {
+    public List<CommentResponse> findAllByPostId(Long postId) {
         return queryFactory
                 .select(new QCommentResponse(
                         comment.id,

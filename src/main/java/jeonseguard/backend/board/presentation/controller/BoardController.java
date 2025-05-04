@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Board", description = "게시판 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v3/board")
+@RequestMapping("/api/v4/board")
 public class BoardController {
     private final BoardFacade boardFacade;
 
@@ -25,10 +25,10 @@ public class BoardController {
         return ResponseEntity.ok(boardFacade.getPostPageByCategory(category, pageable));
     }
 
-    @Operation(summary = "카테고리별 게시글 상세 조회", description = "게시글 ID를 이용하여, 카테고리별 게시글을 조회합니다.")
-    @GetMapping("/{category}/{postId}")
-    public ResponseEntity<PostInfoResponse> getPostByCategory(@AuthenticatedUser Long userId, @PathVariable Long postId, @PathVariable String category) {
-        return ResponseEntity.ok(boardFacade.getPostByCategory(userId, postId, category));
+    @Operation(summary = "게시글 상세 조회", description = "게시글 ID를 이용하여, 게시글을 상세 조회합니다.")
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostInfoResponse> getPostInfo(@AuthenticatedUser Long userId, @PathVariable Long postId) {
+        return ResponseEntity.ok(boardFacade.getPostInfo(userId, postId));
     }
 
     @Operation(summary = "카테고리별 게시글 생성", description = "카테고리별 게시글을 생성합니다.")
