@@ -9,5 +9,4 @@ import java.util.Optional;
 public interface PostQueryRepository {
     Page<PostResponse> findAllWithCounts(BoardCategory category, Pageable pageable);
     Optional<PostDetailResponse> findDetailByUserIdAndId(Long userId, Long postId);
-    Optional<Post> findByUserIdAndIdAndCategory(Long userId, Long postId, BoardCategory category);
 }

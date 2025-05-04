@@ -66,19 +66,6 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         );
     }
 
-    @Override
-    public Optional<Post> findByUserIdAndIdAndCategory(Long userId, Long postId, BoardCategory category) {
-        return Optional.ofNullable(queryFactory
-                .selectFrom(post)
-                .where(
-                        post.id.eq(postId),
-                        post.userId.eq(userId),
-                        post.category.eq(category)
-                )
-                .fetchOne()
-        );
-    }
-
     private NumberExpression<Long> commentCount() {
         return Expressions.numberTemplate(
                 Long.class,

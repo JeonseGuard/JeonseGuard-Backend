@@ -32,12 +32,6 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Post getPostByCategory(Long userId, Long postId, String category) {
-        return postQueryRepository.findByUserIdAndIdAndCategory(userId, postId, parseCategory(category))
-                .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
-    }
-
-    @Transactional(readOnly = true)
     public Post getPost(Long postId) {
         return postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));

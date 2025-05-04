@@ -41,14 +41,14 @@ public class BoardFacade {
         return CreatePostResponse.fromEntity(post);
     }
 
-    public void updatePostByCategory(Long userId, Long postId, String category, UpdatePostRequest request) {
+    public void updatePost(Long userId, Long postId, UpdatePostRequest request) {
         UserDetailResponse response = userService.getUserDetail(userId);
-        Post post = postService.getPostByCategory(userId, postId, category);
+        Post post = postService.getPost(postId);
         postService.updatePost(userId, post, response, request);
     }
 
-    public void deletePostByCategory(Long userId, Long postId, String category) {
-        Post post = postService.getPostByCategory(userId, postId, category);
+    public void deletePost(Long userId, Long postId) {
+        Post post = postService.getPost(postId);
         postService.deletePost(userId, post);
     }
 
