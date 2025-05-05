@@ -1,14 +1,23 @@
-# 기본 이미지 설정
-FROM --platform=linux/amd64 openjdk:17-jdk-slim
+# 1단계: Build Stage
+FROM gradle:8.5-jdk17-alpine AS builder
 
-# jar 파일 이름
-ARG JAR_FILE=build/libs/JeonseGuard-Backend-0.0.1-SNAPSHOT.jar
+WORKDIR /app
 
-# 애플리케이션 JAR 파일 복사
-COPY ${JAR_FILE} app.jar
+COPY build.gradle settings.gradle gradlew /app/
+COPY gradle /app/gradle
+COPY src /app/src
 
-# 포트 오픈
+RUN ./gradlew clean bootJar -x test
+
+# 2단계: Runtime Stage
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/build/libs/*.jar app.jar
+
+ENV TZ=Asia/Seoul
+
 EXPOSE 8080
 
-# 애플리케이션 실행
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Duser.timezone=Asia/Seoul", "-jar", "app.jar"]
