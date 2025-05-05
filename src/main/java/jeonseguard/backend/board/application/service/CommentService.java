@@ -68,6 +68,4 @@ public class CommentService {
         CommentPolicy.validateAuthor(userId, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
         commentRepository.delete(comment);
     }
-
-
 }
