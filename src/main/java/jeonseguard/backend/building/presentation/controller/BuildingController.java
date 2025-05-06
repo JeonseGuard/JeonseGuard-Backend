@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Building", description = "건물 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/building")
+@RequestMapping("/api/v5/building")
 public class BuildingController {
     private final BuildingFacade buildingFacade;
 

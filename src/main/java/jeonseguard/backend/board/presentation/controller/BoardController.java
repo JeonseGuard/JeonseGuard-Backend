@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Board", description = "게시판 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v4/board")
+@RequestMapping("/api/v5/board")
 public class BoardController {
     private final BoardFacade boardFacade;
 
