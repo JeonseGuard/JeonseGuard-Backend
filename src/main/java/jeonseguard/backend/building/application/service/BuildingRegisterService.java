@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import static jeonseguard.backend.global.util.StringUtil.*;
 import static org.springframework.util.StringUtils.hasText;
@@ -65,10 +66,20 @@ public class BuildingRegisterService {
     }
 
     private List<BuildingRegisterAreaItem> fetchBuildingRegisterArea(int pageNumber, BuildingRegisterRequest request) {
-        List<BuildingRegisterAreaItem> items = buildingRegisterApiRepository.fetchBuildingRegisterArea(String.valueOf(pageNumber), request);
-        if (items.isEmpty()) {
-            throw new BusinessException(ErrorCode.BUILDING_REGISTER_AREA_FETCH_ERROR);
-        }
-        return items;
+        List<Supplier<List<BuildingRegisterAreaItem>>> fetchStrategies = buildAreaFetchStrategies(String.valueOf(pageNumber), request);
+        return fetchStrategies.stream()
+                .map(Supplier::get)
+                .filter(items -> !items.isEmpty())
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_AREA_FETCH_ERROR));
+    }
+
+    private List<Supplier<List<BuildingRegisterAreaItem>>> buildAreaFetchStrategies(String pageNumber, BuildingRegisterRequest request) {
+        return List.of(
+                () -> buildingRegisterApiRepository.fetchBuildingRegisterArea(pageNumber, request),
+                () -> buildingRegisterApiRepository.fetchBuildingRegisterAreaWithHoNumber(pageNumber, request),
+                () -> buildingRegisterApiRepository.fetchBuildingRegisterAreaWithDongNumber(pageNumber, request),
+                () -> buildingRegisterApiRepository.fetchBuildingRegisterAreaWithDongNumberAndHoNumber(pageNumber, request)
+        );
     }
 }

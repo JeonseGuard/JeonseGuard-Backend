@@ -5,6 +5,7 @@ import org.springframework.util.StringUtils;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtil {
@@ -14,6 +15,12 @@ public class StringUtil {
 
     public static boolean isOptionalSameText(String requestValue, String targetValue) {
         return !StringUtils.hasText(requestValue) || isSameText(requestValue, targetValue);
+    }
+
+    public static Optional<String> encodeIfNotBlank(String value) {
+        return Optional.ofNullable(value)
+                .filter(StringUtils::hasText)
+                .map(StringUtil::encode);
     }
 
     public static String encode(String value) {
