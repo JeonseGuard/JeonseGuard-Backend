@@ -6,7 +6,6 @@ import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterR
 import jeonseguard.backend.global.config.properties.BuildingProperties;
 import jeonseguard.backend.global.dto.OpenApiResponse;
 import jeonseguard.backend.global.exception.error.*;
-import jeonseguard.backend.global.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Repository;
@@ -15,6 +14,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.*;
 import java.util.*;
+
+import static jeonseguard.backend.global.util.StringUtil.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -55,9 +56,58 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
                 .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_AREA_FETCH_ERROR));
     }
 
+    @Override
+    public List<BuildingRegisterAreaItem> fetchBuildingRegisterAreaWithDongNumber(String pageNumber, BuildingRegisterRequest request) {
+        return webClient.get()
+                .uri(buildUriWithDongNumber(buildingProperties.areaUri(), pageNumber, request))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterAreaItem>>() {})
+                .blockOptional()
+                .map(OpenApiResponse::getItems)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_AREA_FETCH_ERROR));
+    }
+
+    @Override
+    public List<BuildingRegisterAreaItem> fetchBuildingRegisterAreaWithHoNumber(String pageNumber, BuildingRegisterRequest request) {
+        return webClient.get()
+                .uri(buildUriWithHoNumber(buildingProperties.areaUri(), pageNumber, request))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterAreaItem>>() {})
+                .blockOptional()
+                .map(OpenApiResponse::getItems)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_AREA_FETCH_ERROR));
+    }
+
+    @Override
+    public List<BuildingRegisterAreaItem> fetchBuildingRegisterAreaWithDongNumberAndHoNumber(String pageNumber, BuildingRegisterRequest request) {
+        return webClient.get()
+                .uri(buildUriWithDongNumberAndHoNumber(buildingProperties.areaUri(), pageNumber, request))
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<OpenApiResponse<BuildingRegisterAreaItem>>() {})
+                .blockOptional()
+                .map(OpenApiResponse::getItems)
+                .orElseThrow(() -> new BusinessException(ErrorCode.BUILDING_REGISTER_AREA_FETCH_ERROR));
+    }
+
     private URI buildUri(String uri, String pageNumber, BuildingRegisterRequest request) {
+        return buildUriDynamic(uri, pageNumber, request.dongName(), request.hoName(), request);
+    }
+
+    private URI buildUriWithDongNumber(String uri, String pageNumber, BuildingRegisterRequest request) {
+        return buildUriDynamic(uri, pageNumber, request.dongNumber(), request.hoName(), request);
+    }
+
+    private URI buildUriWithHoNumber(String uri, String pageNumber, BuildingRegisterRequest request) {
+        return buildUriDynamic(uri, pageNumber, request.dongName(), request.hoNumber(), request);
+    }
+
+    private URI buildUriWithDongNumberAndHoNumber(String uri, String pageNumber, BuildingRegisterRequest request) {
+        return buildUriDynamic(uri, pageNumber, request.dongNumber(), request.hoNumber(), request);
+    }
+
+    private URI buildUriDynamic(String uri, String pageNumber, String dongValue, String hoValue, BuildingRegisterRequest request) {
         return UriComponentsBuilder.fromUriString(uri)
-                .queryParam("serviceKey", StringUtil.encode(buildingProperties.serviceKey()))
+                .queryParam("serviceKey", encode(buildingProperties.serviceKey()))
                 .queryParam("sigunguCd", request.sigunguCode())
                 .queryParam("bjdongCd", request.regionCode())
                 .queryParam("platGbCd", buildingProperties.categoryCode())
@@ -66,8 +116,8 @@ public class BuildingRegisterApiRepositoryImpl implements BuildingRegisterApiRep
                 .queryParam("_type", "json")
                 .queryParam("numOfRows", buildingProperties.listSize())
                 .queryParam("pageNo", pageNumber)
-                .queryParamIfPresent("dongNm", Optional.ofNullable(request.dongName()).filter(name -> !name.isBlank()).map(StringUtil::encode))
-                .queryParamIfPresent("hoNm", Optional.ofNullable(request.hoName()).filter(name -> !name.isBlank()).map(StringUtil::encode))
+                .queryParamIfPresent("dongNm", encodeIfNotBlank(dongValue))
+                .queryParamIfPresent("hoNm", encodeIfNotBlank(hoValue))
                 .build(true)
                 .toUri();
     }

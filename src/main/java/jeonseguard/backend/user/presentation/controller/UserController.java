@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "User", description = "사용자 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v3/user")
+@RequestMapping("/api/v5/user")
 public class UserController {
     private final UserFacade userFacade;
 

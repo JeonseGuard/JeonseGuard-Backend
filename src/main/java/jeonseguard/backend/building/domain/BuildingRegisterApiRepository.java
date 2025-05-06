@@ -9,4 +9,7 @@ public interface BuildingRegisterApiRepository {
     List<BuildingRegisterOverviewItem> fetchBuildingRegisterOverview(String pageNumber, BuildingRegisterRequest request);
     List<BuildingRegisterFloorItem> fetchBuildingRegisterFloor(String pageNumber, BuildingRegisterRequest request);
     List<BuildingRegisterAreaItem> fetchBuildingRegisterArea(String pageNumber, BuildingRegisterRequest request);
+    List<BuildingRegisterAreaItem> fetchBuildingRegisterAreaWithDongNumber(String pageNumber, BuildingRegisterRequest request);
+    List<BuildingRegisterAreaItem> fetchBuildingRegisterAreaWithHoNumber(String pageNumber, BuildingRegisterRequest request);
+    List<BuildingRegisterAreaItem> fetchBuildingRegisterAreaWithDongNumberAndHoNumber(String pageNumber, BuildingRegisterRequest request);
 }
