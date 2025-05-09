@@ -1,9 +1,10 @@
-name: Deploy to GCP (Develop)
+name: Deploy to GCP
 
 on:
   push:
     branches:
-      - develop
+      - develop 
+      - fix/ci-cd
 
 jobs:
   deploy:
@@ -29,14 +30,15 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
-      - name: Setup SSH for GCP
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
 
-      - name: Deploy on GCP VM
+      - name: Deploy on GCP VM using sshpass
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_USERNAME }}@${{ secrets.GCP_HOST }} << EOF
+          echo "${{ secrets.GCP_SSH_KEY }}" > gcp_key.pem
+          chmod 600 gcp_key.pem
+
+          sshpass -p "${{ secrets.GCP_PASSPHRASE }}" ssh -o StrictHostKeyChecking=no -i gcp_key.pem ${{ secrets.GCP_USERNAME }}@${{ secrets.GCP_HOST }} << EOF
             cd /home/${{ secrets.GCP_USERNAME }}
             docker compose down
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
