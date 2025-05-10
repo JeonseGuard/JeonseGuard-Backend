@@ -57,11 +57,13 @@ security:
       token-uri: ${KAKAO_TOKEN_URL}
       user-info-uri: ${KAKAO_USER_INFO_URL}
 
-search:
+news:
   naver:
-    news:
-      client-id: ${NAVER_NEWS_CLIENT_ID}
-      client-secret: ${NAVER_NEWS_CLIENT_SECRET}
+    client-id: ${NAVER_NEWS_CLIENT_ID}
+    client-secret: ${NAVER_NEWS_CLIENT_SECRET}
+    endpoint: ${NAVER_NEWS_ENDPOINT}
+    query: ${NAVER_NEWS_QUERY}
+    display: ${NAVER_NEWS_DISPLAY}
 
 building:
   api:
