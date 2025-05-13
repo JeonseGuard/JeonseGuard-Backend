@@ -1,9 +1,6 @@
 package jeonseguard.backend.global.config;
 
-import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -24,8 +21,7 @@ public class CacheConfig {
     private final RedisConnectionFactory redisConnectionFactory;
 
     @Bean
-    public CacheManager redisCacheManager() {
-        ObjectMapper objectMapper = createObjectMapper();
+    public CacheManager redisCacheManager(ObjectMapper objectMapper) {
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
         RedisCacheConfiguration defaultRedisCacheConfig = createDefaultRedisCacheConfig(serializer);
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
@@ -54,13 +50,5 @@ public class CacheConfig {
                 .cacheDefaults(defaultCacheConfig)
                 .withInitialCacheConfigurations(cacheConfigs)
                 .build();
-    }
-
-    private ObjectMapper createObjectMapper() {
-        return new ObjectMapper()
-                .registerModule(new JavaTimeModule())
-                .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-                .activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 }

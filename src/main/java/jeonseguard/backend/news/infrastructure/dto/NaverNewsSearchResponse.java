@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 public record NaverNewsSearchResponse(
-        @Schema(description = "네이버 뉴스 기사 목록")
+        @Schema(description = "네이버 뉴스 목록")
         @JsonProperty("items")
         List<NaverNewsItem> items
 ) {
