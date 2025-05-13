@@ -2,7 +2,7 @@ package jeonseguard.backend.global.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "building.api")
+@ConfigurationProperties(prefix = "openapi.building")
 public record BuildingProperties(
         String overviewUri,
         String floorUri,

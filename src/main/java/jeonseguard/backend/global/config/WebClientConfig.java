@@ -6,7 +6,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@EnableConfigurationProperties({JwtTokenProperties.class, KakaoOauthProperties.class, NaverNewsProperties.class, BuildingProperties.class})
+@EnableConfigurationProperties({JwtTokenProperties.class, KakaoOauthProperties.class, NaverSearchProperties.class, BuildingProperties.class})
 public class WebClientConfig {
     @Bean
     public WebClient webClient() {

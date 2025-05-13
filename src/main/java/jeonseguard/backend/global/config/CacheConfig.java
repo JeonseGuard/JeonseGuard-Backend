@@ -37,6 +37,7 @@ public class CacheConfig {
         cacheConfigs.put("userDetail", defaultRedisCacheConfig);
         cacheConfigs.put("regionDetail", defaultRedisCacheConfig);
         cacheConfigs.put("buildingRegister", defaultRedisCacheConfig);
+        cacheConfigs.put("newsList", defaultRedisCacheConfig.entryTtl(Duration.ofMinutes(1)));
         return buildRedisCacheManager(defaultRedisCacheConfig, cacheConfigs);
     }
 

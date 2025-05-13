@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "News", description = "뉴스 기사 관련 API")
+@Tag(name = "news", description = "뉴스 기사 관련 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v5/news")
