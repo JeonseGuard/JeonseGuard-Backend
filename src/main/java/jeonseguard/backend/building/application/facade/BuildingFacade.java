@@ -1,5 +1,6 @@
 package jeonseguard.backend.building.application.facade;
 
+import jeonseguard.backend.building.application.mapper.BuildingRegisterRequestMapper;
 import jeonseguard.backend.building.application.service.BuildingRegisterService;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.building.presentation.dto.request.BuildingAddressRequest;
@@ -28,25 +29,13 @@ public class BuildingFacade {
                     + "(#addressRequest.floorName != null ? #addressRequest.floorName : '')"
     )
     public BuildingRegisterResponse getBuildingRegister(BuildingAddressRequest addressRequest) {
-        BuildingRegisterRequest request = convertToBuildingRegisterRequest(addressRequest);
+        RegionDetailResponse response = regionService.getRegionDetail(addressRequest.address());
+        String parsedRegionCode = extractRegionCode(response.regionCode());
+        String sigunguCode = response.sigunguCode();
+        BuildingRegisterRequest request = BuildingRegisterRequestMapper.convertToBuildingRegisterRequest(parsedRegionCode, sigunguCode, addressRequest);
         var overviewItem = buildingRegisterService.getBuildingRegisterOverview(1, request);
         var floorItem = buildingRegisterService.getBuildingRegisterFloor(1, request);
         var areaItem = buildingRegisterService.getBuildingRegisterArea(1, request);
         return BuildingRegisterResponse.of(overviewItem, floorItem, areaItem);
-    }
-
-    private BuildingRegisterRequest convertToBuildingRegisterRequest(BuildingAddressRequest addressRequest) {
-        RegionDetailResponse response = regionService.getRegionDetail(addressRequest.address());
-        String parsedRegionCode = extractRegionCode(response.regionCode());
-        String sigunguCode = response.sigunguCode();
-        String bun = formatBunji(addressRequest.bun());
-        String ji = addressRequest.ji() != null ? formatBunji(addressRequest.ji()) : null;
-        String dongNumber = addressRequest.dongName() != null ? formatDongName(addressRequest.dongName()) : null;
-        String dongName = addressRequest.dongName() != null ? addressRequest.dongName() : null;
-        String floorNumber = addressRequest.floorName() != null ? formatFloorName(addressRequest.floorName()) : null;
-        String floorName = addressRequest.floorName() != null ? addressRequest.floorName() : null;
-        String hoNumber = addressRequest.hoName() != null ? formatHoName(addressRequest.hoName()) : null;
-        String hoName = addressRequest.hoName() != null ? addressRequest.hoName() : null;
-        return BuildingRegisterRequest.of(parsedRegionCode, sigunguCode, bun, ji, dongNumber, dongName, floorNumber, floorName, hoNumber, hoName);
     }
 }

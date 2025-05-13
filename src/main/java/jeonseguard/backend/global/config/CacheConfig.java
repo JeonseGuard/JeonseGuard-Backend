@@ -23,26 +23,26 @@ public class CacheConfig {
     @Bean
     public CacheManager redisCacheManager(ObjectMapper objectMapper) {
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
-        RedisCacheConfiguration defaultRedisCacheConfig = createDefaultRedisCacheConfig(serializer);
+        RedisCacheConfiguration defaultRedisCacheConfig = createRedisCacheConfigWithTtl(serializer, 5);
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
         cacheConfigs.put("postPage", defaultRedisCacheConfig);
         cacheConfigs.put("postInfo", defaultRedisCacheConfig);
-        cacheConfigs.put("postDetail", defaultRedisCacheConfig);
-        cacheConfigs.put("commentList", defaultRedisCacheConfig);
-        cacheConfigs.put("userInfo", defaultRedisCacheConfig);
-        cacheConfigs.put("userDetail", defaultRedisCacheConfig);
-        cacheConfigs.put("regionDetail", defaultRedisCacheConfig);
-        cacheConfigs.put("buildingRegister", defaultRedisCacheConfig);
-        cacheConfigs.put("newsList", defaultRedisCacheConfig.entryTtl(Duration.ofMinutes(1)));
+        cacheConfigs.put("postDetail", createRedisCacheConfigWithTtl(serializer, 1));
+        cacheConfigs.put("commentList", createRedisCacheConfigWithTtl(serializer, 1));
+        cacheConfigs.put("userInfo", createRedisCacheConfigWithTtl(serializer, 30));
+        cacheConfigs.put("userDetail", createRedisCacheConfigWithTtl(serializer, 30));
+        cacheConfigs.put("regionDetail", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("buildingRegister", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("newsList", createRedisCacheConfigWithTtl(serializer, 1));
         return buildRedisCacheManager(defaultRedisCacheConfig, cacheConfigs);
     }
 
-    private RedisCacheConfiguration createDefaultRedisCacheConfig(GenericJackson2JsonRedisSerializer serializer) {
+    private RedisCacheConfiguration createRedisCacheConfigWithTtl(GenericJackson2JsonRedisSerializer serializer, int ttl) {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .serializeKeysWith(fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(fromSerializer(serializer))
                 .disableCachingNullValues()
-                .entryTtl(Duration.ofMinutes(30));
+                .entryTtl(Duration.ofMinutes(ttl));
     }
 
     private RedisCacheManager buildRedisCacheManager(RedisCacheConfiguration defaultCacheConfig, Map<String, RedisCacheConfiguration> cacheConfigs) {
