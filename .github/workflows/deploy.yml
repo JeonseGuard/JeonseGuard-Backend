@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - fix/ci-cd
 
 jobs:
   deploy:
@@ -30,16 +29,23 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:latest
 
-      - name: Setup SSH for GCP
+      - name: Setup SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
 
-      - name: Deploy on GCP VM
+      - name: Write and transfer dev.env to GCP VM
+        run: |
+          echo "${{ secrets.DEV_ENV }}" > dev.env
+          scp -o StrictHostKeyChecking=no dev.env ${{ secrets.GCP_USERNAME }}@${{ secrets.GCP_HOST }}:/home/${{ secrets.GCP_USERNAME }}/dev.env
+
+      - name: Restart Docker on GCP VM
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_USERNAME }}@${{ secrets.GCP_HOST }} << EOF
+            set -e
             cd /home/${{ secrets.GCP_USERNAME }}
-            docker compose down
+            docker compose down || true
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
             docker compose up -d
-          EOF
+            docker system prune -f
+EOF
