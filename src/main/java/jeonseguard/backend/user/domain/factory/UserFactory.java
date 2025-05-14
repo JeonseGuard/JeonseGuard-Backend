@@ -1,6 +1,6 @@
 package jeonseguard.backend.user.domain.factory;
 
-import jeonseguard.backend.auth.infrastructure.dto.response.KakaoUserInfoResponse;
+import jeonseguard.backend.auth.infrastructure.dto.KakaoUserInfoResponse;
 import jeonseguard.backend.user.domain.entity.*;
 import lombok.*;
 

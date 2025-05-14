@@ -57,8 +57,17 @@ security:
       token-uri: ${KAKAO_TOKEN_URL}
       user-info-uri: ${KAKAO_USER_INFO_URL}
 
-building:
-  api:
+search:
+  naver:
+    client-id: ${NAVER_SEARCH_CLIENT_ID}
+    client-secret: ${NAVER_SEARCH_CLIENT_SECRET}
+    news-endpoint: ${NAVER_SEARCH_NEWS_ENDPOINT}
+    news-query: ${NAVER_SEARCH_NEWS_QUERY}
+    news-sort: ${NAVER_SEARCH_NEWS_SORT}
+    news-display: ${NAVER_SEARCH_NEWS_DISPLAY}
+
+openapi:
+  building:
     overview-uri: ${BUILDING_OVERVIEW_URI}
     floor-uri: ${BUILDING_FLOOR_URI}
     area-uri: ${BUILDING_AREA_URI}

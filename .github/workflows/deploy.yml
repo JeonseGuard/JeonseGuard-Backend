@@ -44,8 +44,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_USERNAME }}@${{ secrets.GCP_HOST }} << EOF
             set -e
             cd /home/${{ secrets.GCP_USERNAME }}
-            docker compose down || true
+            docker compose down
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
             docker compose up -d
             docker system prune -f
-EOF
+          EOF

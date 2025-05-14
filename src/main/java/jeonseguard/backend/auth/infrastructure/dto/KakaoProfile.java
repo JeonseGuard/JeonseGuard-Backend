@@ -1,4 +1,4 @@
-package jeonseguard.backend.auth.infrastructure.dto.external;
+package jeonseguard.backend.auth.infrastructure.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

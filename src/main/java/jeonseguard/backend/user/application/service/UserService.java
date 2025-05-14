@@ -1,6 +1,6 @@
 package jeonseguard.backend.user.application.service;
 
-import jeonseguard.backend.auth.infrastructure.dto.response.KakaoUserInfoResponse;
+import jeonseguard.backend.auth.infrastructure.dto.KakaoUserInfoResponse;
 import jeonseguard.backend.global.exception.error.*;
 import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.domain.factory.UserFactory;
