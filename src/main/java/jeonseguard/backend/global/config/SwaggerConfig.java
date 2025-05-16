@@ -29,14 +29,12 @@ public class SwaggerConfig {
 
     private Components securityComponents() {
         return new Components()
-                .addSecuritySchemes("bearerAuth", jwtSecurityScheme())
-                .addSecuritySchemes("kakaoOAuth", kakaoSecurityScheme());
+                .addSecuritySchemes("bearerAuth", jwtSecurityScheme());
     }
 
     private SecurityRequirement securityRequirements() {
         return new SecurityRequirement()
-                .addList("bearerAuth")
-                .addList("kakaoOAuth");
+                .addList("bearerAuth");
     }
 
     private SecurityScheme jwtSecurityScheme() {
@@ -46,20 +44,6 @@ public class SwaggerConfig {
                 .bearerFormat("JWT")
                 .in(SecurityScheme.In.HEADER)
                 .name(HttpHeaders.AUTHORIZATION);
-    }
-
-    private SecurityScheme kakaoSecurityScheme() {
-        return new SecurityScheme()
-                .type(SecurityScheme.Type.OAUTH2)
-                .description("카카오 OAuth2 로그인")
-                .flows(oauthFlows());
-    }
-
-    private OAuthFlows oauthFlows() {
-        return new OAuthFlows()
-                .authorizationCode(new OAuthFlow()
-                        .authorizationUrl("https://kauth.kakao.com/oauth/authorize")
-                        .tokenUrl("https://kauth.kakao.com/oauth/token"));
     }
 
     private List<Server> serverList() {
