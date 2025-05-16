@@ -3,8 +3,11 @@ package jeonseguard.backend.global.config;
 import io.swagger.v3.oas.models.*;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.*;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpHeaders;
+
+import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
@@ -12,6 +15,7 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(apiInfo())
+                .servers(serverList())
                 .components(securityComponents())
                 .addSecurityItem(securityRequirements());
     }
@@ -56,5 +60,18 @@ public class SwaggerConfig {
                 .authorizationCode(new OAuthFlow()
                         .authorizationUrl("https://kauth.kakao.com/oauth/authorize")
                         .tokenUrl("https://kauth.kakao.com/oauth/token"));
+    }
+
+    private List<Server> serverList() {
+        return List.of(
+                createServer("https://jeonseguard.duckdns.org", "Production Server"),
+                createServer("http://localhost:8080", "Local Server")
+        );
+    }
+
+    private Server createServer(String url, String description) {
+        return new Server()
+                .url(url)
+                .description(description);
     }
 }
