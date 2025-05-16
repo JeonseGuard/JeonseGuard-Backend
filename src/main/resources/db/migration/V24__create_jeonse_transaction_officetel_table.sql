@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS jeonse_transaction_apartment (
+CREATE TABLE IF NOT EXISTS jeonse_transaction_officetel (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     address VARCHAR(50) NOT NULL,
     bun VARCHAR(4) NOT NULL,
