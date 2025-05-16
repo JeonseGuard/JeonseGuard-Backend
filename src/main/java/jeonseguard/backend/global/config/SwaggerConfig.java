@@ -7,16 +7,14 @@ import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpHeaders;
 
-import java.util.List;
-
 @Configuration
 public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(apiInfo())
-                .servers(serverList())
                 .components(securityComponents())
+                .addServersItem(new Server().url("/"))
                 .addSecurityItem(securityRequirements());
     }
 
@@ -44,18 +42,5 @@ public class SwaggerConfig {
                 .bearerFormat("JWT")
                 .in(SecurityScheme.In.HEADER)
                 .name(HttpHeaders.AUTHORIZATION);
-    }
-
-    private List<Server> serverList() {
-        return List.of(
-                createServer("https://jeonseguard.duckdns.org", "Production Server"),
-                createServer("http://localhost:8080", "Local Server")
-        );
-    }
-
-    private Server createServer(String url, String description) {
-        return new Server()
-                .url(url)
-                .description(description);
     }
 }
