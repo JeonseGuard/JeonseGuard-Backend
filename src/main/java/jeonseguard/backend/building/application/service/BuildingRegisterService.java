@@ -1,6 +1,6 @@
 package jeonseguard.backend.building.application.service;
 
-import jeonseguard.backend.building.domain.BuildingRegisterApiRepository;
+import jeonseguard.backend.building.domain.repository.BuildingRegisterApiRepository;
 import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.global.exception.error.*;

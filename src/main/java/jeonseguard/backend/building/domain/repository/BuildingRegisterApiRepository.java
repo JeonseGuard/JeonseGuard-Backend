@@ -1,4 +1,4 @@
-package jeonseguard.backend.building.domain;
+package jeonseguard.backend.building.domain.repository;
 
 import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
