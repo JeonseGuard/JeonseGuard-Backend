@@ -23,14 +23,14 @@ public class JeonseTransactionApartment extends CommonBaseEntity {
     private String floor;
 
     @Column(nullable = false)
-    private String rent_type;
+    private String rentType;
 
     @Column(nullable = false)
-    private String contract_year_month;
+    private String contractYearMonth;
 
     @Column(nullable = false)
     private String price;
 
     @Column(nullable = false)
-    private String housing_type;
+    private String housingType;
 }

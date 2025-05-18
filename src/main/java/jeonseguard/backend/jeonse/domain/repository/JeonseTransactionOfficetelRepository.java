@@ -1,11 +1,11 @@
 package jeonseguard.backend.jeonse.domain.repository;
 
-import jeonseguard.backend.jeonse.infrastructure.dto.JeonseTransactionOfficetelResponse;
+import jeonseguard.backend.jeonse.domain.entity.JeonseTransactionOfficetel;
 
 import java.util.List;
 
 public interface JeonseTransactionOfficetelRepository {
-    List<JeonseTransactionOfficetelResponse> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+    List<JeonseTransactionOfficetel> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
             String address,
             String bun,
             String ji,

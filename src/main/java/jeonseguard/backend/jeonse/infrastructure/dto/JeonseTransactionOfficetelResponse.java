@@ -4,15 +4,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public record JeonseTransactionOfficetelResponse(
         @Schema(description = "전월세 구분")
-        String rent_type,
+        String rentType,
 
         @Schema(description = "계약년월")
-        String contract_year_month,
+        String contractYearMonth,
 
         @Schema(description = "보증금")
         String price,
 
         @Schema(description = "주택유형")
-        String housing_type
+        String housingType
 ) {
 }
