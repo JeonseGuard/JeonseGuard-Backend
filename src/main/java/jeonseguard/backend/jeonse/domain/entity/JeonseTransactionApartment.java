@@ -1,4 +1,4 @@
-package jeonseguard.backend.building.domain.entity;
+package jeonseguard.backend.jeonse.domain.entity;
 
 import jakarta.persistence.*;
 import jeonseguard.backend.global.entity.CommonBaseEntity;
@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class JeonseTransactionRowhouse extends CommonBaseEntity {
+public class JeonseTransactionApartment extends CommonBaseEntity {
     @Column(nullable = false)
     private String address;
 
