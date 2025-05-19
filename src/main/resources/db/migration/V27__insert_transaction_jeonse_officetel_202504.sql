@@ -1,4 +1,4 @@
-INSERT INTO jeonse_transaction_officetel (address, bun, ji, floor, rent_type, contract_year_month, price, housing_type, created_at, updated_at)
+INSERT INTO transaction_jeonse_officetel (address, bun, ji, floor, rent_type, contract_year_month, price, housing_type, created_at, updated_at)
 VALUES ('경기도 김포시 고촌읍 신곡리', '532', '32', '15', '전세', '202504', '160,000,000', '오피스텔', NOW(), NOW()),
        ('대구광역시 수성구 두산동', '999', '0', '29', '전세', '202504', '230,000,000', '오피스텔', NOW(), NOW()),
        ('서울특별시 강서구 염창동', '260', '0', '2', '전세', '202504', '470,000,000', '오피스텔', NOW(), NOW()),
