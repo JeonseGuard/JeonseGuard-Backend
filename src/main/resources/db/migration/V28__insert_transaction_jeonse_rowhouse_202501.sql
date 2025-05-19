@@ -1,4 +1,4 @@
-INSERT INTO jeonse_transaction_rowhouse (address, bun, ji, floor, rent_type, contract_year_month, price, housing_type, created_at, updated_at)
+INSERT INTO transaction_jeonse_rowhouse (address, bun, ji, floor, rent_type, contract_year_month, price, housing_type, created_at, updated_at)
 VALUES ('서울특별시 강동구 천호동', '167', '97', '12', '전세', '202501', '173,000,000', '다세대', NOW(), NOW()),
        ('서울특별시 강동구 천호동', '309', '11', '3', '전세', '202501', '339,750,000', '다세대', NOW(), NOW()),
        ('서울특별시 송파구 송파동', '24', '8', '3', '전세', '202501', '219,800,000', '다세대', NOW(), NOW()),

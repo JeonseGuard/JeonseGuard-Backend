@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS transaction_jeonse_officetel (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS jeonse_transaction_rowhouse (
+CREATE TABLE IF NOT EXISTS transaction_jeonse_rowhouse (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     address VARCHAR(50) NOT NULL,
     bun VARCHAR(4) NOT NULL,
