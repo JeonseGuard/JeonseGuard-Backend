@@ -1,7 +1,7 @@
-package jeonseguard.backend.jeonse.infrastructure.repository;
+package jeonseguard.backend.transaction.infrastructure;
 
-import jeonseguard.backend.jeonse.domain.entity.JeonseTransactionOfficetel;
-import jeonseguard.backend.jeonse.domain.repository.JeonseTransactionOfficetelRepository;
+import jeonseguard.backend.transaction.domain.entity.TransactionJeonseOfficetel;
+import jeonseguard.backend.transaction.domain.repository.TransactionJeonseOfficetelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -9,11 +9,11 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class JeonseTransactionOfficetelRepositoryImpl implements JeonseTransactionOfficetelRepository {
-    private final JeonseTransactionOfficetelJpaRepository jpaRepository;
+public class TransactionJeonseOfficetelRepositoryImpl implements TransactionJeonseOfficetelRepository {
+    private final TransactionJeonseOfficetelJpaRepository jpaRepository;
 
     @Override
-    public List<JeonseTransactionOfficetel> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+    public List<TransactionJeonseOfficetel> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
             String address,
             String bun,
             String ji,

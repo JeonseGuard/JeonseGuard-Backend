@@ -1,7 +1,7 @@
-package jeonseguard.backend.jeonse.infrastructure.repository;
+package jeonseguard.backend.transaction.infrastructure;
 
-import jeonseguard.backend.jeonse.domain.entity.JeonseTransactionApartment;
-import jeonseguard.backend.jeonse.domain.repository.JeonseTransactionApartmentRepository;
+import jeonseguard.backend.transaction.domain.entity.TransactionJeonseApartment;
+import jeonseguard.backend.transaction.domain.repository.TransactionJeonseApartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -9,11 +9,11 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class JeonseTransactionApartmentRepositoryImpl implements JeonseTransactionApartmentRepository {
-    private final JeonseTransactionApartmentJpaRepository jpaRepository;
+public class TransactionJeonseApartmentRepositoryImpl implements TransactionJeonseApartmentRepository {
+    private final TransactionJeonseApartmentJpaRepository jpaRepository;
 
     @Override
-    public List<JeonseTransactionApartment> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+    public List<TransactionJeonseApartment> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
             String address,
             String bun,
             String ji,
