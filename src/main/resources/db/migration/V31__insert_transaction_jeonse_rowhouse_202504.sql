@@ -1,4 +1,4 @@
-INSERT INTO jeonse_transaction_rowhouse (address, bun, ji, floor, rent_type, contract_year_month, price, housing_type, created_at, updated_at)
+INSERT INTO transaction_jeonse_rowhouse (address, bun, ji, floor, rent_type, contract_year_month, price, housing_type, created_at, updated_at)
 VALUES ('인천광역시 서구 석남동', '481', '2', '4', '전세', '202504', '67,000,000', '다세대', NOW(), NOW()),
        ('서울특별시 서대문구 홍은동', '199', '1', '2', '전세', '202504', '170,000,000', '연립', NOW(), NOW()),
        ('서울특별시 서대문구 북가좌동', '382', '1', '3', '전세', '202504', '220,000,000', '다세대', NOW(), NOW()),
