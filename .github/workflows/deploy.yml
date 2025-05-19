@@ -34,14 +34,16 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
 
-      - name: Restart Docker on GCP VM
+      - name: Write and transfer dev.env to GCP VM
+        run: |
+          echo "${{ secrets.DEV_ENV }}" > dev.env
+          scp -o StrictHostKeyChecking=no dev.env ${{ secrets.GCP_USERNAME }}@${{ secrets.GCP_HOST }}:/home/${{ secrets.GCP_USERNAME }}/dev.env
+
+      - name: Deploy on GCP VM
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.GCP_USERNAME }}@${{ secrets.GCP_HOST }} << EOF
-            set -e
             cd /home/${{ secrets.GCP_USERNAME }}
-            cat > dev.env << 'EOT'
-            ${{ secrets.DEV_ENV }}
-            EOT
+            set -e
             docker compose down
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
             docker compose up -d
