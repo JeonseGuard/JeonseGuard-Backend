@@ -1,4 +1,4 @@
-INSERT INTO jeonse_transaction_officetel (address, bun, ji, floor, rent_type, contract_year_month, price, housing_type, created_at, updated_at)
+INSERT INTO transaction_jeonse_officetel (address, bun, ji, floor, rent_type, contract_year_month, price, housing_type, created_at, updated_at)
 VALUES ('서울특별시 성동구 하왕십리동', '1070', '0', '18', '전세', '202502', '212,500,000', '오피스텔', NOW(), NOW()),
        ('인천광역시 중구 신흥동1가', '39', '7', '12', '전세', '202502', '35,000,000', '오피스텔', NOW(), NOW()),
        ('서울특별시 용산구 한강로1가', '50', '1', '23', '전세', '202502', '350,000,000', '오피스텔', NOW(), NOW()),
