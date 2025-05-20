@@ -10,7 +10,6 @@ import jeonseguard.backend.post.presentation.dto.request.*;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostService {
     private final PostRepository postRepository;
     private final PostQueryRepository postQueryRepository;
-
-    @Transactional(readOnly = true)
-    public Page<PostResponse> getPostPageByCategory(String category, Pageable pageable) {
-        return postQueryRepository.findAllWithCounts(parseCategory(category), pageable);
-    }
 
     @Cacheable(value = "postDetail", key = "'post::id:' + #postId")
     @Transactional(readOnly = true)
@@ -40,8 +34,8 @@ public class PostService {
 
     @CacheEvict(value = "postPage", allEntries = true)
     @Transactional
-    public Post createPostByCategory(String category, UserDetailResponse response, CreatePostRequest request) {
-        Post post = PostFactory.from(parseCategory(category), response, request);
+    public Post createPostByCategory(PostCategory category, UserDetailResponse response, CreatePostRequest request) {
+        Post post = PostFactory.from(category, response, request);
         return postRepository.save(post);
     }
 
@@ -65,9 +59,5 @@ public class PostService {
     public void deletePost(Long userId, Post post) {
         PostPolicy.validateAuthor(userId, post, ErrorCode.POST_DELETE_FORBIDDEN);
         postRepository.delete(post);
-    }
-
-    private PostCategory parseCategory(String category) {
-        return PostCategory.valueOf(category.toUpperCase());
     }
 }

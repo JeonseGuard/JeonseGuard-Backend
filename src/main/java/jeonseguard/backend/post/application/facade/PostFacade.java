@@ -3,7 +3,7 @@ package jeonseguard.backend.post.application.facade;
 import jeonseguard.backend.comment.application.service.CommentService;
 import jeonseguard.backend.comment.infrastructure.dto.CommentResponse;
 import jeonseguard.backend.post.application.service.PostService;
-import jeonseguard.backend.post.domain.entity.Post;
+import jeonseguard.backend.post.domain.entity.*;
 import jeonseguard.backend.post.infrastructure.dto.*;
 import jeonseguard.backend.post.presentation.dto.request.*;
 import jeonseguard.backend.post.presentation.dto.response.*;
@@ -11,7 +11,6 @@ import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,12 +22,6 @@ public class PostFacade {
     private final CommentService commentService;
     private final UserService userService;
 
-    @Cacheable(value = "postPage", key = "'post::category:' + #category + ':page:' + #pageable.pageNumber")
-    public PostPageResponse getPostPageByCategory(String category, Pageable pageable) {
-        Page<PostResponse> page = postService.getPostPageByCategory(category, pageable);
-        return PostPageResponse.from(page);
-    }
-
     @Cacheable(value = "postInfo", key = "'post::id:' + #postId")
     public PostInfoResponse getPostInfo(Long userId, Long postId) {
         PostDetailResponse response = postService.getPostDetail(userId, postId);
@@ -38,7 +31,8 @@ public class PostFacade {
 
     public CreatePostResponse createPostByCategory(Long userId, String category, CreatePostRequest request) {
         UserDetailResponse response = userService.getUserDetail(userId);
-        Post post = postService.createPostByCategory(category, response, request);
+        PostCategory parsedCategory = PostCategory.valueOf(category.toUpperCase());
+        Post post = postService.createPostByCategory(parsedCategory, response, request);
         return CreatePostResponse.fromEntity(post);
     }
 

@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v5/post")
 public class PostController {
     private final PostFacade postFacade;
-
-    @Operation(summary = "카테고리별 게시글 전체 조회", description = "카테고리별 게시글을 페이지네이션 방식으로 전체 조회합니다.")
-    @GetMapping("/{category}/page")
-    public ResponseEntity<PostPageResponse> getPostPageByCategory(@PathVariable String category, Pageable pageable) {
-        return ResponseEntity.ok(postFacade.getPostPageByCategory(category, pageable));
-    }
+//
+//    @Operation(summary = "카테고리별 게시글 전체 조회", description = "카테고리별 게시글을 페이지네이션 방식으로 전체 조회합니다.")
+//    @GetMapping("/{category}/page")
+//    public ResponseEntity<PostPageResponse> getPostPageByCategory(@PathVariable String category, Pageable pageable) {
+//        return ResponseEntity.ok(postFacade.getPostPageByCategory(category, pageable));
+//    }
 
     @Operation(summary = "게시글 상세 조회", description = "게시글 ID를 이용하여, 게시글을 상세 조회합니다.")
     @GetMapping("/{postId}")
