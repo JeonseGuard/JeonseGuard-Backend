@@ -32,7 +32,7 @@ public class PostService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_NOT_FOUND));
     }
 
-    @CacheEvict(value = "postPage", allEntries = true)
+    @CacheEvict(value = "board", allEntries = true)
     @Transactional
     public Post createPostByCategory(PostCategory category, UserDetailResponse response, CreatePostRequest request) {
         Post post = PostFactory.from(category, response, request);
@@ -40,8 +40,7 @@ public class PostService {
     }
 
     @Caching(evict = {
-            @CacheEvict(value = "postPage", allEntries = true),
-            @CacheEvict(value = "postInfo", key = "'post::id:' + #post.id"),
+            @CacheEvict(value = "board", allEntries = true),
             @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id")
     })
     @Transactional
@@ -51,8 +50,7 @@ public class PostService {
     }
 
     @Caching(evict = {
-            @CacheEvict(value = "postPage", allEntries = true),
-            @CacheEvict(value = "postInfo", key = "'post::id:' + #post.id"),
+            @CacheEvict(value = "board", allEntries = true),
             @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id")
     })
     @Transactional
