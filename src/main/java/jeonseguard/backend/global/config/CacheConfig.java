@@ -26,8 +26,6 @@ public class CacheConfig {
         RedisCacheConfiguration defaultRedisCacheConfig = createRedisCacheConfigWithTtl(serializer, 5);
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
         cacheConfigs.put("board", defaultRedisCacheConfig);
-        cacheConfigs.put("postPage", defaultRedisCacheConfig);
-        cacheConfigs.put("postInfo", defaultRedisCacheConfig);
         cacheConfigs.put("postDetail", createRedisCacheConfigWithTtl(serializer, 1));
         cacheConfigs.put("commentList", createRedisCacheConfigWithTtl(serializer, 1));
         cacheConfigs.put("userInfo", createRedisCacheConfigWithTtl(serializer, 30));

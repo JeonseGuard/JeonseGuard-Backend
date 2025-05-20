@@ -10,7 +10,6 @@ import jeonseguard.backend.post.presentation.dto.response.*;
 import jeonseguard.backend.user.application.service.UserService;
 import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,7 +21,6 @@ public class PostFacade {
     private final CommentService commentService;
     private final UserService userService;
 
-    @Cacheable(value = "postInfo", key = "'post::id:' + #postId")
     public PostInfoResponse getPostInfo(Long userId, Long postId) {
         PostDetailResponse response = postService.getPostDetail(userId, postId);
         List<CommentResponse> comments = commentService.getComments(postId);
