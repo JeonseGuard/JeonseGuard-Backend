@@ -75,6 +75,9 @@ openapi:
     category-code: ${BUILDING_CATEGORY_CODE}
     list-size: ${BUILDING_LIST_SIZE}
 
+transaction:
+  contract-year-months: ${TRANSACTION_CONTRACT_YEAR_MONTHS}
+
 logging:
   level:
     org.hibernate.sql: debug
