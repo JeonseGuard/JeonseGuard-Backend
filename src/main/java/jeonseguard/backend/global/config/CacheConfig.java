@@ -36,6 +36,9 @@ public class CacheConfig {
         cacheConfigs.put("transactionJeonseApartment", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionJeonseOfficetel", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionJeonseRowhouse", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionSaleApartment", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionSaleOfficetel", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionSaleRowhouse", createRedisCacheConfigWithTtl(serializer, 360));
         return buildRedisCacheManager(defaultRedisCacheConfig, cacheConfigs);
     }
 
