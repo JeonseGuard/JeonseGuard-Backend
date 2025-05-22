@@ -3,7 +3,7 @@ package jeonseguard.backend.transaction.presentation.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jeonseguard.backend.transaction.application.facade.TransactionFacade;
-import jeonseguard.backend.transaction.presentation.dto.request.TransactionJeonseAddressRequest;
+import jeonseguard.backend.transaction.presentation.dto.request.*;
 import jeonseguard.backend.transaction.presentation.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +34,23 @@ public class TransactionController {
     @PostMapping("jeonse/rowhouse")
     public ResponseEntity<List<TransactionJeonseRowhouseResponse>> getTransactionJeonseHistoryForRowhouse(@RequestBody TransactionJeonseAddressRequest request) {
         return ResponseEntity.ok(transactionFacade.getTransactionJeonseHistoryForRowhouse(request));
+    }
+
+    @Operation(summary = "아파트 매매 실거래가 이력 조회", description = "주소 정보를 기반으로, 아파트 매매 실거래가 이력을 조회합니다.")
+    @PostMapping("sale/apartment")
+    public ResponseEntity<List<TransactionSaleApartmentResponse>> getTransactionSaleHistoryForApartment(@RequestBody TransactionSaleAddressRequest request) {
+        return ResponseEntity.ok(transactionFacade.getTransactionSaleHistoryForApartment(request));
+    }
+
+    @Operation(summary = "오피스텔 매매 실거래가 이력 조회", description = "주소 정보를 기반으로, 오피스텔 매매 실거래가 이력을 조회합니다.")
+    @PostMapping("sale/officetel")
+    public ResponseEntity<List<TransactionSaleOfficetelResponse>> getTransactionSaleHistoryForOfficetel(@RequestBody TransactionSaleAddressRequest request) {
+        return ResponseEntity.ok(transactionFacade.getTransactionSaleHistoryForOfficetel(request));
+    }
+
+    @Operation(summary = "연립다세대 매매 실거래가 이력 조회", description = "주소 정보를 기반으로, 연립다세대 매매 실거래가 이력을 조회합니다.")
+    @PostMapping("sale/rowhouse")
+    public ResponseEntity<List<TransactionSaleRowhouseResponse>> getTransactionSaleHistoryForRowhouse(@RequestBody TransactionSaleAddressRequest request) {
+        return ResponseEntity.ok(transactionFacade.getTransactionSaleHistoryForRowhouse(request));
     }
 }

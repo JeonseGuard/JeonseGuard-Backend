@@ -7,7 +7,6 @@ import java.util.List;
 
 @ConfigurationProperties(prefix = "transaction")
 public record TransactionProperties(
-        @Delimiter(",")
-        List<String> contractYearMonths
+        @Delimiter(",") List<String> contractYearMonths
 ) {
 }
