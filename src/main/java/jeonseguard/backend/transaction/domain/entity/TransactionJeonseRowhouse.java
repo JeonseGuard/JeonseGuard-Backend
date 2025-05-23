@@ -23,7 +23,7 @@ public class TransactionJeonseRowhouse extends CommonBaseEntity {
     private String floor;
 
     @Column(nullable = false)
-    private String rentType;
+    private String area;
 
     @Column(nullable = false)
     private String contractYearMonth;
