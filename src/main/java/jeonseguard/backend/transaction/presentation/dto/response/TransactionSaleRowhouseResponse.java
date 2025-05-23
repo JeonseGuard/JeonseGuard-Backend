@@ -13,6 +13,9 @@ public record TransactionSaleRowhouseResponse(
         @Schema(description = "전용면적(m^2)")
         String area,
 
+        @Schema(description = "임대유형")
+        String rentType,
+
         @Schema(description = "주택유형")
         String housingType
 ) {
@@ -21,6 +24,7 @@ public record TransactionSaleRowhouseResponse(
                 rowhouse.getContractYearMonth(),
                 rowhouse.getPrice(),
                 rowhouse.getArea(),
+                "매매",
                 rowhouse.getHousingType()
         );
     }
