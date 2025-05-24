@@ -25,11 +25,6 @@ public class UserController {
         return ResponseEntity.ok(userFacade.getUserInfo(userId));
     }
 
-    @GetMapping("")
-    public ResponseEntity<User> getUserInfo() {
-        return ResponseEntity.ok(userFacade.getUser(1L));
-    }
-
     @Operation(summary = "사용자 닉네임 수정", description = "현재 로그인한 사용자의 닉네임을 수정합니다.")
     @PatchMapping("/nickname")
     public ResponseEntity<Void> updateNickname(@AuthenticatedUser Long userId, @Valid @RequestBody UpdateNicknameRequest request) {
