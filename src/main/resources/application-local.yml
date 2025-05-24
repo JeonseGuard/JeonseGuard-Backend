@@ -19,6 +19,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: false
         use_sql_comments: true
+    open-in-view: false
 
   flyway:
     enabled: true
@@ -77,6 +78,9 @@ openapi:
 
 transaction:
   contract-year-months: ${TRANSACTION_CONTRACT_YEAR_MONTHS}
+
+malicious:
+  blocked-path-prefixes: ${MALICIOUS_BLOCKED_PATH_PREFIXES}
 
 logging:
   level:

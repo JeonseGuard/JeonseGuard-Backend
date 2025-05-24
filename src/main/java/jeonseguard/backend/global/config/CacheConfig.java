@@ -28,7 +28,6 @@ public class CacheConfig {
         cacheConfigs.put("board", defaultRedisCacheConfig);
         cacheConfigs.put("postDetail", createRedisCacheConfigWithTtl(serializer, 1));
         cacheConfigs.put("commentList", createRedisCacheConfigWithTtl(serializer, 1));
-//        cacheConfigs.put("userInfo", createRedisCacheConfigWithTtl(serializer, 30));
         cacheConfigs.put("userDetail", createRedisCacheConfigWithTtl(serializer, 30));
         cacheConfigs.put("regionDetail", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("buildingRegister", createRedisCacheConfigWithTtl(serializer, 360));
