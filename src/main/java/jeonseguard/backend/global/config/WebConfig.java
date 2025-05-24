@@ -12,7 +12,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableConfigurationProperties({JwtTokenProperties.class, TransactionProperties.class})
+@EnableConfigurationProperties({JwtTokenProperties.class, TransactionProperties.class, MaliciousPathProperties.class})
 public class WebConfig implements WebMvcConfigurer {
     private final AuthenticatedUserArgumentResolver authenticatedUserArgumentResolver;
 
