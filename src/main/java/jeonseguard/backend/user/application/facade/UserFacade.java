@@ -13,10 +13,14 @@ import org.springframework.stereotype.Component;
 public class UserFacade {
     private final UserService userService;
 
-    @Cacheable(value = "userInfo", key = "'user::id:' + #userId")
+//    @Cacheable(value = "userInfo", key = "'user::id:' + #userId")
     public UserInfoResponse getUserInfo(Long userId) {
         User user = userService.getUser(userId);
         return UserInfoResponse.fromEntity(user);
+    }
+
+    public User getUser(Long userId) {
+        return userService.getUser(userId);
     }
 
     public void updateNickname(Long userId, UpdateNicknameRequest request) {

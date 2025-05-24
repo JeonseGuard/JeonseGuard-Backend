@@ -31,6 +31,7 @@ public class UserService {
                 .orElseGet(() -> createUser(response));
     }
 
+    @Cacheable(value = "user", key = "'user::id:' + #userId")
     @Transactional(readOnly = true)
     public User getUser(Long userId) {
         return userRepository.findById(userId)
@@ -44,6 +45,7 @@ public class UserService {
     }
 
     @Caching(evict = {
+            @CacheEvict(value = "user", key = "'user::id:' + #user.id"),
             @CacheEvict(value = "userInfo", key = "'user::id:' + #user.id"),
             @CacheEvict(value = "userDetail", key = "'user::id:' + #user.id")
     })
@@ -53,6 +55,7 @@ public class UserService {
     }
 
     @Caching(evict = {
+            @CacheEvict(value = "user", key = "'user::id:' + #user.id"),
             @CacheEvict(value = "userInfo", key = "'user::id:' + #user.id"),
             @CacheEvict(value = "userDetail", key = "'user::id:' + #user.id")
     })

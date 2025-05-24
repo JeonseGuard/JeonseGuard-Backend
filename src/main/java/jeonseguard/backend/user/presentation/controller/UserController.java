@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jeonseguard.backend.global.annotation.AuthenticatedUser;
 import jeonseguard.backend.user.application.facade.UserFacade;
+import jeonseguard.backend.user.domain.entity.User;
 import jeonseguard.backend.user.presentation.dto.request.*;
 import jeonseguard.backend.user.presentation.dto.respone.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,11 @@ public class UserController {
     @GetMapping("/info")
     public ResponseEntity<UserInfoResponse> getUserInfo(@AuthenticatedUser Long userId) {
         return ResponseEntity.ok(userFacade.getUserInfo(userId));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<User> getUserInfo() {
+        return ResponseEntity.ok(userFacade.getUser(1L));
     }
 
     @Operation(summary = "사용자 닉네임 수정", description = "현재 로그인한 사용자의 닉네임을 수정합니다.")
