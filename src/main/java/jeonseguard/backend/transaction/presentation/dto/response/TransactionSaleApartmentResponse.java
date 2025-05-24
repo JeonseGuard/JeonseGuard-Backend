@@ -13,6 +13,9 @@ public record TransactionSaleApartmentResponse(
         @Schema(description = "전용면적(m^2)")
         String area,
 
+        @Schema(description = "임대유형")
+        String rentType,
+
         @Schema(description = "주택유형")
         String housingType
 ) {
@@ -21,6 +24,7 @@ public record TransactionSaleApartmentResponse(
                 apartment.getContractYearMonth(),
                 apartment.getPrice(),
                 apartment.getArea(),
+                "매매",
                 apartment.getHousingType()
         );
     }

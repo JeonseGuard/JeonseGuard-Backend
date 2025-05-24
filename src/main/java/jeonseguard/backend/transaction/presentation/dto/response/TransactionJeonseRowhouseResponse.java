@@ -10,7 +10,10 @@ public record TransactionJeonseRowhouseResponse(
         @Schema(description = "보증금")
         String price,
 
-        @Schema(description = "거래유형")
+        @Schema(description = "전용면적(m^2)")
+        String area,
+
+        @Schema(description = "임대유형")
         String rentType,
 
         @Schema(description = "주택유형")
@@ -20,7 +23,8 @@ public record TransactionJeonseRowhouseResponse(
         return new TransactionJeonseRowhouseResponse(
                 rowhouse.getContractYearMonth(),
                 rowhouse.getPrice(),
-                rowhouse.getRentType(),
+                rowhouse.getArea(),
+                "전세",
                 rowhouse.getHousingType()
         );
     }
