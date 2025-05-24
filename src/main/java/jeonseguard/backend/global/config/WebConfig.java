@@ -38,5 +38,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(0)
                 .addPathPatterns("/**");
     }
-
 }
