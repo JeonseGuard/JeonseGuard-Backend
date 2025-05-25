@@ -19,7 +19,6 @@ public class PostWriteService {
     private final PostRepository postRepository;
 
     @CacheEvict(value = "board", allEntries = true)
-    @Transactional
     public Post createPostByCategory(PostCategory category, UserSummary userSummary, CreatePostRequest request) {
         Post post = PostFactory.from(category, userSummary, request);
         return postRepository.save(post);
@@ -29,7 +28,6 @@ public class PostWriteService {
             @CacheEvict(value = "board", allEntries = true),
             @CacheEvict(value = "post", key = "'post::id:' + #post.id")
     })
-    @Transactional
     public void updatePost(Long userId, Post post, UserSummary userSummary, UpdatePostRequest request) {
         PostPolicy.validateAuthor(userId, post, ErrorCode.POST_UPDATE_FORBIDDEN);
         post.updatePost(request.newTitle(), request.newContent(), userSummary.nickname());
@@ -39,7 +37,6 @@ public class PostWriteService {
             @CacheEvict(value = "board", allEntries = true),
             @CacheEvict(value = "post", key = "'post::id:' + #post.id")
     })
-    @Transactional
     public void deletePost(Long userId, Post post) {
         PostPolicy.validateAuthor(userId, post, ErrorCode.POST_DELETE_FORBIDDEN);
         postRepository.delete(post);

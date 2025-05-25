@@ -2,8 +2,7 @@ package jeonseguard.backend.post.application.facade;
 
 import jeonseguard.backend.comment.application.service.*;
 import jeonseguard.backend.comment.infrastructure.dto.CommentResponse;
-import jeonseguard.backend.post.application.service.PostReadService;
-import jeonseguard.backend.post.application.service.PostWriteService;
+import jeonseguard.backend.post.application.service.*;
 import jeonseguard.backend.post.domain.entity.*;
 import jeonseguard.backend.post.infrastructure.dto.*;
 import jeonseguard.backend.post.presentation.dto.request.*;
