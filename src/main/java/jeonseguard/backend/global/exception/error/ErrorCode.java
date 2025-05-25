@@ -33,7 +33,7 @@ public enum ErrorCode {
     COMMENT_DELETE_FORBIDDEN(HttpStatus.FORBIDDEN, "댓글을 삭제할 권한이 없습니다."),
 
     // 행정구역 관련 에러
-    REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "행정구역을 찾을 수 없습니다."),
+    REGION_SUMMARY_NOT_FOUND(HttpStatus.NOT_FOUND, "행정구역 요약 정보를 찾을 수 없습니다."),
     REGION_DELETE_FORBIDDEN(HttpStatus.FORBIDDEN, "행정구역을 삭제할 권한이 없습니다."),
     INVALID_REGION_CODE(HttpStatus.BAD_REQUEST, "유효하지 않은 법정동코드입니다."),
 

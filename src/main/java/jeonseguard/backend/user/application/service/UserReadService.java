@@ -20,7 +20,7 @@ public class UserReadService {
     @Cacheable(value = "user", key = "'user::id:' + #userId")
     public UserSummary getUserSummary(Long userId) {
         return userRepository.findById(userId)
-                .map(UserSummary::fromEntity)
+                .map(UserSummary::from)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_SUMMARY_NOT_FOUND));
     }
 

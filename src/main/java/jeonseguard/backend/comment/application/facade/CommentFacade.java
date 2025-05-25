@@ -19,7 +19,7 @@ public class CommentFacade {
     public CreateCommentResponse createComment(Long userId, CreateCommentRequest request) {
         UserSummary userSummary = userService.getUserSummary(userId);
         Comment comment = commentWriteService.createComment(userSummary, request);
-        return CreateCommentResponse.fromEntity(comment);
+        return CreateCommentResponse.from(comment);
     }
 
     public void updateComment(Long userId, Long commentId, UpdateCommentRequest request) {

@@ -16,37 +16,37 @@ public class TransactionFacade {
 
     public List<TransactionJeonseApartmentResponse> getTransactionJeonseHistoryForApartment(TransactionJeonseAddressRequest request) {
         return jeonseService.getTransactionJeonseHistoryForApartment(request).stream()
-                .map(TransactionJeonseApartmentResponse::fromEntity)
+                .map(TransactionJeonseApartmentResponse::from)
                 .toList();
     }
 
     public List<TransactionJeonseOfficetelResponse> getTransactionJeonseHistoryForOfficetel(TransactionJeonseAddressRequest request) {
         return jeonseService.getTransactionJeonseHistoryForOfficetel(request).stream()
-                .map(TransactionJeonseOfficetelResponse::fromEntity)
+                .map(TransactionJeonseOfficetelResponse::from)
                 .toList();
     }
 
     public List<TransactionJeonseRowhouseResponse> getTransactionJeonseHistoryForRowhouse(TransactionJeonseAddressRequest request) {
         return jeonseService.getTransactionJeonseHistoryForRowhouse(request).stream()
-                .map(TransactionJeonseRowhouseResponse::fromEntity)
+                .map(TransactionJeonseRowhouseResponse::from)
                 .toList();
     }
 
     public List<TransactionSaleApartmentResponse> getTransactionSaleHistoryForApartment(TransactionSaleAddressRequest request) {
         return saleService.getTransactionSaleHistoryForApartment(request).stream()
-                .map(TransactionSaleApartmentResponse::fromEntity)
+                .map(TransactionSaleApartmentResponse::from)
                 .toList();
     }
 
     public List<TransactionSaleOfficetelResponse> getTransactionSaleHistoryForOfficetel(TransactionSaleAddressRequest request) {
         return saleService.getTransactionSaleHistoryForOfficetel(request).stream()
-                .map(TransactionSaleOfficetelResponse::fromEntity)
+                .map(TransactionSaleOfficetelResponse::from)
                 .toList();
     }
 
     public List<TransactionSaleRowhouseResponse> getTransactionSaleHistoryForRowhouse(TransactionSaleAddressRequest request) {
         return saleService.getTransactionSaleHistoryForRowhouse(request).stream()
-                .map(TransactionSaleRowhouseResponse::fromEntity)
+                .map(TransactionSaleRowhouseResponse::from)
                 .toList();
     }
 }

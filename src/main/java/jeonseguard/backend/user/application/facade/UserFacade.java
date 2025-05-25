@@ -16,7 +16,7 @@ public class UserFacade {
     public UserInfoResponse getUserInfo(Long userId) {
         User user = userReadService.getUser(userId);
         String role = user.getRole().toString();
-        return UserInfoResponse.fromEntity(user, role);
+        return UserInfoResponse.from(user, role);
     }
 
     public void updateNickname(Long userId, UpdateNicknameRequest request) {

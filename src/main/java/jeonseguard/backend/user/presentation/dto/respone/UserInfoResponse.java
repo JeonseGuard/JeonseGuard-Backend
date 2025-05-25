@@ -10,7 +10,7 @@ public record UserInfoResponse(
         @Schema(description = "이메일") String email,
         @Schema(description = "역할") String role
 ) {
-    public static UserInfoResponse fromEntity(User user, String role) {
+    public static UserInfoResponse from(User user, String role) {
         return new UserInfoResponse(
                 user.getId(),
                 user.getNickname(),

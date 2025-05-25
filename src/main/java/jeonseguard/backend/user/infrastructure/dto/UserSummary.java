@@ -10,7 +10,7 @@ public record UserSummary(
         @Schema(description = "닉네임") String nickname,
         @Schema(description = "역할") Role role
 ) {
-    public static UserSummary fromEntity(User user) {
+    public static UserSummary from(User user) {
         return new UserSummary(
                 user.getId(),
                 user.getNickname(),

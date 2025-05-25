@@ -19,7 +19,7 @@ public record TransactionSaleRowhouseResponse(
         @Schema(description = "주택유형")
         String housingType
 ) {
-    public static TransactionSaleRowhouseResponse fromEntity(TransactionSaleRowhouse rowhouse) {
+    public static TransactionSaleRowhouseResponse from(TransactionSaleRowhouse rowhouse) {
         return new TransactionSaleRowhouseResponse(
                 rowhouse.getContractYearMonth(),
                 rowhouse.getPrice(),

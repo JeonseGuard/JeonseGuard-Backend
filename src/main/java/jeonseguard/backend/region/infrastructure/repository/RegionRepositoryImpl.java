@@ -13,11 +13,6 @@ public class RegionRepositoryImpl implements RegionRepository {
     private final RegionJpaRepository jpaRepository;
 
     @Override
-    public void save(Region region) {
-        jpaRepository.save(region);
-    }
-
-    @Override
     public Optional<Region> findByAddress(String address) {
         return jpaRepository.findByAddress(address);
     }

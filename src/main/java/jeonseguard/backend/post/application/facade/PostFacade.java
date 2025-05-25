@@ -33,7 +33,7 @@ public class PostFacade {
         UserSummary userSummary = userReadService.getUserSummary(userId);
         PostCategory parsedCategory = PostCategory.valueOf(category.toUpperCase());
         Post post = postWriteService.createPostByCategory(parsedCategory, userSummary, request);
-        return CreatePostResponse.fromEntity(post);
+        return CreatePostResponse.from(post);
     }
 
     public void updatePost(Long userId, Long postId, UpdatePostRequest request) {
