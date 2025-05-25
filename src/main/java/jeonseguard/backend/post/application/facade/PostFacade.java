@@ -1,6 +1,6 @@
 package jeonseguard.backend.post.application.facade;
 
-import jeonseguard.backend.comment.application.service.CommentService;
+import jeonseguard.backend.comment.application.service.*;
 import jeonseguard.backend.comment.infrastructure.dto.CommentResponse;
 import jeonseguard.backend.post.application.service.PostService;
 import jeonseguard.backend.post.domain.entity.*;
@@ -18,30 +18,31 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostFacade {
     private final PostService postService;
-    private final CommentService commentService;
-    private final UserReadService userService;
+    private final CommentReadService commentReadService;
+    private final CommentWriteService commentWriteService;
+    private final UserReadService userReadService;
 
     public PostInfoResponse getPostInfo(Long userId, Long postId) {
         PostDetailResponse response = postService.getPostDetail(userId, postId);
-        List<CommentResponse> comments = commentService.getComments(postId);
+        List<CommentResponse> comments = commentReadService.getComments(postId);
         return PostInfoResponse.of(response, comments);
     }
 
     public CreatePostResponse createPostByCategory(Long userId, String category, CreatePostRequest request) {
-        UserSummary userSummary = userService.getUserSummary(userId);
+        UserSummary userSummary = userReadService.getUserSummary(userId);
         PostCategory parsedCategory = PostCategory.valueOf(category.toUpperCase());
         Post post = postService.createPostByCategory(parsedCategory, userSummary, request);
         return CreatePostResponse.fromEntity(post);
     }
 
     public void updatePost(Long userId, Long postId, UpdatePostRequest request) {
-        UserSummary userSummary = userService.getUserSummary(userId);
+        UserSummary userSummary = userReadService.getUserSummary(userId);
         Post post = postService.getPost(postId);
         postService.updatePost(userId, post, userSummary, request);
     }
 
     public void deletePost(Long userId, Long postId) {
-        commentService.deleteAllByPostId(postId);
+        commentWriteService.deleteAllByPostId(postId);
         Post post = postService.getPost(postId);
         postService.deletePost(userId, post);
     }
