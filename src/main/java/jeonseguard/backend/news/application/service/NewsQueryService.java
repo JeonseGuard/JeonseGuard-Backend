@@ -17,6 +17,6 @@ public class NewsQueryService {
 
     @Cacheable(value = "news", unless = "#result == null")
     public List<NaverNews> getNews() {
-        return searchProvider.fetchNews().items();
+        return searchProvider.getNews().items();
     }
 }

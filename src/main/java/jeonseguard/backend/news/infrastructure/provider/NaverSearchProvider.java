@@ -15,7 +15,7 @@ public class NaverSearchProvider {
     private final NaverSearchClient naverSearchClient;
     private final NaverSearchProperties properties;
 
-    public NaverNewsSearchResponse fetchNews() {
+    public NaverNewsSearchResponse getNews() {
         URI uri = buildUri(properties.newsEndpoint(), properties.newsQuery(), properties.newsDisplay(), properties.newsSort());
         return naverSearchClient.fetchNews(uri, properties.clientId(), properties.clientSecret());
     }

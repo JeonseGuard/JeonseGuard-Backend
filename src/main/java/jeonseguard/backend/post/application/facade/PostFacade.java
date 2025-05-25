@@ -21,7 +21,7 @@ public class PostFacade {
     private final PostCommandService postCommandService;
     private final CommentQueryService commentQueryService;
     private final CommentCommandService commentCommandService;
-    private final UserQueryService userReadService;
+    private final UserQueryService userQueryService;
 
     public PostInfoResponse getPostInfo(Long userId, Long postId) {
         PostSummary postSummary = postQueryService.getPostSummary(userId, postId);
@@ -30,14 +30,14 @@ public class PostFacade {
     }
 
     public CreatePostResponse createPostByCategory(Long userId, String category, CreatePostRequest request) {
-        UserSummary userSummary = userReadService.getUserSummary(userId);
+        UserSummary userSummary = userQueryService.getUserSummary(userId);
         PostCategory parsedCategory = PostCategory.valueOf(category.toUpperCase());
         Post post = postCommandService.createPostByCategory(parsedCategory, userSummary, request);
         return CreatePostResponse.from(post);
     }
 
     public void updatePost(Long userId, Long postId, UpdatePostRequest request) {
-        UserSummary userSummary = userReadService.getUserSummary(userId);
+        UserSummary userSummary = userQueryService.getUserSummary(userId);
         Post post = postQueryService.getPost(postId);
         postCommandService.updatePost(userId, post, userSummary, request);
     }

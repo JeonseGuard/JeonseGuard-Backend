@@ -21,16 +21,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("BuildingRegisterApiRepositoryImpl 단위 테스트")
+@DisplayName("BuildingRegisterAreaApiRepositoryImpl 단위 테스트")
 @SuppressWarnings({"rawtypes", "unchecked"})
-class BuildingRegisterApiRepositoryImplTest {
+class BuildingRegisterAreaApiRepositoryImplTest {
 
     @Mock private WebClient webClient;
     @Mock private WebClient.RequestHeadersUriSpec uriSpec;
     @Mock private WebClient.RequestHeadersSpec headersSpec;
     @Mock private WebClient.ResponseSpec responseSpec;
     @Mock private BuildingProperties buildingProperties;
-    @InjectMocks private BuildingRegisterApiRepositoryImpl repository;
+    @InjectMocks private BuildingRegisterAreaApiRepositoryImpl repository;
 
     @BeforeEach
     void setUp() {

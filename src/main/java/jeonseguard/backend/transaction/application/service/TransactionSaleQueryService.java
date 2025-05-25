@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class TransactionSaleQueryService {
@@ -20,7 +21,6 @@ public class TransactionSaleQueryService {
     private final TransactionProperties properties;
 
     @Cacheable(cacheNames = "transactionSaleApartment", key = "#request.address() + ':' + #request.bun() + ':' + #request.ji() + ':' + #request.floorNumber()")
-    @Transactional(readOnly = true)
     public List<TransactionSaleApartment> getTransactionSaleHistoryForApartment(TransactionSaleAddressRequest request) {
         return apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
@@ -32,7 +32,6 @@ public class TransactionSaleQueryService {
     }
 
     @Cacheable(cacheNames = "transactionSaleOfficetel", key = "#request.address() + ':' + #request.bun() + ':' + #request.ji() + ':' + #request.floorNumber()")
-    @Transactional(readOnly = true)
     public List<TransactionSaleOfficetel> getTransactionSaleHistoryForOfficetel(TransactionSaleAddressRequest request) {
         return officetelRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
@@ -44,7 +43,6 @@ public class TransactionSaleQueryService {
     }
 
     @Cacheable(cacheNames = "transactionSaleRowhouse", key = "#request.address() + ':' + #request.bun() + ':' + #request.ji() + ':' + #request.floorNumber()")
-    @Transactional(readOnly = true)
     public List<TransactionSaleRowhouse> getTransactionSaleHistoryForRowhouse(TransactionSaleAddressRequest request) {
         return rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),

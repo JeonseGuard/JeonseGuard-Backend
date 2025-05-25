@@ -14,16 +14,16 @@ import org.springframework.stereotype.Component;
 public class CommentFacade {
     private final CommentQueryService commentQueryService;
     private final CommentCommandService commentCommandService;
-    private final UserQueryService userService;
+    private final UserQueryService userQueryService;
 
     public CreateCommentResponse createComment(Long userId, CreateCommentRequest request) {
-        UserSummary userSummary = userService.getUserSummary(userId);
+        UserSummary userSummary = userQueryService.getUserSummary(userId);
         Comment comment = commentCommandService.createComment(userSummary, request);
         return CreateCommentResponse.from(comment);
     }
 
     public void updateComment(Long userId, Long commentId, UpdateCommentRequest request) {
-        UserSummary userSummary = userService.getUserSummary(userId);
+        UserSummary userSummary = userQueryService.getUserSummary(userId);
         Comment comment = commentQueryService.getComment(commentId);
         commentCommandService.updateComment(userId, comment, userSummary, request);
     }
