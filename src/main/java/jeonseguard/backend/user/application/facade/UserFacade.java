@@ -10,22 +10,22 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserFacade {
-    private final UserReadService userReadService;
-    private final UserWriteService userWriteService;
+    private final UserQueryService userQueryService;
+    private final UserCommandService userCommandService;
 
     public UserInfoResponse getUserInfo(Long userId) {
-        User user = userReadService.getUser(userId);
+        User user = userQueryService.getUser(userId);
         String role = user.getRole().toString();
         return UserInfoResponse.from(user, role);
     }
 
     public void updateNickname(Long userId, UpdateNicknameRequest request) {
-        User user = userReadService.getUser(userId);
-        userWriteService.updateNickname(user, request);
+        User user = userQueryService.getUser(userId);
+        userCommandService.updateNickname(user, request);
     }
 
     public void updateProfileImage(Long userId, UpdateProfileImageRequest request) {
-        User user = userReadService.getUser(userId);
-        userWriteService.updateProfileImage(user, request);
+        User user = userQueryService.getUser(userId);
+        userCommandService.updateProfileImage(user, request);
     }
 }

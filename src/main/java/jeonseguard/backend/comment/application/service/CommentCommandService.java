@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class CommentWriteService {
+public class CommentCommandService {
     private final CommentRepository commentRepository;
     private final CommentQueryRepository commentQueryRepository;
 

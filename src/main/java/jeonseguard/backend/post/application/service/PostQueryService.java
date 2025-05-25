@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
-public class PostReadService {
+public class PostQueryService {
     private final PostRepository postRepository;
     private final PostQueryRepository postQueryRepository;
 

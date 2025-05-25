@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
-public class HeartReadService {
+public class HeartQueryService {
     private final HeartQueryRepository heartQueryRepository;
 
     public boolean hasHeart(Long userId, ToggleHeartRequest request) {

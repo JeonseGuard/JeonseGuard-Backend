@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class HeartWriteService {
+public class HeartCommandService {
     private final HeartRepository heartRepository;
 
     @Caching(evict = {

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class PostWriteService {
+public class PostCommandService {
     private final PostRepository postRepository;
 
     @CacheEvict(value = "board", allEntries = true)

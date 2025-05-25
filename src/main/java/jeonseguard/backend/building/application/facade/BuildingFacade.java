@@ -5,7 +5,7 @@ import jeonseguard.backend.building.application.service.BuildingRegisterService;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.building.presentation.dto.request.BuildingAddressRequest;
 import jeonseguard.backend.building.presentation.dto.response.BuildingRegisterResponse;
-import jeonseguard.backend.region.application.RegionService;
+import jeonseguard.backend.region.application.RegionQueryService;
 import jeonseguard.backend.region.infrastructure.dto.RegionSummary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,7 +17,7 @@ import static jeonseguard.backend.global.util.AddressUtil.*;
 @RequiredArgsConstructor
 public class BuildingFacade {
     private final BuildingRegisterService buildingRegisterService;
-    private final RegionService regionService;
+    private final RegionQueryService regionQueryService;
 
     @Cacheable(
             value = "buildingRegister",
@@ -29,7 +29,7 @@ public class BuildingFacade {
                     + "(#addressRequest.floorName != null ? #addressRequest.floorName : '')"
     )
     public BuildingRegisterResponse getBuildingRegister(BuildingAddressRequest addressRequest) {
-        RegionSummary response = regionService.getRegionSummary(addressRequest.address());
+        RegionSummary response = regionQueryService.getRegionSummary(addressRequest.address());
         String parsedRegionCode = extractRegionCode(response.regionCode());
         String sigunguCode = response.sigunguCode();
         BuildingRegisterRequest request = BuildingRegisterRequestMapper.convertToBuildingRegisterRequest(parsedRegionCode, sigunguCode, addressRequest);

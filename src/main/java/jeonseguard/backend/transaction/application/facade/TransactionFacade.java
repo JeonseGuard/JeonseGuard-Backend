@@ -11,41 +11,41 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class TransactionFacade {
-    private final TransactionJeonseService jeonseService;
-    private final TransactionSaleService saleService;
+    private final TransactionJeonseQueryService transactionJeonseQueryService;
+    private final TransactionSaleQueryService transactionSaleQueryService;
 
     public List<TransactionJeonseApartmentResponse> getTransactionJeonseHistoryForApartment(TransactionJeonseAddressRequest request) {
-        return jeonseService.getTransactionJeonseHistoryForApartment(request).stream()
+        return transactionJeonseQueryService.getTransactionJeonseHistoryForApartment(request).stream()
                 .map(TransactionJeonseApartmentResponse::from)
                 .toList();
     }
 
     public List<TransactionJeonseOfficetelResponse> getTransactionJeonseHistoryForOfficetel(TransactionJeonseAddressRequest request) {
-        return jeonseService.getTransactionJeonseHistoryForOfficetel(request).stream()
+        return transactionJeonseQueryService.getTransactionJeonseHistoryForOfficetel(request).stream()
                 .map(TransactionJeonseOfficetelResponse::from)
                 .toList();
     }
 
     public List<TransactionJeonseRowhouseResponse> getTransactionJeonseHistoryForRowhouse(TransactionJeonseAddressRequest request) {
-        return jeonseService.getTransactionJeonseHistoryForRowhouse(request).stream()
+        return transactionJeonseQueryService.getTransactionJeonseHistoryForRowhouse(request).stream()
                 .map(TransactionJeonseRowhouseResponse::from)
                 .toList();
     }
 
     public List<TransactionSaleApartmentResponse> getTransactionSaleHistoryForApartment(TransactionSaleAddressRequest request) {
-        return saleService.getTransactionSaleHistoryForApartment(request).stream()
+        return transactionSaleQueryService.getTransactionSaleHistoryForApartment(request).stream()
                 .map(TransactionSaleApartmentResponse::from)
                 .toList();
     }
 
     public List<TransactionSaleOfficetelResponse> getTransactionSaleHistoryForOfficetel(TransactionSaleAddressRequest request) {
-        return saleService.getTransactionSaleHistoryForOfficetel(request).stream()
+        return transactionSaleQueryService.getTransactionSaleHistoryForOfficetel(request).stream()
                 .map(TransactionSaleOfficetelResponse::from)
                 .toList();
     }
 
     public List<TransactionSaleRowhouseResponse> getTransactionSaleHistoryForRowhouse(TransactionSaleAddressRequest request) {
-        return saleService.getTransactionSaleHistoryForRowhouse(request).stream()
+        return transactionSaleQueryService.getTransactionSaleHistoryForRowhouse(request).stream()
                 .map(TransactionSaleRowhouseResponse::from)
                 .toList();
     }

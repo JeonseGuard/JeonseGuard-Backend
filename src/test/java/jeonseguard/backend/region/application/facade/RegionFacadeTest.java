@@ -1,7 +1,7 @@
 package jeonseguard.backend.region.application.facade;
 
 import jeonseguard.backend.global.exception.error.*;
-import jeonseguard.backend.region.application.RegionService;
+import jeonseguard.backend.region.application.RegionQueryService;
 import jeonseguard.backend.region.presentation.dto.DeleteRegionRequest;
 import jeonseguard.backend.user.domain.entity.*;
 import org.junit.jupiter.api.*;
@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.*;
 class RegionFacadeTest {
 
     @Mock
-    private RegionService regionService;
+    private RegionQueryService regionQueryService;
 
     @Mock
     private UserService userService;
@@ -76,7 +76,7 @@ class RegionFacadeTest {
 
             // when& then
             assertThatNoException().isThrownBy(() -> regionFacade.deleteRegion(adminId, request));
-            then(regionService).should().deleteRegion(request);
+            then(regionQueryService).should().deleteRegion(request);
         }
     }
 }

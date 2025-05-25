@@ -14,7 +14,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
-public class UserReadService {
+public class UserQueryService {
     private final UserRepository userRepository;
 
     @Cacheable(value = "user", key = "'user::id:' + #userId")

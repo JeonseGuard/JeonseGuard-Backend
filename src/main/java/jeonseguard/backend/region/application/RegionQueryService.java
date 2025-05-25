@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class RegionService {
+public class RegionQueryService {
     private final RegionRepository regionRepository;
 
     @Cacheable(value = "region", key = "'region::address:' + #address")

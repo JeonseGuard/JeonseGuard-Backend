@@ -12,7 +12,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
-public class NewsService {
+public class NewsQueryService {
     private final NaverSearchProvider searchProvider;
 
     @Cacheable(value = "news", unless = "#result == null")

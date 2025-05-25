@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class HeartFacade {
-    private final HeartReadService heartReadService;
-    private final HeartWriteService heartWriteService;
+    private final HeartQueryService heartQueryService;
+    private final HeartCommandService heartCommandService;
 
     public HeartResponse togglePostHeart(Long userId, ToggleHeartRequest request) {
-        heartWriteService.toggleHeart(userId, request);
-        long heartCount = heartReadService.countHeart(request);
-        boolean heartStatus = heartReadService.hasHeart(userId, request);
+        heartCommandService.toggleHeart(userId, request);
+        long heartCount = heartQueryService.countHeart(request);
+        boolean heartStatus = heartQueryService.hasHeart(userId, request);
         return HeartResponse.of(heartCount, heartStatus);
     }
 }

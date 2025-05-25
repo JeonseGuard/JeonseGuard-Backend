@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuthFacade {
     private final AuthService authService;
-    private final UserReadService userReadService;
-    private final UserWriteService userWriteService;
+    private final UserQueryService userQueryService;
+    private final UserCommandService userCommandService;
 
     public TokenResponse login(LoginRequest request) {
         KakaoUserInfoResponse response = authService.getKakaoUserInfo(request);
@@ -37,7 +37,7 @@ public class AuthFacade {
     }
 
     private User getOrCreateUser(KakaoUserInfoResponse response) {
-        return userReadService.getUserByKakaoId(response.kakaoId())
-                .orElseGet(() -> userWriteService.createUser(response));
+        return userQueryService.getUserByKakaoId(response.kakaoId())
+                .orElseGet(() -> userCommandService.createUser(response));
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class UserWriteService {
+public class UserCommandService {
     private final UserRepository userRepository;
 
     public User createUser(KakaoUserInfoResponse response) {
