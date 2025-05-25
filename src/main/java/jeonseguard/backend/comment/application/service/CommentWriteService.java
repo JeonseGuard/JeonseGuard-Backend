@@ -21,7 +21,7 @@ public class CommentWriteService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #request.postId()"),
+            @CacheEvict(value = "post", key = "'post::id:' + #request.postId()"),
             @CacheEvict(value = "comments", key = "'comment::postId:' + #request.postId()")
     })
 
@@ -32,7 +32,7 @@ public class CommentWriteService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #comment.postId"),
+            @CacheEvict(value = "post", key = "'post::id:' + #comment.postId"),
             @CacheEvict(value = "comments", key = "'comment::postId:' + #comment.postId")
     })
     public void updateComment(Long userId, Comment comment, UserSummary userSummary, UpdateCommentRequest request) {
@@ -42,7 +42,7 @@ public class CommentWriteService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #comment.postId"),
+            @CacheEvict(value = "post", key = "'post::id:' + #comment.postId"),
             @CacheEvict(value = "comments", key = "'comment::postId:' + #comment.postId")
     })
     public void deleteComment(Long userId, Comment comment) {
@@ -52,7 +52,7 @@ public class CommentWriteService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #postId"),
+            @CacheEvict(value = "post", key = "'post::id:' + #postId"),
             @CacheEvict(value = "comments", key = "'comment::postId:' + #postId")
     })
     public void deleteAllByPostId(Long postId) {

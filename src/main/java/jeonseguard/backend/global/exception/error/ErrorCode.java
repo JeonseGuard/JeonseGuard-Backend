@@ -23,6 +23,7 @@ public enum ErrorCode {
 
     // 게시글 관련 에러
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."),
+    POST_SUMMARY_NOT_FOUND(HttpStatus.NOT_FOUND, "게시글 요약 정보를 찾을 수 없습니다."),
     POST_UPDATE_FORBIDDEN(HttpStatus.FORBIDDEN, "게시글을 수정할 권한이 없습니다."),
     POST_DELETE_FORBIDDEN(HttpStatus.FORBIDDEN, "게시글을 삭제할 권한이 없습니다."),
 

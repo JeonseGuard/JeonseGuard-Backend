@@ -17,7 +17,7 @@ public class HeartWriteService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "postDetail", key = "'post::id:' + #request.postId()")
+            @CacheEvict(value = "post", key = "'post::id:' + #request.postId()")
     })
     public void toggleHeart(Long userId, ToggleHeartRequest request) {
         if (heartRepository.existsByUserIdAndPostId(userId, request.postId())) {

@@ -20,9 +20,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     private final QHeart heart = QHeart.heart;
 
     @Override
-    public Optional<PostDetailResponse> findDetailByUserIdAndId(Long userId, Long postId) {
+    public Optional<PostSummary> findByUserIdAndId(Long userId, Long postId) {
         return Optional.ofNullable(queryFactory
-                .select(new QPostDetailResponse(
+                .select(new QPostSummary(
                         post.id,
                         post.title,
                         post.content,
