@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     // 회원 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다."),
+    USER_SUMMARY_NOT_FOUND(HttpStatus.NOT_FOUND, "회원 요약 정보를 찾을 수 없습니다."),
 
     // 인증 관련 예외
     INVALID_JWT_TOKEN(HttpStatus.UNAUTHORIZED, "잘못된 JWT 토큰입니다."),

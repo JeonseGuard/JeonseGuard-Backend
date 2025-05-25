@@ -7,7 +7,7 @@ import jeonseguard.backend.comment.domain.entity.Comment;
 import jeonseguard.backend.comment.domain.repository.*;
 import jeonseguard.backend.comment.presentation.dto.request.*;
 import jeonseguard.backend.global.exception.error.*;
-import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
+import jeonseguard.backend.user.infrastructure.dto.UserSummary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
@@ -39,8 +39,8 @@ public class CommentService {
             @CacheEvict(value = "commentList", key = "'comment::postId:' + #request.postId()")
     })
     @Transactional
-    public Comment createComment(UserDetailResponse response, CreateCommentRequest request) {
-        Comment comment = CommentFactory.from(response, request);
+    public Comment createComment(UserSummary userSummary, CreateCommentRequest request) {
+        Comment comment = CommentFactory.from(userSummary, request);
         return commentRepository.save(comment);
     }
 
@@ -50,9 +50,9 @@ public class CommentService {
             @CacheEvict(value = "commentList", key = "'comment::postId:' + #comment.postId")
     })
     @Transactional
-    public void updateComment(Long userId, Comment comment, UserDetailResponse response, UpdateCommentRequest request) {
+    public void updateComment(Long userId, Comment comment, UserSummary userSummary, UpdateCommentRequest request) {
         CommentPolicy.validateAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
-        comment.updateComment(request.newContent(), response.nickname());
+        comment.updateComment(request.newContent(), userSummary.nickname());
     }
 
     @Caching(evict = {

@@ -7,7 +7,7 @@ import jeonseguard.backend.post.domain.entity.*;
 import jeonseguard.backend.post.domain.repository.*;
 import jeonseguard.backend.post.infrastructure.dto.*;
 import jeonseguard.backend.post.presentation.dto.request.*;
-import jeonseguard.backend.user.infrastructure.dto.UserDetailResponse;
+import jeonseguard.backend.user.infrastructure.dto.UserSummary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
@@ -34,8 +34,8 @@ public class PostService {
 
     @CacheEvict(value = "board", allEntries = true)
     @Transactional
-    public Post createPostByCategory(PostCategory category, UserDetailResponse response, CreatePostRequest request) {
-        Post post = PostFactory.from(category, response, request);
+    public Post createPostByCategory(PostCategory category, UserSummary userSummary, CreatePostRequest request) {
+        Post post = PostFactory.from(category, userSummary, request);
         return postRepository.save(post);
     }
 
@@ -44,9 +44,9 @@ public class PostService {
             @CacheEvict(value = "postDetail", key = "'post::id:' + #post.id")
     })
     @Transactional
-    public void updatePost(Long userId, Post post, UserDetailResponse response, UpdatePostRequest request) {
+    public void updatePost(Long userId, Post post, UserSummary userSummary, UpdatePostRequest request) {
         PostPolicy.validateAuthor(userId, post, ErrorCode.POST_UPDATE_FORBIDDEN);
-        post.updatePost(request.newTitle(), request.newContent(), response.nickname());
+        post.updatePost(request.newTitle(), request.newContent(), userSummary.nickname());
     }
 
     @Caching(evict = {

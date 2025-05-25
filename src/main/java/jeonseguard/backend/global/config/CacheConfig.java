@@ -25,6 +25,7 @@ public class CacheConfig {
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
         RedisCacheConfiguration defaultRedisCacheConfig = createRedisCacheConfigWithTtl(serializer, 5);
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
+        cacheConfigs.put("user", createRedisCacheConfigWithTtl(serializer, 30));
         cacheConfigs.put("board", defaultRedisCacheConfig);
         cacheConfigs.put("postDetail", createRedisCacheConfigWithTtl(serializer, 1));
         cacheConfigs.put("commentList", createRedisCacheConfigWithTtl(serializer, 1));
@@ -38,7 +39,6 @@ public class CacheConfig {
         cacheConfigs.put("transactionSaleApartment", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionSaleOfficetel", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionSaleRowhouse", createRedisCacheConfigWithTtl(serializer, 360));
-        cacheConfigs.put("user", createRedisCacheConfigWithTtl(serializer, 30));
         return buildRedisCacheManager(defaultRedisCacheConfig, cacheConfigs);
     }
 
