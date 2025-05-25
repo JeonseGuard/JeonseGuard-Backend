@@ -29,10 +29,9 @@ public class CacheConfig {
         cacheConfigs.put("board", defaultRedisCacheConfig);
         cacheConfigs.put("post", createRedisCacheConfigWithTtl(serializer, 1));
         cacheConfigs.put("comments", createRedisCacheConfigWithTtl(serializer, 1));
-
+        cacheConfigs.put("news", createRedisCacheConfigWithTtl(serializer, 1));
         cacheConfigs.put("region", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("buildingRegister", createRedisCacheConfigWithTtl(serializer, 360));
-        cacheConfigs.put("newsList", createRedisCacheConfigWithTtl(serializer, 1));
         cacheConfigs.put("transactionJeonseApartment", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionJeonseOfficetel", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionJeonseRowhouse", createRedisCacheConfigWithTtl(serializer, 360));

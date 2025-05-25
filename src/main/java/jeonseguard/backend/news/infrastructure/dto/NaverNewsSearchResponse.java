@@ -8,6 +8,6 @@ import java.util.List;
 public record NaverNewsSearchResponse(
         @Schema(description = "네이버 뉴스 목록")
         @JsonProperty("items")
-        List<NaverNewsItem> items
+        List<NaverNews> items
 ) {
 }
