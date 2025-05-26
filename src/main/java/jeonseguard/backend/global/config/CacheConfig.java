@@ -25,20 +25,19 @@ public class CacheConfig {
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
         RedisCacheConfiguration defaultRedisCacheConfig = createRedisCacheConfigWithTtl(serializer, 5);
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
+        cacheConfigs.put("user", createRedisCacheConfigWithTtl(serializer, 60));
         cacheConfigs.put("board", defaultRedisCacheConfig);
-        cacheConfigs.put("postDetail", createRedisCacheConfigWithTtl(serializer, 1));
-        cacheConfigs.put("commentList", createRedisCacheConfigWithTtl(serializer, 1));
-        cacheConfigs.put("userDetail", createRedisCacheConfigWithTtl(serializer, 30));
-        cacheConfigs.put("regionDetail", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("post", defaultRedisCacheConfig);
+        cacheConfigs.put("comments", defaultRedisCacheConfig);
+        cacheConfigs.put("news", createRedisCacheConfigWithTtl(serializer, 1));
+        cacheConfigs.put("region", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("buildingRegister", createRedisCacheConfigWithTtl(serializer, 360));
-        cacheConfigs.put("newsList", createRedisCacheConfigWithTtl(serializer, 1));
         cacheConfigs.put("transactionJeonseApartment", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionJeonseOfficetel", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionJeonseRowhouse", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionSaleApartment", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionSaleOfficetel", createRedisCacheConfigWithTtl(serializer, 360));
         cacheConfigs.put("transactionSaleRowhouse", createRedisCacheConfigWithTtl(serializer, 360));
-        cacheConfigs.put("user", createRedisCacheConfigWithTtl(serializer, 30));
         return buildRedisCacheManager(defaultRedisCacheConfig, cacheConfigs);
     }
 

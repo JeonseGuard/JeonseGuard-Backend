@@ -6,7 +6,7 @@ import jeonseguard.backend.post.domain.entity.Post;
 public record CreatePostResponse(
         @Schema(description = "게시글 ID", example = "100") Long postId
 ) {
-    public static CreatePostResponse fromEntity(Post post) {
+    public static CreatePostResponse from(Post post) {
         return new CreatePostResponse(post.getId());
     }
 }

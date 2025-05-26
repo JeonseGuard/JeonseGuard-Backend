@@ -9,13 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static jeonseguard.backend.global.constant.CacheKey.BOARD_CATEGORY_PREFIX;
+
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
-public class BoardService {
+public class BoardQueryService {
     private final BoardQueryRepository boardQueryRepository;
 
-    @Cacheable(value = "board", key = "'board::category:' + #category + ':page:' + #pageable.pageNumber")
-    @Transactional(readOnly = true)
+    @Cacheable(value = "board", key = "'" + BOARD_CATEGORY_PREFIX + "' + #category + ':page:' + #pageable.pageNumber")
     public BoardResponse getBoardByCategory(PostCategory category, Pageable pageable) {
         return boardQueryRepository.findAllWithCounts(category, pageable);
     }

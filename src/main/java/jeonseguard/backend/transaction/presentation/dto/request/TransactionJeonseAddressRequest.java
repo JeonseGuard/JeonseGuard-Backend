@@ -15,4 +15,7 @@ public record TransactionJeonseAddressRequest(
         @Schema(description = "층번호")
         String floorNumber
 ) {
+        public String toCacheKey() {
+                return address + ":" + bun + ":" + ji + ":" + floorNumber;
+        }
 }

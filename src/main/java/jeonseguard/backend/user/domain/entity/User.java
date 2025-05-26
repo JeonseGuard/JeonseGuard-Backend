@@ -1,13 +1,11 @@
 package jeonseguard.backend.user.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jeonseguard.backend.global.entity.CommonBaseEntity;
 import lombok.*;
 
 import static org.springframework.util.StringUtils.hasText;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Builder
 @Getter

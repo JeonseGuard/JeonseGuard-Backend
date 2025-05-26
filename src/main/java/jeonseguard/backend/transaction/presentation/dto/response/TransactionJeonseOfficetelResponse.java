@@ -19,7 +19,7 @@ public record TransactionJeonseOfficetelResponse(
         @Schema(description = "주택유형")
         String housingType
 ) {
-    public static TransactionJeonseOfficetelResponse fromEntity(TransactionJeonseOfficetel officetel) {
+    public static TransactionJeonseOfficetelResponse from(TransactionJeonseOfficetel officetel) {
         return new TransactionJeonseOfficetelResponse(
                 officetel.getContractYearMonth(),
                 officetel.getPrice(),

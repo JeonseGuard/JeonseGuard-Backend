@@ -1,7 +1,7 @@
 package jeonseguard.backend.region.application.service;
 
 import jeonseguard.backend.global.exception.error.*;
-import jeonseguard.backend.region.application.RegionService;
+import jeonseguard.backend.region.application.RegionQueryService;
 import jeonseguard.backend.region.domain.entity.Region;
 import jeonseguard.backend.region.domain.repository.*;
 import jeonseguard.backend.region.presentation.dto.DeleteRegionRequest;
@@ -17,11 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @SpringBootTest
-@DisplayName("RegionService 통합 테스트")
-class RegionServiceIntegrationTest {
+@DisplayName("RegionQueryService 통합 테스트")
+class RegionQueryServiceIntegrationTest {
 
     @Autowired
-    private RegionService regionService;
+    private RegionQueryService regionQueryService;
 
     @Autowired
     private RegionRepository regionRepository;
@@ -51,7 +51,7 @@ class RegionServiceIntegrationTest {
             String unknownAddress = "서울특별시 종로구 천사동";
 
             // when
-            BusinessException ex = Assertions.assertThrows(BusinessException.class, () -> regionService.getRegionCode(unknownAddress));
+            BusinessException ex = Assertions.assertThrows(BusinessException.class, () -> regionQueryService.getRegionCode(unknownAddress));
 
             // then
             assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.REGION_NOT_FOUND);
@@ -65,7 +65,7 @@ class RegionServiceIntegrationTest {
             String expectedRegionCode = "1111010200";
 
             // when
-            String result = regionService.getRegionCode(address);
+            String result = regionQueryService.getRegionCode(address);
             String cached = regionStore.findRegionCodeByAddress(address).orElse(null);
 
             // then
@@ -85,7 +85,7 @@ class RegionServiceIntegrationTest {
             String unknownAddress = "서울특별시 종로구 악마동";
 
             // when
-            BusinessException ex = Assertions.assertThrows(BusinessException.class, () -> regionService.getRegionCode(unknownAddress));
+            BusinessException ex = Assertions.assertThrows(BusinessException.class, () -> regionQueryService.getRegionCode(unknownAddress));
 
             // then
             assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.REGION_NOT_FOUND);
@@ -99,7 +99,7 @@ class RegionServiceIntegrationTest {
             String expectedSigunguCode = "11110";
 
             // when
-            String result = regionService.getSigunguCode(address);
+            String result = regionQueryService.getSigunguCode(address);
             String cached = regionStore.findSigunguCodeByAddress(address).orElse(null);
 
             // then
@@ -120,7 +120,7 @@ class RegionServiceIntegrationTest {
             DeleteRegionRequest request = new DeleteRegionRequest(address);
 
             // when
-            regionService.deleteRegion(request);
+            regionQueryService.deleteRegion(request);
 
             // then
             assertThat(regionStore.findRegionCodeByAddress(address)).isEmpty();

@@ -30,16 +30,17 @@ public class AuthService {
         return TokenResponse.of(accessToken, refreshToken);
     }
 
-    public TokenResponse refreshTokens(RefreshRequest request) {
+    public RefreshTokenResponse getCachedRefreshTokenInfo(RefreshRequest request) {
         String refreshToken = request.refreshToken();
         Long userId = tokenProvider.getUserIdFromToken(refreshToken);
-        String storedRefreshToken = refreshTokenStore.getRefreshToken(userId);
+        String cachedRefreshToken = refreshTokenStore.getRefreshToken(userId);
+        return RefreshTokenResponse.of(userId, refreshToken, cachedRefreshToken);
+    }
+
+    public void cacheRefreshToken(Long userId, TokenResponse response) {
         long refreshTokenExpirationTime = tokenProvider.getRefreshTokenExpirationTime();
-        validateRefreshToken(refreshToken, storedRefreshToken);
-        TokenResponse response = getTokens(userId);
         refreshTokenStore.removeRefreshToken(userId);
         refreshTokenStore.saveRefreshToken(userId, response.refreshToken(), refreshTokenExpirationTime);
-        return response;
     }
 
     public void blacklistToken(LogoutRequest request) {
@@ -50,8 +51,8 @@ public class AuthService {
         refreshTokenStore.removeRefreshToken(userId);
     }
 
-    private void validateRefreshToken(String refreshToken, String storedRefreshToken) {
-        if (storedRefreshToken == null || !storedRefreshToken.equals(refreshToken)) {
+    public void validateRefreshToken(RefreshTokenResponse response) {
+        if (response.cachedRefreshToken() == null || !response.cachedRefreshToken().equals(response.refreshToken())) {
             throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
     }
