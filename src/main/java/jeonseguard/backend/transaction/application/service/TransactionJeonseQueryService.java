@@ -22,7 +22,7 @@ public class TransactionJeonseQueryService {
     private final TransactionJeonseRowhouseRepository rowhouseRepository;
     private final TransactionProperties properties;
 
-    @Cacheable(cacheNames = "transactionJeonseApartment", key = "'" + TRANSACTION_JEONSE_APARTMENT_PREFIX + "' + #request.toCacheKey()")
+    @Cacheable(value = "transactionJeonseApartment", key = "'" + TRANSACTION_JEONSE_APARTMENT_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionJeonseApartment> getTransactionJeonseHistoryForApartment(TransactionJeonseAddressRequest request) {
         return apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
@@ -33,7 +33,7 @@ public class TransactionJeonseQueryService {
         );
     }
 
-    @Cacheable(cacheNames = "transactionJeonseOfficetel", key = "'" + TRANSACTION_JEONSE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
+    @Cacheable(value = "transactionJeonseOfficetel", key = "'" + TRANSACTION_JEONSE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionJeonseOfficetel> getTransactionJeonseHistoryForOfficetel(TransactionJeonseAddressRequest request) {
         return officetelRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
@@ -44,7 +44,7 @@ public class TransactionJeonseQueryService {
         );
     }
 
-    @Cacheable(cacheNames = "transactionJeonseRowhouse", key = "'" + TRANSACTION_JEONSE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
+    @Cacheable(value = "transactionJeonseRowhouse", key = "'" + TRANSACTION_JEONSE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionJeonseRowhouse> getTransactionJeonseHistoryForRowhouse(TransactionJeonseAddressRequest request) {
         return rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),

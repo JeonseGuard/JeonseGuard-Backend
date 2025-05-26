@@ -27,4 +27,7 @@ public record BuildingAddressRequest(
         @Schema(description = "호명칭")
         String hoName
 ) {
+        public String toCacheKey() {
+                return address + ":" + bun + ":" + ji + ":" + dongName + ":" + floorName + ":" + hoName;
+        }
 }

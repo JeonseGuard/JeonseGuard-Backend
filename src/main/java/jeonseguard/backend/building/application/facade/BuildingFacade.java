@@ -1,14 +1,17 @@
 package jeonseguard.backend.building.application.facade;
 
 import jeonseguard.backend.building.application.service.*;
+import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.building.presentation.dto.request.BuildingAddressRequest;
 import jeonseguard.backend.building.presentation.dto.response.BuildingRegisterResponse;
 import jeonseguard.backend.region.application.RegionQueryService;
 import jeonseguard.backend.region.infrastructure.dto.RegionSummary;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+import static jeonseguard.backend.global.constant.CacheKey.BUILDING_REGISTER_PREFIX;
 import static jeonseguard.backend.global.util.AddressUtil.*;
 
 @Component
@@ -19,14 +22,15 @@ public class BuildingFacade {
     private final BuildingRegisterAreaQueryService buildingRegisterAreaQueryService;
     private final RegionQueryService regionQueryService;
 
+    @Cacheable(value = "buildingRegister", key = "'" + BUILDING_REGISTER_PREFIX + "' + #addressRequest.toCacheKey()")
     public BuildingRegisterResponse getBuildingRegister(BuildingAddressRequest addressRequest) {
         RegionSummary response = regionQueryService.getRegionSummary(addressRequest.address());
         String parsedRegionCode = extractRegionCode(response.regionCode());
         String sigunguCode = response.sigunguCode();
         BuildingRegisterRequest request = convertToBuildingRegisterRequest(parsedRegionCode, sigunguCode, addressRequest);
-        var overviewItem = buildingRegisterOverviewQueryService.getBuildingRegisterOverview(1, request);
-        var floorItem = buildingRegisterFloorQueryService.getBuildingRegisterFloor(1, request);
-        var areaItem = buildingRegisterAreaQueryService.getBuildingRegisterArea(1, request);
+        BuildingRegisterOverviewItem overviewItem = buildingRegisterOverviewQueryService.getBuildingRegisterOverview(1, request);
+        BuildingRegisterFloorItem floorItem = buildingRegisterFloorQueryService.getBuildingRegisterFloor(1, request);
+        BuildingRegisterAreaItem areaItem = buildingRegisterAreaQueryService.getBuildingRegisterArea(1, request);
         return BuildingRegisterResponse.of(overviewItem, floorItem, areaItem);
     }
 

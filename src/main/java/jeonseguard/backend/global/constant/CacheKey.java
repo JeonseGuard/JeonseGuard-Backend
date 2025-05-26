@@ -6,6 +6,7 @@ public class CacheKey {
     public static final String POST_ID_PREFIX = "post::id:";
     public static final String COMMENTS_BY_POST_ID_PREFIX = "comments::post::id:";
     public static final String REGION_ADDRESS_PREFIX = "region::address:";
+    public static final String BUILDING_REGISTER_PREFIX = "building::register:";
     public static final String TRANSACTION_JEONSE_APARTMENT_PREFIX = "transaction::jeonse::apartment:";
     public static final String TRANSACTION_JEONSE_OFFICETEL_PREFIX = "transaction::jeonse::officetel:";
     public static final String TRANSACTION_JEONSE_ROWHOUSE_PREFIX = "transaction::jeonse::rowhouse:";

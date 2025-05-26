@@ -22,7 +22,7 @@ public class TransactionSaleQueryService {
     private final TransactionSaleRowhouseRepository rowhouseRepository;
     private final TransactionProperties properties;
 
-    @Cacheable(cacheNames = "transactionSaleApartment", key = "'" + TRANSACTION_SALE_APARTMENT_PREFIX + "' + #request.toCacheKey()")
+    @Cacheable(value = "transactionSaleApartment", key = "'" + TRANSACTION_SALE_APARTMENT_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionSaleApartment> getTransactionSaleHistoryForApartment(TransactionSaleAddressRequest request) {
         return apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
@@ -33,7 +33,7 @@ public class TransactionSaleQueryService {
         );
     }
 
-    @Cacheable(cacheNames = "transactionSaleOfficetel", key = "'" + TRANSACTION_SALE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
+    @Cacheable(value = "transactionSaleOfficetel", key = "'" + TRANSACTION_SALE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionSaleOfficetel> getTransactionSaleHistoryForOfficetel(TransactionSaleAddressRequest request) {
         return officetelRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
@@ -44,7 +44,7 @@ public class TransactionSaleQueryService {
         );
     }
 
-    @Cacheable(cacheNames = "transactionSaleRowhouse", key = "'" + TRANSACTION_SALE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
+    @Cacheable(value = "transactionSaleRowhouse", key = "'" + TRANSACTION_SALE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionSaleRowhouse> getTransactionSaleHistoryForRowhouse(TransactionSaleAddressRequest request) {
         return rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
