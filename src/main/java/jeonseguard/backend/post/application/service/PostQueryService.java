@@ -9,6 +9,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static jeonseguard.backend.global.constant.CacheKey.POST_ID_PREFIX;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
@@ -16,7 +18,7 @@ public class PostQueryService {
     private final PostRepository postRepository;
     private final PostQueryRepository postQueryRepository;
 
-    @Cacheable(value = "post", key = "'post::id:' + #postId")
+    @Cacheable(value = "post", key = "'" + POST_ID_PREFIX + "' + #postId")
     public PostSummary getPostSummary(Long userId, Long postId) {
         return postQueryRepository.findByUserIdAndId(userId, postId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.POST_SUMMARY_NOT_FOUND));

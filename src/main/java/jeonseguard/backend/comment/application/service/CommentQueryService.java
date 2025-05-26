@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static jeonseguard.backend.global.constant.CacheKey.COMMENTS_BY_POST_ID_PREFIX;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class CommentQueryService {
     private final CommentRepository commentRepository;
     private final CommentQueryRepository commentQueryRepository;
 
-    @Cacheable(value = "comments", key = "'comment::postId:' + #postId")
+    @Cacheable(value = "comments", key = "'" + COMMENTS_BY_POST_ID_PREFIX + "' + #postId")
     public List<CommentResponse> getComments(Long postId) {
         return commentQueryRepository.findAllByPostId(postId);
     }

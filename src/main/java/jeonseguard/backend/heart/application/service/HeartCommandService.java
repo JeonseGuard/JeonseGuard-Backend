@@ -9,6 +9,8 @@ import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static jeonseguard.backend.global.constant.CacheKey.POST_ID_PREFIX;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class HeartCommandService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "post", key = "'post::id:' + #request.postId()")
+            @CacheEvict(value = "post", key = "'" + POST_ID_PREFIX + "' + #request.postId()")
     })
     public void toggleHeart(Long userId, ToggleHeartRequest request) {
         if (heartRepository.existsByUserIdAndPostId(userId, request.postId())) {

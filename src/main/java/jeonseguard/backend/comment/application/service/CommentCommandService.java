@@ -12,6 +12,8 @@ import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static jeonseguard.backend.global.constant.CacheKey.*;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -21,8 +23,8 @@ public class CommentCommandService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "post", key = "'post::id:' + #request.postId()"),
-            @CacheEvict(value = "comments", key = "'comment::postId:' + #request.postId()")
+            @CacheEvict(value = "post", key = "'" + POST_ID_PREFIX + "' + #request.postId()"),
+            @CacheEvict(value = "comments", key = "'" + COMMENTS_BY_POST_ID_PREFIX + "' + #request.postId()")
     })
 
     public Comment createComment(UserSummary userSummary, CreateCommentRequest request) {
@@ -32,8 +34,8 @@ public class CommentCommandService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "post", key = "'post::id:' + #comment.postId"),
-            @CacheEvict(value = "comments", key = "'comment::postId:' + #comment.postId")
+            @CacheEvict(value = "post", key = "'" + POST_ID_PREFIX + "' + #comment.postId"),
+            @CacheEvict(value = "comments", key = "'" + COMMENTS_BY_POST_ID_PREFIX + "' + #comment.postId")
     })
     public void updateComment(Long userId, Comment comment, UserSummary userSummary, UpdateCommentRequest request) {
         CommentPolicy.validateAuthor(userId, comment, ErrorCode.COMMENT_UPDATE_FORBIDDEN);
@@ -42,8 +44,8 @@ public class CommentCommandService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "post", key = "'post::id:' + #comment.postId"),
-            @CacheEvict(value = "comments", key = "'comment::postId:' + #comment.postId")
+            @CacheEvict(value = "post", key = "'" + POST_ID_PREFIX + "' + #comment.postId"),
+            @CacheEvict(value = "comments", key = "'" + COMMENTS_BY_POST_ID_PREFIX + "' + #comment.postId")
     })
     public void deleteComment(Long userId, Comment comment) {
         CommentPolicy.validateAuthor(userId, comment, ErrorCode.COMMENT_DELETE_FORBIDDEN);
@@ -52,8 +54,8 @@ public class CommentCommandService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "post", key = "'post::id:' + #postId"),
-            @CacheEvict(value = "comments", key = "'comment::postId:' + #postId")
+            @CacheEvict(value = "post", key = "'" + POST_ID_PREFIX + "' + #postId"),
+            @CacheEvict(value = "comments", key = "'" + COMMENTS_BY_POST_ID_PREFIX + "' + #postId")
     })
     public void deleteAllByPostId(Long postId) {
         commentQueryRepository.deleteAllByPostId(postId);

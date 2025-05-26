@@ -11,13 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static jeonseguard.backend.global.constant.CacheKey.USER_ID_PREFIX;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class UserQueryService {
     private final UserRepository userRepository;
 
-    @Cacheable(value = "user", key = "'user::id:' + #userId")
+    @Cacheable(value = "user", key = "'" + USER_ID_PREFIX + "' + #userId")
     public UserSummary getUserSummary(Long userId) {
         return userRepository.findById(userId)
                 .map(UserSummary::from)

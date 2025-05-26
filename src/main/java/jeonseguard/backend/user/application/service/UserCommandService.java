@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static jeonseguard.backend.global.constant.CacheKey.USER_ID_PREFIX;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -21,12 +23,12 @@ public class UserCommandService {
         return userRepository.save(user);
     }
 
-    @CacheEvict(value = "user", key = "'user::id:' + #user.id")
+    @CacheEvict(value = "user", key = "'" + USER_ID_PREFIX + "' + #user.id")
     public void updateNickname(User user, UpdateNicknameRequest request) {
         user.updateNickname(request.newNickname());
     }
 
-    @CacheEvict(value = "user", key = "'user::id:' + #user.id")
+    @CacheEvict(value = "user", key = "'" + USER_ID_PREFIX + "' + #user.id")
     public void updateProfileImage(User user, UpdateProfileImageRequest request) {
         user.updateProfileImage(request.newProfileImage());
     }

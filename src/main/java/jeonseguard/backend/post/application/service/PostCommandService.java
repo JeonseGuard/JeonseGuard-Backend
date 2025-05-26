@@ -12,6 +12,8 @@ import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static jeonseguard.backend.global.constant.CacheKey.POST_ID_PREFIX;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class PostCommandService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "post", key = "'post::id:' + #post.id")
+            @CacheEvict(value = "post", key = "'" + POST_ID_PREFIX + "' + #post.id")
     })
     public void updatePost(Long userId, Post post, UserSummary userSummary, UpdatePostRequest request) {
         PostPolicy.validateAuthor(userId, post, ErrorCode.POST_UPDATE_FORBIDDEN);
@@ -35,7 +37,7 @@ public class PostCommandService {
 
     @Caching(evict = {
             @CacheEvict(value = "board", allEntries = true),
-            @CacheEvict(value = "post", key = "'post::id:' + #post.id")
+            @CacheEvict(value = "post", key = "'" + POST_ID_PREFIX + "' + #post.id")
     })
     public void deletePost(Long userId, Post post) {
         PostPolicy.validateAuthor(userId, post, ErrorCode.POST_DELETE_FORBIDDEN);
