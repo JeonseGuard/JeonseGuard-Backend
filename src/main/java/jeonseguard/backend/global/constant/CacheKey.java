@@ -1,6 +1,8 @@
 package jeonseguard.backend.global.constant;
 
 public class CacheKey {
+    public static final String AUTH_REFRESH_ID_PREFIX = "auth::refresh::id:";
+    public static final String AUTH_LOGOUT_TOKEN_PREFIX = "auth::logout::token:";
     public static final String USER_ID_PREFIX = "user::id:";
     public static final String BOARD_CATEGORY_PREFIX = "board::category:";
     public static final String POST_ID_PREFIX = "post::id:";
