@@ -3,7 +3,7 @@ package jeonseguard.backend.transaction.application.service;
 import jeonseguard.backend.global.config.properties.TransactionProperties;
 import jeonseguard.backend.transaction.domain.entity.*;
 import jeonseguard.backend.transaction.domain.repository.*;
-import jeonseguard.backend.transaction.presentation.dto.request.TransactionJeonseAddressRequest;
+import jeonseguard.backend.transaction.presentation.dto.request.TransactionAddressRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class TransactionJeonseQueryService {
     private final TransactionProperties properties;
 
     @Cacheable(value = "transactionJeonseApartment", key = "'" + TRANSACTION_JEONSE_APARTMENT_PREFIX + "' + #request.toCacheKey()")
-    public List<TransactionJeonseApartment> getTransactionJeonseHistoryForApartment(TransactionJeonseAddressRequest request) {
+    public List<TransactionJeonseApartment> getTransactionJeonseHistoryForApartment(TransactionAddressRequest request) {
         return apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
                 request.bun(),
@@ -34,7 +34,7 @@ public class TransactionJeonseQueryService {
     }
 
     @Cacheable(value = "transactionJeonseOfficetel", key = "'" + TRANSACTION_JEONSE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
-    public List<TransactionJeonseOfficetel> getTransactionJeonseHistoryForOfficetel(TransactionJeonseAddressRequest request) {
+    public List<TransactionJeonseOfficetel> getTransactionJeonseHistoryForOfficetel(TransactionAddressRequest request) {
         return officetelRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
                 request.bun(),
@@ -45,7 +45,7 @@ public class TransactionJeonseQueryService {
     }
 
     @Cacheable(value = "transactionJeonseRowhouse", key = "'" + TRANSACTION_JEONSE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
-    public List<TransactionJeonseRowhouse> getTransactionJeonseHistoryForRowhouse(TransactionJeonseAddressRequest request) {
+    public List<TransactionJeonseRowhouse> getTransactionJeonseHistoryForRowhouse(TransactionAddressRequest request) {
         return rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
                 request.bun(),

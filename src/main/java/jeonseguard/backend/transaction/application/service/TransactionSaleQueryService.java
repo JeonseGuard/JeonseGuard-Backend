@@ -3,7 +3,7 @@ package jeonseguard.backend.transaction.application.service;
 import jeonseguard.backend.global.config.properties.TransactionProperties;
 import jeonseguard.backend.transaction.domain.entity.*;
 import jeonseguard.backend.transaction.domain.repository.*;
-import jeonseguard.backend.transaction.presentation.dto.request.TransactionSaleAddressRequest;
+import jeonseguard.backend.transaction.presentation.dto.request.TransactionAddressRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class TransactionSaleQueryService {
     private final TransactionProperties properties;
 
     @Cacheable(value = "transactionSaleApartment", key = "'" + TRANSACTION_SALE_APARTMENT_PREFIX + "' + #request.toCacheKey()")
-    public List<TransactionSaleApartment> getTransactionSaleHistoryForApartment(TransactionSaleAddressRequest request) {
+    public List<TransactionSaleApartment> getTransactionSaleHistoryForApartment(TransactionAddressRequest request) {
         return apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
                 request.bun(),
@@ -34,7 +34,7 @@ public class TransactionSaleQueryService {
     }
 
     @Cacheable(value = "transactionSaleOfficetel", key = "'" + TRANSACTION_SALE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
-    public List<TransactionSaleOfficetel> getTransactionSaleHistoryForOfficetel(TransactionSaleAddressRequest request) {
+    public List<TransactionSaleOfficetel> getTransactionSaleHistoryForOfficetel(TransactionAddressRequest request) {
         return officetelRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
                 request.bun(),
@@ -45,7 +45,7 @@ public class TransactionSaleQueryService {
     }
 
     @Cacheable(value = "transactionSaleRowhouse", key = "'" + TRANSACTION_SALE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
-    public List<TransactionSaleRowhouse> getTransactionSaleHistoryForRowhouse(TransactionSaleAddressRequest request) {
+    public List<TransactionSaleRowhouse> getTransactionSaleHistoryForRowhouse(TransactionAddressRequest request) {
         return rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
                 request.address(),
                 request.bun(),
