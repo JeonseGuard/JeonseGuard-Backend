@@ -24,33 +24,36 @@ public class TransactionSaleQueryService {
 
     @Cacheable(value = "transactionSaleApartment", key = "'" + TRANSACTION_SALE_APARTMENT_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionSaleApartment> getTransactionSaleHistoryForApartment(TransactionAddressRequest request) {
-        return apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+        return apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
                 request.address(),
                 request.bun(),
                 request.ji(),
                 request.floorNumber(),
+                request.area(),
                 properties.contractYearMonths()
         );
     }
 
     @Cacheable(value = "transactionSaleOfficetel", key = "'" + TRANSACTION_SALE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionSaleOfficetel> getTransactionSaleHistoryForOfficetel(TransactionAddressRequest request) {
-        return officetelRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+        return officetelRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
                 request.address(),
                 request.bun(),
                 request.ji(),
                 request.floorNumber(),
+                request.area(),
                 properties.contractYearMonths()
         );
     }
 
     @Cacheable(value = "transactionSaleRowhouse", key = "'" + TRANSACTION_SALE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionSaleRowhouse> getTransactionSaleHistoryForRowhouse(TransactionAddressRequest request) {
-        return rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+        return rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
                 request.address(),
                 request.bun(),
                 request.ji(),
                 request.floorNumber(),
+                request.area(),
                 properties.contractYearMonths()
         );
     }

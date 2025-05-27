@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TransactionJeonseApartmentJpaRepository extends JpaRepository<TransactionJeonseApartment, Long> {
-    List<TransactionJeonseApartment> findAllByAddressAndBunAndJiAndFloorAndContractYearMonthIn(
+    List<TransactionJeonseApartment> findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonthIn(
             String address,
             String bun,
             String ji,
             String floor,
+            String area,
             List<String> contractYearMonths
     );
 }
