@@ -69,12 +69,13 @@ search:
 
 openapi:
   building:
-    overview-uri: ${BUILDING_OVERVIEW_URI}
-    floor-uri: ${BUILDING_FLOOR_URI}
-    area-uri: ${BUILDING_AREA_URI}
-    service-key: ${BUILDING_SERVICE_KEY}
-    category-code: ${BUILDING_CATEGORY_CODE}
-    list-size: ${BUILDING_LIST_SIZE}
+    register:
+      overview-uri: ${BUILDING_REGISTER_OVERVIEW_URI}
+      floor-uri: ${BUILDING_REGISTER_FLOOR_URI}
+      area-uri: ${BUILDING_REGISTER_AREA_URI}
+      service-key: ${BUILDING_REGISTER_SERVICE_KEY}
+      category-code: ${BUILDING_REGISTER_CATEGORY_CODE}
+      list-size: ${BUILDING_REGISTER_LIST_SIZE}
 
 transaction:
   contract-year-months: ${TRANSACTION_CONTRACT_YEAR_MONTHS}

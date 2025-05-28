@@ -2,7 +2,7 @@ package jeonseguard.backend.building.infrastructure.repository;
 
 import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
-import jeonseguard.backend.global.config.properties.BuildingProperties;
+import jeonseguard.backend.global.config.properties.BuildingRegisterProperties;
 import jeonseguard.backend.global.dto.OpenApiResponse;
 import jeonseguard.backend.global.exception.error.*;
 import org.junit.jupiter.api.*;
@@ -29,17 +29,17 @@ class BuildingRegisterAreaApiRepositoryImplTest {
     @Mock private WebClient.RequestHeadersUriSpec uriSpec;
     @Mock private WebClient.RequestHeadersSpec headersSpec;
     @Mock private WebClient.ResponseSpec responseSpec;
-    @Mock private BuildingProperties buildingProperties;
+    @Mock private BuildingRegisterProperties buildingRegisterProperties;
     @InjectMocks private BuildingRegisterAreaApiRepositoryImpl repository;
 
     @BeforeEach
     void setUp() {
-        lenient().when(buildingProperties.overviewUri()).thenReturn("https://example.com/overview");
-        lenient().when(buildingProperties.floorUri()).thenReturn("https://example.com/floor");
-        lenient().when(buildingProperties.areaUri()).thenReturn("https://example.com/area");
-        lenient().when(buildingProperties.serviceKey()).thenReturn("test-key");
-        lenient().when(buildingProperties.categoryCode()).thenReturn("0");
-        lenient().when(buildingProperties.listSize()).thenReturn("10");
+        lenient().when(buildingRegisterProperties.overviewUri()).thenReturn("https://example.com/overview");
+        lenient().when(buildingRegisterProperties.floorUri()).thenReturn("https://example.com/floor");
+        lenient().when(buildingRegisterProperties.areaUri()).thenReturn("https://example.com/area");
+        lenient().when(buildingRegisterProperties.serviceKey()).thenReturn("test-key");
+        lenient().when(buildingRegisterProperties.categoryCode()).thenReturn("0");
+        lenient().when(buildingRegisterProperties.listSize()).thenReturn("10");
     }
 
     private <T> void mockWebClientResponse(List<T> items) {
