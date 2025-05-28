@@ -1,7 +1,9 @@
 package jeonseguard.backend.global.util;
 
+import lombok.*;
 import org.springframework.util.StringUtils;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LongUtil {
     public static Long parsePrice(String amount) {
         if (!StringUtils.hasText(amount)) {

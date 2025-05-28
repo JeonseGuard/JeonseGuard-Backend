@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static jeonseguard.backend.global.constant.CacheKey.*;
+import static jeonseguard.backend.global.util.TransactionPriceUtil.filterByHighestPricePerMonth;
 
 @Transactional(readOnly = true)
 @Service
@@ -24,7 +25,7 @@ public class TransactionJeonseQueryService {
 
     @Cacheable(value = "transactionJeonseApartment", key = "'" + TRANSACTION_JEONSE_APARTMENT_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionJeonseApartment> getTransactionJeonseHistoryForApartment(TransactionAddressRequest request) {
-        return apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
+        List<TransactionJeonseApartment> all = apartmentRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
                 request.address(),
                 request.bun(),
                 request.ji(),
@@ -32,11 +33,12 @@ public class TransactionJeonseQueryService {
                 request.area(),
                 properties.contractYearMonths()
         );
+        return filterByHighestPricePerMonth(all, TransactionJeonseApartment::getContractYearMonth, TransactionJeonseApartment::getPrice);
     }
 
     @Cacheable(value = "transactionJeonseOfficetel", key = "'" + TRANSACTION_JEONSE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionJeonseOfficetel> getTransactionJeonseHistoryForOfficetel(TransactionAddressRequest request) {
-        return officetelRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
+        List<TransactionJeonseOfficetel> all = officetelRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
                 request.address(),
                 request.bun(),
                 request.ji(),
@@ -44,11 +46,12 @@ public class TransactionJeonseQueryService {
                 request.area(),
                 properties.contractYearMonths()
         );
+        return filterByHighestPricePerMonth(all, TransactionJeonseOfficetel::getContractYearMonth, TransactionJeonseOfficetel::getPrice);
     }
 
     @Cacheable(value = "transactionJeonseRowhouse", key = "'" + TRANSACTION_JEONSE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
     public List<TransactionJeonseRowhouse> getTransactionJeonseHistoryForRowhouse(TransactionAddressRequest request) {
-        return rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
+        List<TransactionJeonseRowhouse> all =  rowhouseRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
                 request.address(),
                 request.bun(),
                 request.ji(),
@@ -56,5 +59,6 @@ public class TransactionJeonseQueryService {
                 request.area(),
                 properties.contractYearMonths()
         );
+        return filterByHighestPricePerMonth(all, TransactionJeonseRowhouse::getContractYearMonth, TransactionJeonseRowhouse::getPrice);
     }
 }
