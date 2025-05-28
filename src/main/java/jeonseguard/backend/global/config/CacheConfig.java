@@ -1,6 +1,5 @@
 package jeonseguard.backend.global.config;
 
-import com.fasterxml.jackson.databind.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -21,8 +20,7 @@ public class CacheConfig {
     private final RedisConnectionFactory redisConnectionFactory;
 
     @Bean
-    public CacheManager redisCacheManager(ObjectMapper objectMapper) {
-        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(objectMapper);
+    public CacheManager redisCacheManager(GenericJackson2JsonRedisSerializer serializer) {
         RedisCacheConfiguration defaultRedisCacheConfig = createRedisCacheConfigWithTtl(serializer, 5);
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
         cacheConfigs.put("user", createRedisCacheConfigWithTtl(serializer, 60));

@@ -13,18 +13,20 @@ public class TransactionSaleRowhouseRepositoryImpl implements TransactionSaleRow
     private final TransactionSaleRowhouseJpaRepository jpaRepository;
 
     @Override
-    public List<TransactionSaleRowhouse> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+    public List<TransactionSaleRowhouse> findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
             String address,
             String bun,
             String ji,
             String floor,
+            String area,
             List<String> contractYearMonths
     ) {
-        return jpaRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonthIn(
+        return jpaRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonthIn(
                 address,
                 bun,
                 ji,
                 floor,
+                area,
                 contractYearMonths
         );
     }

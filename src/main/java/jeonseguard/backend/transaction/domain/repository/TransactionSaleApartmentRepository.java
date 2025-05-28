@@ -5,11 +5,12 @@ import jeonseguard.backend.transaction.domain.entity.TransactionSaleApartment;
 import java.util.List;
 
 public interface TransactionSaleApartmentRepository {
-    List<TransactionSaleApartment> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+    List<TransactionSaleApartment> findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
             String address,
             String bun,
             String ji,
             String floor,
+            String area,
             List<String> contractYearMonths
     );
 }

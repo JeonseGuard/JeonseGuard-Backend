@@ -9,7 +9,7 @@ import org.springframework.context.annotation.*;
 @Configuration
 public class JacksonConfig {
     @Bean
-    public ObjectMapper createObjectMapper() {
+    public ObjectMapper objectMapper() {
         return new ObjectMapper()
                 .registerModule(new JavaTimeModule())
                 .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)

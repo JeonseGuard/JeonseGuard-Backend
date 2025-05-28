@@ -1,5 +1,6 @@
 package jeonseguard.backend.global.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.lettuce.core.*;
 import jeonseguard.backend.global.config.properties.RedisProperties;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +27,19 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory, GenericJackson2JsonRedisSerializer serializer) {
         RedisTemplate<String, String> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
         template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setValueSerializer(serializer);
         template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setHashValueSerializer(serializer);
         return template;
+    }
+
+    @Bean
+    public GenericJackson2JsonRedisSerializer redisSerializer(ObjectMapper objectMapper) {
+        return new GenericJackson2JsonRedisSerializer(objectMapper);
     }
 
     private RedisStandaloneConfiguration createRedisConfiguration() {

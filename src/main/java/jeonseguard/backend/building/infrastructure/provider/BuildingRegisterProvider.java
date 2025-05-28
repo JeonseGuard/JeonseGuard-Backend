@@ -1,6 +1,6 @@
 package jeonseguard.backend.building.infrastructure.provider;
 
-import jeonseguard.backend.building.infrastructure.client.*;
+import jeonseguard.backend.building.infrastructure.client.BuildingRegisterClient;
 import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.global.config.properties.BuildingProperties;
@@ -17,38 +17,36 @@ import static jeonseguard.backend.global.util.StringUtil.*;
 @RequiredArgsConstructor
 public class BuildingRegisterProvider {
     private final BuildingProperties buildingProperties;
-    private final BuildingRegisterOverviewClient buildingRegisterOverviewClient;
-    private final BuildingRegisterFloorClient buildingRegisterFloorClient;
-    private final BuildingRegisterAreaClient buildingRegisterAreaClient;
+    private final BuildingRegisterClient buildingRegisterClient;
 
     public List<BuildingRegisterOverviewItem> getBuildingRegisterOverviews(String pageNumber, BuildingRegisterRequest request) {
         URI uri = buildUri(buildingProperties.overviewUri(), pageNumber, request.dongName(), request.hoName(), request);
-        return buildingRegisterOverviewClient.fetchBuildingRegisterOverviews(uri);
+        return buildingRegisterClient.fetchBuildingRegisterOverviews(uri);
     }
 
     public List<BuildingRegisterFloorItem> getBuildingRegisterFloors(String pageNumber, BuildingRegisterRequest request) {
         URI uri = buildUri(buildingProperties.floorUri(), pageNumber, request.dongName(), request.hoName(), request);
-        return buildingRegisterFloorClient.fetchBuildingRegisterFloors(uri);
+        return buildingRegisterClient.fetchBuildingRegisterFloors(uri);
     }
 
     public List<BuildingRegisterAreaItem> getBuildingRegisterAreas(String pageNumber, BuildingRegisterRequest request) {
         URI uri = buildUri(buildingProperties.areaUri(), pageNumber, request.dongName(), request.hoName(), request);
-        return buildingRegisterAreaClient.fetchBuildingRegisterAreas(uri);
+        return buildingRegisterClient.fetchBuildingRegisterAreas(uri);
     }
 
     public List<BuildingRegisterAreaItem> getBuildingRegisterAreasWithDongNumber(String pageNumber, BuildingRegisterRequest request) {
         URI uri = buildUri(buildingProperties.areaUri(), pageNumber, request.dongNumber(), request.hoName(), request);
-        return buildingRegisterAreaClient.fetchBuildingRegisterAreas(uri);
+        return buildingRegisterClient.fetchBuildingRegisterAreas(uri);
     }
 
     public List<BuildingRegisterAreaItem> getBuildingRegisterAreasWithHoNumber(String pageNumber, BuildingRegisterRequest request) {
         URI uri = buildUri(buildingProperties.areaUri(), pageNumber, request.dongName(), request.hoNumber(), request);
-        return buildingRegisterAreaClient.fetchBuildingRegisterAreas(uri);
+        return buildingRegisterClient.fetchBuildingRegisterAreas(uri);
     }
 
     public List<BuildingRegisterAreaItem> getBuildingRegisterAreasWithDongNumberAndHoNumber(String pageNumber, BuildingRegisterRequest request) {
         URI uri = buildUri(buildingProperties.areaUri(), pageNumber, request.dongNumber(), request.hoNumber(), request);
-        return buildingRegisterAreaClient.fetchBuildingRegisterAreas(uri);
+        return buildingRegisterClient.fetchBuildingRegisterAreas(uri);
     }
 
     private URI buildUri(String uri, String pageNumber, String dongValue, String hoValue, BuildingRegisterRequest request) {

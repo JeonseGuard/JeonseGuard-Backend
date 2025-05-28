@@ -16,7 +16,7 @@ import static jeonseguard.backend.global.util.AddressUtil.*;
 
 @Component
 @RequiredArgsConstructor
-public class BuildingFacade {
+public class BuildingRegisterFacade {
     private final BuildingRegisterOverviewQueryService buildingRegisterOverviewQueryService;
     private final BuildingRegisterFloorQueryService buildingRegisterFloorQueryService;
     private final BuildingRegisterAreaQueryService buildingRegisterAreaQueryService;

@@ -13,19 +13,22 @@ public class TransactionJeonseApartmentRepositoryImpl implements TransactionJeon
     private final TransactionJeonseApartmentJpaRepository jpaRepository;
 
     @Override
-    public List<TransactionJeonseApartment> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+    public List<TransactionJeonseApartment> findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
             String address,
             String bun,
             String ji,
             String floor,
+            String area,
             List<String> contractYearMonths
     ) {
-        return jpaRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonthIn(
+        return jpaRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonthIn(
                 address,
                 bun,
                 ji,
                 floor,
+                area,
                 contractYearMonths
         );
+
     }
 }

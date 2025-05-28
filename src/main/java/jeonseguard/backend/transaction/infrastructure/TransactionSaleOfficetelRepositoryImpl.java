@@ -13,18 +13,20 @@ public class TransactionSaleOfficetelRepositoryImpl implements TransactionSaleOf
     private final TransactionSaleOfficetelJpaRepository jpaRepository;
 
     @Override
-    public List<TransactionSaleOfficetel> findAllByAddressAndBunAndJiAndFloorAndContractYearMonths(
+    public List<TransactionSaleOfficetel> findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonths(
             String address,
             String bun,
             String ji,
             String floor,
+            String area,
             List<String> contractYearMonths
     ) {
-        return jpaRepository.findAllByAddressAndBunAndJiAndFloorAndContractYearMonthIn(
+        return jpaRepository.findAllByAddressAndBunAndJiAndFloorAndAreaAndContractYearMonthIn(
                 address,
                 bun,
                 ji,
                 floor,
+                area,
                 contractYearMonths
         );
     }
