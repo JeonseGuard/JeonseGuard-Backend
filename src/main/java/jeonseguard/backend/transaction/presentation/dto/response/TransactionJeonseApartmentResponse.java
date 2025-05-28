@@ -1,10 +1,8 @@
 package jeonseguard.backend.transaction.presentation.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jeonseguard.backend.transaction.domain.entity.TransactionJeonseApartment;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public record TransactionJeonseApartmentResponse(
         @Schema(description = "계약년월")
         String contractYearMonth,

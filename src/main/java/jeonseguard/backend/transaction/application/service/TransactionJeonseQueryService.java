@@ -33,7 +33,11 @@ public class TransactionJeonseQueryService {
                 request.area(),
                 properties.contractYearMonths()
         );
-        return filterByHighestPricePerMonth(all, TransactionJeonseApartment::getContractYearMonth, TransactionJeonseApartment::getPrice);
+        return filterByHighestPricePerMonth(
+                all,
+                TransactionJeonseApartment::getContractYearMonth,
+                TransactionJeonseApartment::getPrice
+        );
     }
 
     @Cacheable(value = "transactionJeonseOfficetel", key = "'" + TRANSACTION_JEONSE_OFFICETEL_PREFIX + "' + #request.toCacheKey()")
@@ -46,7 +50,10 @@ public class TransactionJeonseQueryService {
                 request.area(),
                 properties.contractYearMonths()
         );
-        return filterByHighestPricePerMonth(all, TransactionJeonseOfficetel::getContractYearMonth, TransactionJeonseOfficetel::getPrice);
+        return filterByHighestPricePerMonth(
+                all,
+                TransactionJeonseOfficetel::getContractYearMonth,
+                TransactionJeonseOfficetel::getPrice);
     }
 
     @Cacheable(value = "transactionJeonseRowhouse", key = "'" + TRANSACTION_JEONSE_ROWHOUSE_PREFIX + "' + #request.toCacheKey()")
@@ -59,6 +66,10 @@ public class TransactionJeonseQueryService {
                 request.area(),
                 properties.contractYearMonths()
         );
-        return filterByHighestPricePerMonth(all, TransactionJeonseRowhouse::getContractYearMonth, TransactionJeonseRowhouse::getPrice);
+        return filterByHighestPricePerMonth(
+                all,
+                TransactionJeonseRowhouse::getContractYearMonth,
+                TransactionJeonseRowhouse::getPrice
+        );
     }
 }

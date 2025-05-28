@@ -19,6 +19,24 @@ import java.util.List;
 public class TransactionController {
     private final TransactionFacade transactionFacade;
 
+    @Operation(summary = "아파트 실거래가 이력 통합 조회", description = "주소 정보를 기반으로, 아파트 실거래가 이력을 통합 조회합니다.")
+    @PostMapping("summary/apartment")
+    public ResponseEntity<TransactionSummaryApartmentResponse> getTransactionSummaryHistoryForApartment(@Valid @RequestBody TransactionAddressRequest request) {
+        return ResponseEntity.ok(transactionFacade.getTransactionSummaryHistoryForApartment(request));
+    }
+
+    @Operation(summary = "오피스텔 실거래가 이력 통합 조회", description = "주소 정보를 기반으로, 오피스텔 실거래가 이력을 통합 조회합니다.")
+    @PostMapping("summary/officetel")
+    public ResponseEntity<TransactionSummaryOfficetelResponse> getTransactionSummaryHistoryForOfficetel(@Valid @RequestBody TransactionAddressRequest request) {
+        return ResponseEntity.ok(transactionFacade.getTransactionSummaryHistoryForOfficetel(request));
+    }
+
+    @Operation(summary = "연립다세대 실거래가 이력 통합 조회", description = "주소 정보를 기반으로, 연립다세대 실거래가 이력을 통합 조회합니다.")
+    @PostMapping("summary/rowhouse")
+    public ResponseEntity<TransactionSummaryRowhouseResponse> getTransactionSummaryHistoryForRowhouse(@Valid @RequestBody TransactionAddressRequest request) {
+        return ResponseEntity.ok(transactionFacade.getTransactionSummaryHistoryForRowhouse(request));
+    }
+
     @Operation(summary = "아파트 전세 실거래가 이력 조회", description = "주소 정보를 기반으로, 아파트 전세 실거래가 이력을 조회합니다.")
     @PostMapping("jeonse/apartment")
     public ResponseEntity<List<TransactionJeonseApartmentResponse>> getTransactionJeonseHistoryForApartment(@Valid @RequestBody TransactionAddressRequest request) {
