@@ -1,6 +1,6 @@
 package jeonseguard.backend.building.infrastructure.provider;
 
-import jeonseguard.backend.building.infrastructure.client.*;
+import jeonseguard.backend.building.infrastructure.client.BuildingRegisterClient;
 import jeonseguard.backend.building.infrastructure.dto.external.*;
 import jeonseguard.backend.building.infrastructure.dto.request.BuildingRegisterRequest;
 import jeonseguard.backend.global.config.properties.BuildingProperties;

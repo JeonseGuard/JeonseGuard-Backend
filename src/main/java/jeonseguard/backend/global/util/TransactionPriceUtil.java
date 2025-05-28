@@ -11,7 +11,6 @@ import static jeonseguard.backend.global.util.LongUtil.parsePrice;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TransactionPriceUtil {
-
     public static <T> List<T> filterByHighestPricePerMonth(
             List<T> transactions,
             Function<T, String> contractYearMonthExtractor,

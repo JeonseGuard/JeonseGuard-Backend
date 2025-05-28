@@ -79,9 +79,6 @@ openapi:
 transaction:
   contract-year-months: ${TRANSACTION_CONTRACT_YEAR_MONTHS}
 
-malicious:
-  blocked-path-prefixes: ${MALICIOUS_BLOCKED_PATH_PREFIXES}
-
 logging:
   level:
     org.hibernate.sql: debug

@@ -2,7 +2,6 @@ package jeonseguard.backend.global.config;
 
 import jeonseguard.backend.auth.infrastructure.resolver.AuthenticatedUserArgumentResolver;
 import jeonseguard.backend.global.config.properties.*;
-import jeonseguard.backend.global.intercepter.MaliciousPathBlockInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +12,9 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableConfigurationProperties({JwtTokenProperties.class, TransactionProperties.class, MaliciousPathProperties.class})
+@EnableConfigurationProperties({JwtTokenProperties.class, TransactionProperties.class})
 public class WebConfig implements WebMvcConfigurer {
     private final AuthenticatedUserArgumentResolver authenticatedUserArgumentResolver;
-    private final MaliciousPathBlockInterceptor maliciousPathBlockInterceptor;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -30,12 +28,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(maliciousPathBlockInterceptor)
-                .order(0)
-                .addPathPatterns("/**");
     }
 }
