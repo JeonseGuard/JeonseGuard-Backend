@@ -6,10 +6,7 @@ import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DateUtil {
-    // 입력 파싱 전용
     private static final DateTimeFormatter FLEXIBLE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    // 출력 포맷 전용
     private static final DateTimeFormatter FIXED_FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
     public static LocalDate parseDate(String raw) {
