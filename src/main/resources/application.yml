@@ -31,6 +31,9 @@ management:
       process.files: false
       system.cpu.count: false
       system.cpu.usage: false
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
   info:
     git:
       mode: full
