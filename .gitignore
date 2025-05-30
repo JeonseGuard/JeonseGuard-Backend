@@ -9,7 +9,8 @@ build/**
 **/local.env
 **/dev.env
 **/test.env
-docker-compose.yml
+**/prometheus.yml
+**/docker-compose.yml
 
 ### STS ###
 .apt_generated
