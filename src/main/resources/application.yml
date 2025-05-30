@@ -26,6 +26,11 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+  metrics:
+    enable:
+      process.files: false
+      system.cpu.count: false
+      system.cpu.usage: false
   info:
     git:
       mode: full
