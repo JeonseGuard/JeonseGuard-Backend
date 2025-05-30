@@ -89,5 +89,5 @@ clean {
 }
 
 gitProperties {
-	failOnNoGitDirectory = true
+	failOnNoGitDirectory = false
 }
