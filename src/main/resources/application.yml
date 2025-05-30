@@ -6,3 +6,26 @@ springdoc:
     disable-swagger-default-url: true
     display-request-duration: true
     operations-sorter: alpha
+
+spring:
+  application:
+    name: jeonseguard
+
+info:
+  app:
+    name: jeonseguard
+    description: 전세 사기 예방 서비스
+    version: 0.0.1
+    owner: 최민우
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, info
+  endpoint:
+    health:
+      show-details: when-authorized
+  info:
+    git:
+      mode: full
