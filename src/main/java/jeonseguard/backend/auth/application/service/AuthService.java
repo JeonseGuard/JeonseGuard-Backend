@@ -30,11 +30,11 @@ public class AuthService {
         return TokenResponse.of(accessToken, refreshToken);
     }
 
-    public RefreshTokenResponse getRefreshTokenWithUserIdAndCache(RefreshRequest request) {
+    public RefreshTokenVerificationResponse getRefreshTokenVerification(RefreshRequest request) {
         String refreshToken = request.refreshToken();
         Long userId = tokenProvider.getUserIdFromToken(refreshToken);
         String cachedRefreshToken = refreshTokenStore.getRefreshToken(userId);
-        return RefreshTokenResponse.of(userId, refreshToken, cachedRefreshToken);
+        return RefreshTokenVerificationResponse.of(userId, refreshToken, cachedRefreshToken);
     }
 
     public void cacheRefreshToken(Long userId, TokenResponse response) {
@@ -51,7 +51,7 @@ public class AuthService {
         refreshTokenStore.removeRefreshToken(userId);
     }
 
-    public void validateRefreshToken(RefreshTokenResponse response) {
+    public void validateRefreshToken(RefreshTokenVerificationResponse response) {
         if (response.cachedRefreshToken() == null || !response.cachedRefreshToken().equals(response.refreshToken())) {
             throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
