@@ -8,4 +8,4 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     honor_labels: true
     static_configs:
-      - targets: ['springboot-app:8080']
+      - targets: ['app:8080']
