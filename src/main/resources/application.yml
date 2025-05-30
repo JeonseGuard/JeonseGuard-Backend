@@ -20,6 +20,10 @@ management:
     health:
       show-details: never
 
+  info:
+    git:
+      mode: full
+
 info:
   app:
     name: jeonseguard

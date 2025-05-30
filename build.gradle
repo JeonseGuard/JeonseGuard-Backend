@@ -61,6 +61,7 @@ dependencies {
 
 	// Prometheus
 	implementation 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'com.gorylenko.gradle-git-properties:2.5.0'
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
