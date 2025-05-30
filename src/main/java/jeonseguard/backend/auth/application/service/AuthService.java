@@ -30,7 +30,7 @@ public class AuthService {
         return TokenResponse.of(accessToken, refreshToken);
     }
 
-    public RefreshTokenResponse getCachedRefreshTokenInfo(RefreshRequest request) {
+    public RefreshTokenResponse getRefreshTokenWithUserIdAndCache(RefreshRequest request) {
         String refreshToken = request.refreshToken();
         Long userId = tokenProvider.getUserIdFromToken(refreshToken);
         String cachedRefreshToken = refreshTokenStore.getRefreshToken(userId);

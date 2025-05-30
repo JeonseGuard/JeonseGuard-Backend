@@ -24,7 +24,7 @@ public class AuthFacade {
     }
 
     public TokenResponse refresh(RefreshRequest request) {
-        RefreshTokenResponse response = authService.getCachedRefreshTokenInfo(request);
+        RefreshTokenResponse response = authService.getRefreshTokenWithUserIdAndCache(request);
         authService.validateRefreshToken(response);
         Long userId = response.userId();
         TokenResponse tokens = authService.getTokens(userId);
