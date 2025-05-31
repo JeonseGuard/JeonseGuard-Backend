@@ -82,4 +82,7 @@ transaction:
 
 logging:
   level:
-    org.hibernate.sql: debug
+    root: info
+    org.springframework.web: info
+    org.hibernate.SQL: off
+    org.hibernate.type.descriptor.sql.BasicBinder: off
