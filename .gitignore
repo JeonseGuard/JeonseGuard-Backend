@@ -11,6 +11,8 @@ build/**
 **/test.env
 **/prometheus.yml
 **/docker-compose.yml
+**/promtail-config.yaml
+**/loki-config.yaml
 
 ### STS ###
 .apt_generated
