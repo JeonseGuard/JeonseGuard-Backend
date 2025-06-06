@@ -28,14 +28,14 @@ public class CacheConfig {
         cacheConfigs.put("post", defaultRedisCacheConfig);
         cacheConfigs.put("comments", defaultRedisCacheConfig);
         cacheConfigs.put("news", createRedisCacheConfigWithTtl(serializer, 1));
-        cacheConfigs.put("region", createRedisCacheConfigWithTtl(serializer, 720));
-        cacheConfigs.put("buildingRegister", createRedisCacheConfigWithTtl(serializer, 720));
-        cacheConfigs.put("transactionJeonseApartment", createRedisCacheConfigWithTtl(serializer, 720));
-        cacheConfigs.put("transactionJeonseOfficetel", createRedisCacheConfigWithTtl(serializer, 720));
-        cacheConfigs.put("transactionJeonseRowhouse", createRedisCacheConfigWithTtl(serializer, 720));
-        cacheConfigs.put("transactionSaleApartment", createRedisCacheConfigWithTtl(serializer, 720));
-        cacheConfigs.put("transactionSaleOfficetel", createRedisCacheConfigWithTtl(serializer, 720));
-        cacheConfigs.put("transactionSaleRowhouse", createRedisCacheConfigWithTtl(serializer, 720));
+        cacheConfigs.put("region", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("buildingRegister", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionJeonseApartment", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionJeonseOfficetel", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionJeonseRowhouse", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionSaleApartment", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionSaleOfficetel", createRedisCacheConfigWithTtl(serializer, 360));
+        cacheConfigs.put("transactionSaleRowhouse", createRedisCacheConfigWithTtl(serializer, 360));
         return buildRedisCacheManager(defaultRedisCacheConfig, cacheConfigs);
     }
 
