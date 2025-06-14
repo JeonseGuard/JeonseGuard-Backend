@@ -37,7 +37,7 @@
 ![image](https://github.com/user-attachments/assets/9b312dee-03d7-4b5e-97b0-e4a8dd5320fa)
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Microsoft-Teams-Animated-Emojis/master/Emojis/Smilies/Blue%20Heart.png" alt="Blue Heart" width="25" height="25" /> ERD
-![image](https://github.com/user-attachments/assets/2bb937e3-61ff-46f6-8690-5d3055ca1ef4)
+![image](https://github.com/user-attachments/assets/04d0fecf-18f3-4de8-9e32-422afbc0754a)
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Star.png" alt="Star" width="25" height="25" /> 팀원
 |[김수진](https://github.com/sujeengim)|[이고은](https://github.com/g00u)|[성대열](https://github.com/Daeye0l)|[최민우](https://github.com/chaiminwoo0223)|
