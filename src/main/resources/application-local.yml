@@ -1,0 +1,89 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+        use_sql_comments: true
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    out-of-order: false
+    clean-disabled: true
+    url: ${FLYWAY_DATABASE_URL}
+    user: ${FLYWAY_DATABASE_USERNAME}
+    password: ${FLYWAY_DATABASE_PASSWORD}
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+      timeout: ${REDIS_TIMEOUT}
+
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+        one-indexed-parameters: false
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    access-expiration-time: ${JWT_ACCESS_EXPIRATION_TIME}
+    refresh-expiration-time: ${JWT_REFRESH_EXPIRATION_TIME}
+
+  oauth2:
+    kakao:
+      client-id: ${KAKAO_CLIENT_ID}
+      client-secret: ${KAKAO_CLIENT_SECRET}
+      redirect-uri: ${KAKAO_REDIRECT_URL}
+      token-uri: ${KAKAO_TOKEN_URL}
+      user-info-uri: ${KAKAO_USER_INFO_URL}
+
+search:
+  naver:
+    client-id: ${NAVER_SEARCH_CLIENT_ID}
+    client-secret: ${NAVER_SEARCH_CLIENT_SECRET}
+    news-endpoint: ${NAVER_SEARCH_NEWS_ENDPOINT}
+    news-query: ${NAVER_SEARCH_NEWS_QUERY}
+    news-sort: ${NAVER_SEARCH_NEWS_SORT}
+    news-display: ${NAVER_SEARCH_NEWS_DISPLAY}
+
+openapi:
+  building:
+    register:
+      overview-uri: ${BUILDING_REGISTER_OVERVIEW_URI}
+      floor-uri: ${BUILDING_REGISTER_FLOOR_URI}
+      area-uri: ${BUILDING_REGISTER_AREA_URI}
+      service-key: ${BUILDING_REGISTER_SERVICE_KEY}
+      category-code: ${BUILDING_REGISTER_CATEGORY_CODE}
+      list-size: ${BUILDING_REGISTER_LIST_SIZE}
+
+transaction:
+  contract-year-months: ${TRANSACTION_CONTRACT_YEAR_MONTHS}
+
+logging:
+  level:
+    root: info
+    org.springframework.web: debug
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: debug
+

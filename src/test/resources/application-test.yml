@@ -1,0 +1,43 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+    import: optional:file:test.env[.properties]
+
+  datasource:
+    url: ${TEST_DATABASE_URL}
+    username: ${TEST_DATABASE_USERNAME}
+    password: ${TEST_DATABASE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+        use_sql_comments: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    out-of-order: false
+    clean-disabled: true
+    url: ${TEST_FLYWAY_DATABASE_URL}
+    user: ${TEST_FLYWAY_DATABASE_USERNAME}
+    password: ${TEST_FLYWAY_DATABASE_PASSWORD}
+
+  data:
+    redis:
+      host: ${TEST_REDIS_HOST}
+      port: ${TEST_REDIS_PORT}
+      password: ${TEST_REDIS_PASSWORD}
+      timeout: ${TEST_REDIS_TIMEOUT}
+
+logging:
+  level:
+    org.hibernate.sql: debug
